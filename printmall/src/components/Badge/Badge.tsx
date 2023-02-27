@@ -1,21 +1,27 @@
 import React from 'react';
-import squish from "../Helpers/ClassNameHelper"
-import "./Badge.sass"
+import squish from '../Helpers/ClassNameHelper';
+import './Badge.sass';
+
 interface BadgeProps {
-  content:  number;
-  className?:  string;
+  content: number;
+  className?: string;
   children: React.ReactNode;
 }
 
-const Badge: React.FC<BadgeProps> = ({content = 0, children, className = ''}) => {
+const Badge: React.FC<BadgeProps> = ({
+  content = 0,
+  children,
+  className = ''
+}) => {
   if (!content) {
     return <>{children}</>;
   }
 
-  const finalContent = content >= 100? "99+" : content;
+  const finalContent = content >= 100 ? '99+' : content;
 
   return (
-    <div className={squish`
+    <div
+      className={squish`
       badge-container
       ${className}
     `}>
@@ -23,6 +29,6 @@ const Badge: React.FC<BadgeProps> = ({content = 0, children, className = ''}) =>
       {children}
     </div>
   );
-}
+};
 
-export default Badge
+export default Badge;
