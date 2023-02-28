@@ -1,10 +1,19 @@
 import '../../i18n/config';
 import { useTranslation } from 'react-i18next';
+import './Hero.sass';
+import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
+import Button from '../../common/Button';
+
 const Hero = () => {
   const { t } = useTranslation();
   return (
-    <div>
-      <p>{t('hero.subTitle')}</p>
+    <div className="hero">
+      <span className="hero-sub-tittle">{t('hero.subTitle')}</span>
+      <h1 className="hero-tittle">{t('hero.title')}</h1>
+      <Button className="hero-primary-btn" icon={<ArrowForward />}>
+        {t('hero.primaryBtn')}
+      </Button>
+      <Button type="secondary">{t('hero.secondaryBtn')}</Button>
     </div>
   );
 };

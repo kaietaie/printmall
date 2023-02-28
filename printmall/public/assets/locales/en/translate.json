@@ -3,6 +3,9 @@
     "liveChat": "Live Chat!"
   },
   "hero": {
-    "subTitle": "Marketplace featuring Influencers and Creative Freedom"
+    "subTitle": "Marketplace featuring Influencers and Creative Freedom",
+    "title": "Custom Stuff from your Favorite Influencers",
+    "primaryBtn": "Go to marketplace",
+    "secondaryBtn": "How it works?"
   }
 }

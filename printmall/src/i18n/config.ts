@@ -9,7 +9,7 @@ i18next
   .use(HttpApi)
   .init({
     supportedLngs: ['en', 'ua'],
-    // debug: true,
+    debug: false,
     fallbackLng: 'en',
     detection: {
       order: ['cookie', 'htmlTag', 'localStorage', 'path', 'subdomain'],
