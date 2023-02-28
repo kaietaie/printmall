@@ -17,8 +17,5 @@ i18next
     },
     backend: {
       loadPath: '/assets/locales/{{lng}}/components/header.json'
-    },
-    react: {
-      useSuspense: false
     }
   });

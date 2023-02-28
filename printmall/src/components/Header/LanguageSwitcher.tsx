@@ -1,10 +1,12 @@
 import i18next from 'i18next';
+import cookies from 'js-cookie';
 
 const LanguageSwitcher = () => {
-  const currentLanguage = i18next.language;
+  const currentLanguage = cookies.get('i18next') || 'ua';
   const handleChangeLanguage = (code: string) => {
     i18next.changeLanguage(code);
   };
+
   return (
     <div className="language-switcher">
       <button
