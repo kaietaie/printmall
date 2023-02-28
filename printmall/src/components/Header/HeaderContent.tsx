@@ -12,7 +12,7 @@ const HeaderContent = () => {
     <div className="header-content">
       <PhoneIcon />
       <span className="header-phone">1-888-676-2660</span>
-      <span className="header-content-live-chat">{t('liveChat')}</span>
+      <span className="header-content-live-chat">{t('header.liveChat')}</span>
       <HeaderButtons />
       <LanguageSwitcher />
       <Burger />

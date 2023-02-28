@@ -16,6 +16,6 @@ i18next
       caches: ['cookie']
     },
     backend: {
-      loadPath: '/assets/locales/{{lng}}/components/header.json'
+      loadPath: '/assets/locales/{{lng}}/translate.json'
     }
   });
