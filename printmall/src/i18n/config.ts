@@ -1,17 +1,23 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { resources } from './resources';
+import HttpApi from 'i18next-http-backend';
 
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
+  .use(HttpApi)
   .init({
-    debug: true,
+    // debug: true,
     fallbackLng: 'en',
-    resources,
     detection: {
-      order: ['htmlTag', 'cookie', 'localStorage', 'path', 'subdomain'],
+      order: ['cookie', 'htmlTag', 'localStorage', 'path', 'subdomain'],
       caches: ['cookie']
+    },
+    backend: {
+      loadPath: '/assets/locales/{{lng}}/components/header.json'
+    },
+    react: {
+      useSuspense: false
     }
   });
