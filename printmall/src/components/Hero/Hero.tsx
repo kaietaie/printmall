@@ -1,8 +1,8 @@
 import '../../i18n/config';
 import { useTranslation } from 'react-i18next';
-import './Hero.sass';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import Button from '../../common/Button';
+import './Hero.sass';
 
 const Hero = () => {
   const { t } = useTranslation();
