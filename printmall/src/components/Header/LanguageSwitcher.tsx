@@ -1,10 +1,10 @@
-import i18next from 'i18next';
+import { changeLanguage } from 'i18next';
 import cookies from 'js-cookie';
 
 const LanguageSwitcher = () => {
   const currentLanguage = cookies.get('i18next') || 'ua';
   const handleChangeLanguage = (code: string) => {
-    i18next.changeLanguage(code);
+    changeLanguage(code);
   };
 
   return (
