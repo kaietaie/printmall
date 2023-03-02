@@ -1,6 +1,11 @@
+@import '../../styles/variables'
+
 .hero
   text-align: center
   padding: 65px 0 78px
+
+.hero-titles
+  margin-bottom: 136px
 
 .hero-sub-tittle
   font-weight: 500
@@ -15,3 +20,73 @@
 
 .hero-primary-btn
   margin-right: 24px
+
+.hero-images
+  display: flex
+  margin: 0 auto
+  width: fit-content
+  position: relative
+
+  &:before
+    position: absolute
+    top: -80px
+    right: 170px
+    content: url("./images/arrow.svg")
+
+.hero-img
+  width: 186px
+  height: 278px
+  vertical-align: top
+
+.hero-img-container
+  position: relative
+
+  &::before
+    position: absolute
+    border-radius: 20px
+    width: 186px
+    height: 278px
+    border: 1px solid $primary
+    z-index: 1
+    content: ''
+
+  &:not(:last-child)
+    margin-right: 10px
+
+.hero-img-container--first
+  &::before
+    top: 4px
+    left: -5px
+
+.hero-img-container.hero-img-container--second
+  margin-right: 20px
+
+  &::before
+    top: 3px
+    left: 5px
+
+.hero-img-container--third
+  &::before
+    top: -5px
+    left: -6px
+
+.hero-img-container--fourth
+  &::before
+    top: -3px
+    left: 5px
+
+.hero-images-card
+  margin-top: -20px
+
+  p
+    color: $black
+    text-align: left
+    font-size: 12px
+    width: 186px
+    margin: 0 0 8px 6px
+    line-height: 16px
+
+.hero-img-container--first,
+.hero-img-container--third,
+.hero-images-card
+  transform: rotate(-6deg)
