@@ -1,18 +1,13 @@
 @import '../../styles/variables'
 
 .nav-bar
-  //margin: 0 auto
+  width: fit-content
+  margin: 0 auto
 
 .nav-bar-list
   display: flex
-  width: fit-content
-  margin: 0 auto
   list-style: none
   padding: 0
-  //display: flex
-
-  //li
-  //  display: inline
 
 .nav-item
   color: inherit
@@ -24,9 +19,13 @@
   text-decoration: none
   padding: 16px
   border-bottom: 2px solid $secondary-light
+  transition: border-bottom-color 0.2s
 
   &:hover
     border-bottom-color: $primary-light
+
+  &:active
+    border-bottom-color: $secondary-light
 
   svg
     margin-right: 8px
