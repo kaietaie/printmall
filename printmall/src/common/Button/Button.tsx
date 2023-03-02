@@ -7,15 +7,15 @@ interface ButtonProps {
   isDisabled?: boolean;
   type?: 'primary' | 'secondary';
   children: string;
-  icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
+  iconEnd?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
 }
 
 const Button: React.FC<ButtonProps> = ({
   children,
-  icon,
+  iconEnd,
   type = 'primary',
   isDisabled = false,
-  className
+  className,
 }) => {
   return (
     <button
@@ -24,9 +24,10 @@ const Button: React.FC<ButtonProps> = ({
         button
         button-${type}
         ${className ? className : ''}
-      `}>
+      `}
+    >
       {children}
-      {icon && icon}
+      {iconEnd && iconEnd}
     </button>
   );
 };

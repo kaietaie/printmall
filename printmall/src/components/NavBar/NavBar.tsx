@@ -1,0 +1,34 @@
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { navItems } from './navItems';
+import squish from '../../Helpers/ClassNameHelper';
+import './NavBar.sass';
+
+const NavBar: React.FC = () => {
+  const classNameHelper = ({ isActive }: { isActive: boolean }): string => {
+    return squish`
+      nav-item
+      ${isActive ? 'nav-item--active' : ''}`;
+  };
+
+  return (
+    <nav className="nav-bar">
+      <ul className="nav-bar-list">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <li key={item.label}>
+              <NavLink to={item.to} className={classNameHelper}>
+                <Icon />
+                {item.label}
+              </NavLink>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+};
+
+export default NavBar;
