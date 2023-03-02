@@ -12,10 +12,10 @@ interface NavItem {
 }
 
 export const navItems: NavItem[] = [
-  { label: 'Marketplace', to: '/', icon: StoreIcon },
-  { label: 'Influencers', to: '/', icon: UserIcon },
-  { label: 'Discounts', to: '/', icon: ShirtIcon },
-  { label: 'Partnership', to: '/', icon: LikeIcon },
-  { label: 'Blog', to: '/', icon: BookIcon },
-  { label: 'Contact Us', to: '/', icon: MailIcon },
+  { label: 'navBar.marketplace', to: '/', icon: StoreIcon },
+  { label: 'navBar.influencers', to: '/', icon: UserIcon },
+  { label: 'navBar.discounts', to: '/', icon: ShirtIcon },
+  { label: 'navBar.partnership', to: '/', icon: LikeIcon },
+  { label: 'navBar.blog', to: '/', icon: BookIcon },
+  { label: 'navBar.contactUs', to: '/', icon: MailIcon },
 ];

@@ -3,8 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { navItems } from './navItems';
 import squish from '../../Helpers/ClassNameHelper';
 import './NavBar.sass';
+import { useTranslation } from 'react-i18next';
 
 const NavBar: React.FC = () => {
+  const { t } = useTranslation();
   const classNameHelper = ({ isActive }: { isActive: boolean }): string => {
     return squish`
       nav-item
@@ -21,7 +23,7 @@ const NavBar: React.FC = () => {
             <li key={item.label}>
               <NavLink to={item.to} className={classNameHelper}>
                 <Icon />
-                {item.label}
+                {t(item.label)}
               </NavLink>
             </li>
           );

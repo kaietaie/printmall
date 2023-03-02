@@ -2,6 +2,14 @@
   "header": {
     "liveChat": "Live Chat!"
   },
+  "navBar": {
+    "marketplace": "Marketplace",
+    "influencers": "Influencers",
+    "discounts": "Discounts",
+    "partnership": "Partnership",
+    "blog": "Blog",
+    "contactUs": "Contact Us"
+  },
   "hero": {
     "subTitle": "Marketplace featuring Influencers and Creative Freedom",
     "title": "Custom Stuff from your Favorite Influencers",
