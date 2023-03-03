@@ -17,5 +17,10 @@
     "secondaryBtn": "How it works?",
     "imageText1": "Our marketplace provides unique and personalized clothing options for customers while also supporting independent creators and designers.",
     "imageText2": " We prioritize sustainability and ethical practices in their production process, by using eco-friendly materials and ensuring fair labour practices."
+  },
+  "bestCollections": {
+    "title": "Best Collections",
+    "subTitle": "Marketplace"
   }
+
 }

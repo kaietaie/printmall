@@ -2,8 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { navItems } from './navItems';
 import squish from '../../Helpers/ClassNameHelper';
-import './NavBar.sass';
 import { useTranslation } from 'react-i18next';
+import './NavBar.sass';
 
 const NavBar: React.FC = () => {
   const { t } = useTranslation();

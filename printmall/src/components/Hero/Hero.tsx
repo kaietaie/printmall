@@ -7,7 +7,6 @@ import firstImage from './images/img1.png';
 import secondImage from './images/img2.png';
 import thirdImage from './images/img3.png';
 import fourthImage from './images/img4.png';
-import withNavBar from '../../HOCS/withNavBar';
 import './Hero.sass';
 
 const Hero: React.FC<unknown> = () => {
@@ -48,4 +47,4 @@ const Hero: React.FC<unknown> = () => {
   );
 };
 
-export default withNavBar({ wrappedComponent: Hero });
+export default Hero;
