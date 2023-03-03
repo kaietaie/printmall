@@ -1,13 +1,18 @@
 import SectionTitle from '../../common/SectionTitle';
 import { useTranslation } from 'react-i18next';
+import FilterTabs from '../../common/FilterTabs';
+import './BestCollections.sass';
 
 const BestCollections = () => {
   const { t } = useTranslation();
 
   return (
-    <SectionTitle topSubTitle={t('bestCollections.subTitle')}>
-      {t('bestCollections.title')}
-    </SectionTitle>
+    <div className="best-collections-head">
+      <SectionTitle topSubTitle={t('bestCollections.subTitle')}>
+        {t('bestCollections.title')}
+      </SectionTitle>
+      <FilterTabs />
+    </div>
   );
 };
 
