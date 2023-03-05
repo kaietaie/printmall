@@ -1,13 +1,4 @@
 import { Request, Response } from "express";
-// // import { pool } from "../dbConnection";
-
-// export default async function productCard(req: Request, res: Response) {
-//  try {
-
-//  } catch (error) {
-
-//  }
-// }
 import { authorityList } from "../../config/authorityList";
 import { pool } from "../../dbConnection";
 import { verifyAuthority } from "../../middleware/verifyAuthority.js";
