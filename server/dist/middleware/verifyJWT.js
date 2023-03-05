@@ -6,10 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 function verifyJWT(req, res, next) {
-    const authHeader = req.headers.authorization || req.headers.Authorization;
-    if (!authHeader)
+    const token = req.headers.authorization || req.headers.Authorization.toString();
+    if (!token)
         return res.sendStatus(401);
-    const token = authHeader;
     jsonwebtoken_1.default.verify(token, process.env.ACCESSKEY, (error, decoded) => {
         if (error)
             return res.status(403).json({ error: error.message });
