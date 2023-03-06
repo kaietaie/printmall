@@ -1,13 +1,4 @@
 import { Request, Response } from "express";
-// // import { pool } from "../dbConnection";
-
-// export default async function productCard(req: Request, res: Response) {
-//  try {
-
-//  } catch (error) {
-
-//  }
-// }
 import { authorityList } from "../../config/authorityList";
 import { pool } from "../../dbConnection";
 import { verifyAuthority } from "../../middleware/verifyAuthority.js";
@@ -35,62 +26,130 @@ export default async function getProduct(req: Request, res: Response) {
       const product_id = req.body.product_id;
       const realProduct = await checkDataDB(product_id, "products");
       if (realProduct === false) {
-        return res.status(404).json({ Error: "Cannot find a pdoduct" });
+        return res.status(404).json({ Error: "Cannot find a product" });
       }
-      const sql = `SELECT  p.product_id, 
-            p.product_name, 
-            p.product_price, 
-            COALESCE(ROUND(avg_reviews.review_rating, 2), 0) as review_rating, 
-            s.seller_name,
-            s.seller_rating
-            FROM products p 
-            LEFT JOIN (
-             SELECT product_id, AVG(review_rating) as review_rating 
-             FROM reviews 
-             GROUP BY product_id
-            ) as avg_reviews ON avg_reviews.product_id = p.product_id 
-            JOIN sellers s ON s.seller_id = p.product_seller_id 
-            WHERE p.product_id = $1
-            ORDER BY p.product_id;`;
+      // const sql = `SELECT  p.product_id, 
+      //       p.product_name, 
+      //       p.product_price, 
+      //       COALESCE(ROUND(avg_reviews.review_rating, 2), 0) as review_rating, 
+      //       s.seller_name,
+      //       s.seller_rating
+      //       FROM products p 
+      //       LEFT JOIN (
+      //        SELECT product_id, AVG(review_rating) as review_rating 
+      //        FROM reviews 
+      //        GROUP BY product_id
+      //       ) as avg_reviews ON avg_reviews.product_id = p.product_id 
+      //       JOIN sellers s ON s.seller_id = p.product_seller_id 
+      //       WHERE p.product_id = $1
+      //       ORDER BY p.product_id;`;
+      // const product = await pool.query(sql, [product_id]);
+      // 
+      // const sqlColors = `SELECT c.color, pi.product_image
+      // FROM products_colors pc
+      // JOIN colors c ON c.color_id = pc.color_id
+      // JOIN products_images pi on pi.color_id = pc.color_id
+      // WHERE pc.product_id = $1 AND pi.product_id = $1;
+      // `;
+      // const productColors = await pool.query(sqlColors, [product_id]);
+
+
+
+
+      // product.rows[0].colors = productColors.rows
+      // return res.json(product.rows);
+
+
+      const sql = `
+  SELECT p.product_id, 
+         p.product_name, 
+         p.product_price, 
+         s.seller_name,
+         c.color,
+         pi.product_image
+  FROM products p 
+  JOIN sellers s ON s.seller_id = p.product_seller_id 
+  JOIN products_colors pc ON pc.product_id = p.product_id
+  JOIN colors c ON c.color_id = pc.color_id
+  JOIN products_images pi ON pi.color_id = pc.color_id AND pi.product_id = p.product_id
+  WHERE p.product_id = $1
+  ORDER BY p.product_id, c.color;
+`;
+
       const product = await pool.query(sql, [product_id]);
-      const sqlColors = `SELECT c.color, pi.product_image
-      FROM products_colors pc
-      JOIN colors c ON c.color_id = pc.color_id
-      JOIN products_images pi on pi.color_id = pc.color_id
-      WHERE pc.product_id = $1 AND pi.product_id = $1;
-      `;
-      const productColors = await pool.query(sqlColors, [product_id]);
-      
+
+      // Construct the response object
+      const response = {
+        product_id: product.rows[0].product_id,
+        product_name: product.rows[0].product_name,
+        product_price: product.rows[0].product_price,
+        seller_name: product.rows[0].seller_name,
+        colors: [],
+      };
+
+      // Add color and product image data to the response object
+      for (const row of product.rows) {
+        const color = row.color;
+        const productImage = row.product_image;
+        response.colors.push({ color, product_image: productImage });
+      }
 
 
 
-      product.rows[0].colors = productColors.rows
-      return res.json(product.rows[0]);
+
+
+      return res.json(response);
     } catch (error) {
       return res.json({ Error: error.message });
     }
   }
   //  or have a look on all orders
   if (Object.keys(req.body).length === 0) {
-    const sql = `SELECT  p.product_id, 
-        p.product_name, 
-        c.color, 
-        p.product_price, 
-        COALESCE(ROUND(avg_reviews.review_rating, 2), 0) as review_rating, 
-        s.seller_name,
-        s.seller_rating
+    const sql = `SELECT p.product_id, 
+    p.product_name, 
+    p.product_price, 
+    s.seller_name,
+    c.color,
+    pi.product_image
 FROM products p 
-JOIN products_colors pc ON pc.product_id = p.product_id 
-LEFT JOIN colors c ON c.color_id = pc.color_id 
-LEFT JOIN (
-  SELECT product_id, AVG(review_rating) as review_rating 
-  FROM reviews 
-  GROUP BY product_id
-) as avg_reviews ON avg_reviews.product_id = p.product_id 
 JOIN sellers s ON s.seller_id = p.product_seller_id 
-ORDER BY p.product_id;`;
+JOIN products_colors pc ON pc.product_id = p.product_id
+JOIN colors c ON c.color_id = pc.color_id
+JOIN products_images pi ON pi.color_id = pc.color_id AND pi.product_id = p.product_id
+ORDER BY p.product_id, c.color;`;
     const orders = await pool.query(sql);
-    res.json(orders.rows);
+
+
+
+    const mergedObj = orders.rows.reduce((accumulator, current) => {
+      // Перевіряємо, чи існує вже об'єкт з поточним product_id в accumulator
+      const existingProduct = accumulator.find(product => product.product_id === current.product_id);
+
+      if (existingProduct) {
+        // Якщо об'єкт існує, додаємо до нього нову колірну варіацію
+        existingProduct.colors.push({
+          color: current.color,
+          product_image: current.product_image
+        });
+      } else {
+        // Якщо об'єкта ще не існує, створюємо новий з першою колірною варіацією
+        accumulator.push({
+          product_id: current.product_id,
+          product_name: current.product_name,
+          product_price: current.product_price,
+          seller_name: current.seller_name,
+          colors: [{
+            color: current.color,
+            product_image: current.product_image
+          }]
+        });
+      }
+
+      return accumulator;
+    }, []);
+
+
+    res.json(mergedObj);
   } else {
     return res.status(400).json({ Error: "Bad request" })
   }

@@ -49,6 +49,7 @@ CREATE TABLE sellers (
     seller_products     integer,
     seller_password     varchar(200) NOT NULL,
     seller_billing      varchar,
+    seller_announcement varchar(350),
     seller_blocked      boolean DEFAULT FALSE,
     seller_email_varified boolean DEFAULT FALSE,
     seller_access_token   varchar(200),
@@ -109,14 +110,14 @@ values (1, 1),(2, 1),(3, 1),(4, 1),(1, 2), (2, 2),(5, 2),(4, 2),(6, 2);
 insert into blog  values 
 ( 
     "ua_blog_title", 
-            "ua_blog_text", 
-            "en_blog_title", 
-            "en_blog_text",
-            "blog_image", 
-            1, 
-            1, 
-            1677922004,
-1677922004
+    "ua_blog_text", 
+    "en_blog_title", 
+    "en_blog_text",
+    "blog_image", 
+    1, 
+    1, 
+    1677922004,
+    1677922004
  );
 
 
@@ -265,5 +266,9 @@ ORDER BY p.product_id;
 (9 rows)
 
 -------------------------------------------------
-
-
+-- SUM of all products of seller
+SELECT s.seller_name, COUNT(p.product_id) AS product_count
+FROM sellers s
+JOIN products p ON s.seller_id = p.product_seller_id
+GROUP BY s.seller_name;
+------
