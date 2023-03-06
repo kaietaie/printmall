@@ -1,4 +1,7 @@
+import withNavBar from '../HOCS/withNavBar';
+import SellerHero from '../components/SellerHero';
+
 const Seller = () => {
-  return <div>asdv</div>;
+  return <SellerHero />;
 };
-export default Seller;
+export default withNavBar({ wrappedComponent: Seller });
