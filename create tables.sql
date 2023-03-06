@@ -104,7 +104,15 @@ CREATE TABLE reviews (
 -- ----------------------------------------------------
 
 insert into products_colors (color_id, product_id)
-values (1, 1),(2, 1),(3, 1),(4, 1),(1, 2), (2, 2),(5, 2),(4, 2),(6, 2);
+values 
+(1, 3),(2, 3),(3, 3),(4, 3),
+(1, 4), (2, 4),(5, 4),(4, 4),(6, 4),
+(1, 5),(2, 5),(3, 5),(4, 5),
+(1, 6), (2, 6),(5, 6),(4, 6),(6, 6),
+(1, 7),(2, 7),(3, 7),(4, 7),
+(1, 8), (2, 8),(5, 8),(4, 8),(6, 8),
+(1, 9),(2, 9),(3, 9),(4, 9),
+(1, 10), (2, 10),(5, 10),(4, 10),(6, 10);
 ----------------
 
 insert into blog  values 
@@ -131,10 +139,32 @@ insert into blog  values
 
 -- ADD PHOTOS TO DB
 insert into products_images( product_id, product_image, color_id) values
-( 2, '/public/product_images/2/black.png', 2),
-( 2, '/public/product_images/2/white.png', 1),
-( 2, '/public/product_images/2/yellow.png', 4),
-( 2, '/public/product_images/2/grey.png', 5);
+( 10, '/public/product_images/10/black.png', 2),
+( 10, '/public/product_images/10/white.png', 1),
+( 10, '/public/product_images/10/yellow.png', 4),
+( 10, '/public/product_images/10/grey.png', 5);
+( 9, '/public/product_images/9/black.png', 2),
+( 9, '/public/product_images/9/white.png', 1),
+( 9, '/public/product_images/9/yellow.png', 4),
+( 9, '/public/product_images/9/grey.png', 5);
+( 5, '/public/product_images/5/black.png', 2),
+( 5, '/public/product_images/5/white.png', 1),
+( 5, '/public/product_images/5/yellow.png', 4),
+( 5, '/public/product_images/5/grey.png', 5),
+( 6, '/public/product_images/6/black.png', 2),
+( 6, '/public/product_images/6/white.png', 1),
+( 6, '/public/product_images/6/yellow.png', 4),
+( 6, '/public/product_images/6/grey.png', 5),
+( 7, '/public/product_images/7/black.png', 2),
+( 7, '/public/product_images/7/white.png', 1),
+( 7, '/public/product_images/7/yellow.png', 4),
+( 7, '/public/product_images/7/grey.png', 5),
+( 8, '/public/product_images/8/black.png', 2),
+( 8, '/public/product_images/8/white.png', 1),
+( 8, '/public/product_images/8/yellow.png', 4),
+( 8, '/public/product_images/8/grey.png', 5);
+
+
 
 insert into reviews ( product_id,user_id,
     review_text, review_rating, review_date  )
