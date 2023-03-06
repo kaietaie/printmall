@@ -4,6 +4,9 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 import corsConfig from "./CORS/corsConfig";
 import credentials from './middleware/credentials';
+import { blogRouter } from "./routes/blog.route";
+import { productRouter } from "./routes/product.route";
+import { sellerRouter } from "./routes/seller.route";
 
 
 const host = process.env.HOST || "localhost";
@@ -20,7 +23,9 @@ app.use(cors(corsConfig));
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.json());
-// app.use('/apicars', );
+app.use('/blog', blogRouter);
+app.use('/products', productRouter);
+app.use('/seller', sellerRouter);
 // app.use('/auth', );
 // app.use('/refresh', );
 // app.use('/logout',  );

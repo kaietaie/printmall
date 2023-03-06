@@ -1,5 +1,5 @@
-import { Request } from "express";
-export const verifyAuthority = (req: Request, ...allowedAuthorities) => {
+import { MyRequest } from "../interfaces/interfaces"
+export const verifyAuthority = (req: MyRequest, ...allowedAuthorities) => {
         if (!req.headers.Authorization) return false;
         const rolesArray = [...allowedAuthorities];
         const authority = [req.authority];
