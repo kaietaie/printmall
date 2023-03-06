@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ReactComponent as StarIcon } from './icons/star.svg';
 import { Product } from '../../types/Products';
+import { Link } from 'react-router-dom';
 import './ProductCard.sass';
 
 interface ProductCardProps {
@@ -43,7 +44,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         ))}
       </div>
       <div className="product-card-seller-info">
-        <span className="product-card-seller-name">{seller_name}</span>
+        <Link
+          to={`/${seller_name.toLowerCase()}`}
+          className="product-card-seller-name"
+        >
+          {seller_name}
+        </Link>
         <div className="product-card-seller-info-rating">
           <StarIcon />
           <span>{`${seller_rating} | ${seller_sales}`}</span>
