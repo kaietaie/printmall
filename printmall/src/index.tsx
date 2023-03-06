@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.sass';
+import { Provider } from 'react-redux';
 import App from './App';
+import store from './store/store';
+import './index.sass';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,7 +11,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <Suspense fallback={<div>Loading...</div>}>
     <React.StrictMode>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </React.StrictMode>
   </Suspense>
 );

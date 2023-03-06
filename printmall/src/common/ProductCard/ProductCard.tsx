@@ -1,38 +1,31 @@
 import React, { useState } from 'react';
 import { ReactComponent as StarIcon } from './icons/star.svg';
+import { Product } from '../../types/Products';
 import './ProductCard.sass';
-
-interface Color {
-  name: string;
-  image: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  colors: Color[];
-  seller: string;
-  sales: number;
-  price: number;
-  rating: number;
-}
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { colors, name, seller, price, rating, sales } = product;
+  const {
+    colors,
+    product_price,
+    product_name,
+    seller_name,
+    seller_sales,
+    seller_rating,
+  } = product;
 
-  const [selectedColor, setSelectedColor] = useState<string>(colors[0].name);
+  const [selectedColor, setSelectedColor] = useState<string>(colors[0].color);
 
   const handleColorPick = (color: string) => {
     setSelectedColor(color);
   };
 
   const tShirtImage = colors.find(
-    (color) => color.name === selectedColor
-  )?.image;
+    (color) => color.color === selectedColor
+  )?.product_image;
 
   return (
     <div>
@@ -40,25 +33,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="product-card-colors">
         {colors.map((color) => (
           <div
-            key={color.name}
+            key={color.color}
             className="product-card-color"
             style={{
-              backgroundColor: color.name,
+              backgroundColor: color.color,
             }}
-            onMouseEnter={() => handleColorPick(color.name)}
+            onMouseEnter={() => handleColorPick(color.color)}
           ></div>
         ))}
       </div>
       <div className="product-card-seller-info">
-        <span>{seller}</span>
+        <span className="product-card-seller-name">{seller_name}</span>
         <div className="product-card-seller-info-rating">
           <StarIcon />
-          {/*<span>{rating}</span>|<span>{sales}</span>*/}
-          <span>{`${rating} | ${sales}`}</span>
+          <span>{`${seller_rating} | ${seller_sales}`}</span>
         </div>
       </div>
-      <span className="product-card-name">{name}</span>
-      <span className="product-card-price">{`$${price}`}</span>
+      <span className="product-card-name">{product_name}</span>
+      <span className="product-card-price">{`$${product_price}`}</span>
     </div>
   );
 };
