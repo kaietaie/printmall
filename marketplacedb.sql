@@ -449,6 +449,14 @@ COPY public.colors (color_id, color) FROM stdin;
 COPY public.products (product_id, product_name, product_discription, product_size, product_price, product_seller_id, create_user_id, update_user_id, create_datetime, update_datetime) FROM stdin;
 1	Herbi Vore T-Shirt	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	M	359	2	1	1	2023-03-04 16:30:46.207	2023-03-04 16:30:46.207
 2	Wildlife Adventure T-Shirt	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	L	24	2	1	1	2023-03-04 16:32:46.495	2023-03-04 16:32:46.495
+3	Bohemian Style Graphic Tee T-Shirt Collection	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	XL	63	2	1	1	2023-03-06 21:30:22.675	2023-03-06 21:30:22.675
+4	Mountain Explorer Graphic Tee	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	L	42	2	1	1	2023-03-06 21:30:51.317	2023-03-06 21:30:51.317
+5	Floral Burst Tank Top	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	S	65	2	1	1	2023-03-06 21:31:13.83	2023-03-06 21:31:13.83
+6	Ocean View Tee	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	XS	65	2	1	1	2023-03-06 21:31:31.903	2023-03-06 21:31:31.903
+7	DesignGenius	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	M	54	2	1	1	2023-03-06 21:31:51.997	2023-03-06 21:31:51.997
+8	ColorBlockClothing	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	M	48	2	1	1	2023-03-06 21:32:03.299	2023-03-06 21:32:03.299
+9	TeeArtistry	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	M	48	2	1	1	2023-03-06 21:32:10.886	2023-03-06 21:32:10.886
+10	Tee Artistry Tenis	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	XXL	68	2	1	1	2023-03-06 21:35:06.298	2023-03-06 21:35:06.298
 \.
 
 
@@ -466,6 +474,42 @@ COPY public.products_colors (color_id, product_id) FROM stdin;
 5	2
 4	2
 6	2
+1	3
+2	3
+3	3
+4	3
+1	4
+2	4
+5	4
+4	4
+6	4
+1	5
+2	5
+3	5
+4	5
+1	6
+2	6
+5	6
+4	6
+6	6
+1	7
+2	7
+3	7
+4	7
+1	8
+2	8
+5	8
+4	8
+6	8
+1	9
+2	9
+3	9
+4	9
+1	10
+2	10
+5	10
+4	10
+6	10
 \.
 
 
@@ -482,6 +526,38 @@ COPY public.products_images (products_images_id, product_id, product_image, colo
 14	2	/public/product_images/2/white.png	1
 15	2	/public/product_images/2/yellow.png	4
 16	2	/public/product_images/2/grey.png	5
+41	3	/public/product_images/3/black.png	2
+42	3	/public/product_images/3/white.png	1
+43	3	/public/product_images/3/yellow.png	4
+44	3	/public/product_images/3/grey.png	5
+45	4	/public/product_images/4/black.png	2
+46	4	/public/product_images/4/white.png	1
+47	4	/public/product_images/4/yellow.png	4
+48	4	/public/product_images/4/grey.png	5
+49	5	/public/product_images/5/black.png	2
+50	5	/public/product_images/5/white.png	1
+51	5	/public/product_images/5/yellow.png	4
+52	5	/public/product_images/5/grey.png	5
+53	6	/public/product_images/6/black.png	2
+54	6	/public/product_images/6/white.png	1
+55	6	/public/product_images/6/yellow.png	4
+56	6	/public/product_images/6/grey.png	5
+57	7	/public/product_images/7/black.png	2
+58	7	/public/product_images/7/white.png	1
+59	7	/public/product_images/7/yellow.png	4
+60	7	/public/product_images/7/grey.png	5
+61	8	/public/product_images/8/black.png	2
+62	8	/public/product_images/8/white.png	1
+63	8	/public/product_images/8/yellow.png	4
+64	8	/public/product_images/8/grey.png	5
+65	9	/public/product_images/9/black.png	2
+66	9	/public/product_images/9/white.png	1
+67	9	/public/product_images/9/yellow.png	4
+68	9	/public/product_images/9/grey.png	5
+69	10	/public/product_images/10/black.png	2
+70	10	/public/product_images/10/white.png	1
+71	10	/public/product_images/10/yellow.png	4
+72	10	/public/product_images/10/grey.png	5
 \.
 
 
@@ -506,7 +582,9 @@ COPY public.reviews (review_id, product_id, user_id, review_text, review_rating,
 --
 
 COPY public.sellers (seller_id, seller_name, seller_email, seller_photo, seller_cover_image, seller_products, seller_password, seller_billing, seller_blocked, seller_email_varified, seller_access_token, seller_refresh_token, create_user_id, update_user_id, create_datetime, update_datetime, seller_rating, seller_announcement) FROM stdin;
-2	Solider	soleder@gss.com	photo path	cover path	\N	$2b$05$zMYPm38Q8Rgvz5j70ldpjOpE8qpV5FvCQPRc8.aqJON.Jahs4IMpK	\N	f	f	\N	\N	\N	\N	2023-03-04 14:17:03.697	2023-03-04 14:17:03.697	4.375	\N
+2	Solider	soleder@gss.com	photo path	cover path	\N	$2b$05$zMYPm38Q8Rgvz5j70ldpjOpE8qpV5FvCQPRc8.aqJON.Jahs4IMpK	\N	f	f	\N	\N	\N	\N	2023-03-04 14:17:03.697	2023-03-04 14:17:03.697	4.375	Hi friend and thanks for stopping by. Our mission is to create a collection neon lighting. We fabricate all of our products by hand.West Ninth Vintage is our pride and joy and it is our priority that it comes through in our work and our customer service. We make products that we love and we hope you do too.
+3	go-a	go-a@gss.com	/photo/path	/cover/path	\N	$2b$05$uL/Fr76Je0fMI20CfbMLeOj8cjqOtnGgYExs6M9w1kf0E/eXrq4w.	\N	f	f	\N	\N	\N	\N	2023-03-06 00:24:15.491	2023-03-06 00:24:15.491	\N	\N
+4	Go-A	go-a@gss.com	/photo/path	/cover/path	\N	$2b$05$Oursq4ceRykeX44dpd2...ywXKpW0hoo4.TE94LdFhUWvybDkmFm.	\N	f	f	\N	\N	\N	\N	2023-03-06 00:27:47.39	2023-03-06 00:27:47.39	\N	\N
 \.
 
 
@@ -546,14 +624,14 @@ SELECT pg_catalog.setval('public.colors_color_id_seq', 1, false);
 -- Name: products_images_products_images_id_seq; Type: SEQUENCE SET; Schema: public; Owner: printmall
 --
 
-SELECT pg_catalog.setval('public.products_images_products_images_id_seq', 16, true);
+SELECT pg_catalog.setval('public.products_images_products_images_id_seq', 72, true);
 
 
 --
 -- Name: products_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: printmall
 --
 
-SELECT pg_catalog.setval('public.products_product_id_seq', 2, true);
+SELECT pg_catalog.setval('public.products_product_id_seq', 10, true);
 
 
 --
@@ -567,7 +645,7 @@ SELECT pg_catalog.setval('public.reviews_review_id_seq', 8, true);
 -- Name: sellers_seller_id_seq; Type: SEQUENCE SET; Schema: public; Owner: printmall
 --
 
-SELECT pg_catalog.setval('public.sellers_seller_id_seq', 2, true);
+SELECT pg_catalog.setval('public.sellers_seller_id_seq', 4, true);
 
 
 --
