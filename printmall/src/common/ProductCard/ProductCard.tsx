@@ -30,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <div>
-      <img className="product-card-img" src={tShirtImage} alt="T-shirt" />
+      <img className="product-card-img" src={'http://localhost:5000'+tShirtImage} alt="T-shirt" />
       <div className="product-card-colors">
         {colors.map((color) => (
           <div

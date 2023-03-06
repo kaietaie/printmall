@@ -12,6 +12,7 @@ const credentials_1 = __importDefault(require("./middleware/credentials"));
 const blog_route_1 = require("./routes/blog.route");
 const product_route_1 = require("./routes/product.route");
 const seller_route_1 = require("./routes/seller.route");
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const host = process.env.HOST || "localhost";
 const port = process.env.SERVER_PORT || 5000;
 const app = (0, express_1.default)();
@@ -24,8 +25,13 @@ app.use((0, cors_1.default)(corsConfig_1.default));
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
+// enable files upload
+app.use((0, express_fileupload_1.default)({
+    createParentPath: true
+}));
+app.use('/public', express_1.default.static('public'));
 app.use('/blog', blog_route_1.blogRouter);
-app.use('/product', product_route_1.productRouter);
+app.use('/products', product_route_1.productRouter);
 app.use('/seller', seller_route_1.sellerRouter);
 // app.use('/auth', );
 // app.use('/refresh', );

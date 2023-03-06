@@ -20,15 +20,16 @@ app.use(credentials);
 // Cross Origin Resource Sharing
 app.use(cors(corsConfig));
 // built-in middleware to handle urlencoded form data
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.json());
 // enable files upload
 app.use(fileUpload({
   createParentPath: true
 }));
+app.use('/public',express.static('public'));
 
-app.use('/blog', blogRouter); 
+app.use('/blog', blogRouter);
 app.use('/products', productRouter);
 app.use('/seller', sellerRouter);
 // app.use('/auth', );
