@@ -6,7 +6,6 @@ const filterItems = [
   { label: 'Durnev' },
   { label: 'Starlink' },
   { label: 'Lego' },
-  { label: 'Lego' },
   { label: 'Star Wars' },
 ];
 const FilterTabs = () => {

@@ -1,4 +1,28 @@
+@import '../../styles/variables'
+
 .best-collections-head
   display: flex
   justify-content: space-between
   align-items: end
+  margin-bottom: 24px
+
+.best-collections-cards
+  display: flex
+  justify-content: space-between
+  margin-bottom: 32px
+
+.best-collections-discover-button
+  display: flex
+  margin: 0 auto
+
+  svg
+    fill: $typography
+    transition: fill 0.2s
+
+  &:hover
+    svg
+      fill: $white
+
+  &:active
+    svg
+      fill: $typography
