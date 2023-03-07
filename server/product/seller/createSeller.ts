@@ -20,11 +20,11 @@ export default async function createSeller(req: Request, res: Response) {
             seller_email,
             seller_photo,
             seller_cover_image,
-            seller_announcement
+            seller_announcement,
             create_datetime,
             update_datetime 
         )
-           values ($1, $2, $3, $4, $5, %6 to_timestamp($7 / 1000.0), to_timestamp($8 / 1000.0));`;
+           values ($1, $2, $3, $4, $5, $6, to_timestamp($7 / 1000.0), to_timestamp($8 / 1000.0));`;
 
         const params = [
             seller_name,

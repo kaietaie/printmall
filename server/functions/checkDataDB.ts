@@ -10,12 +10,12 @@ export default async function checkDataDB(id: number | string, table: string): P
     sql = `SELECT * from ${table} WHERE ${normtable}_name='${id}';`;
     }
     const find = await pool.query(sql);
-    if (
-      find?.rows[0]?.archivated === true ||
-      find?.rows[0]?.enabled === false
-    ) {
-      return false;
-    }
+    // if (
+    //   find?.rows[0]?.archivated === true ||
+    //   find?.rows[0]?.enabled === false
+    // ) {
+    //   return false;
+    // }
     if (find?.rowCount === 1) {
       return true;
     }
