@@ -101,7 +101,30 @@ CREATE TABLE reviews (
     review_date        timestamp NOT NULL
 );
 
+CREATE TABLE seller_contact (
+    seller_contact_id   serial PRIMARY KEY,
+    seller_id           integer REFERENCES sellers(seller_id),
+    seller_contact_facebook      varchar(200),
+    seller_contact_instagram      varchar(200),
+    seller_contact_tiktok      varchar(200),
+    seller_contact_apple_music      varchar(200),
+    seller_contact_spotify      varchar(200)
+);
 -- ----------------------------------------------------
+
+insert into seller_contact (
+    seller_id,
+    seller_contact_facebook ,
+    seller_contact_instagram,
+    seller_contact_tiktok,
+    seller_contact_apple_music,
+    seller_contact_spotify )
+values 
+(4, 'https://www.facebook.com/GoAbandoriginal/', 
+'https://www.instagram.com/go_a_band/', 
+'https://www.tiktok.com/@go_a_ukraine', 
+'https://music.apple.com/us/artist/go-a/1502267232', 
+'https://open.spotify.com/artist/4kvCU3MzggM2piZCqvxj0x');
 
 insert into products_colors (color_id, product_id)
 values 

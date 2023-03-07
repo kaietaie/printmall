@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
-import { authorityList } from "../../config/authorityList";
+// import { authorityList } from "../../config/authorityList";
 import { pool } from "../../dbConnection";
-import { verifyAuthority } from "../../middleware/verifyAuthority.js";
-import jwt from "jsonwebtoken";
+// import { verifyAuthority } from "../../middleware/verifyAuthority.js";
+// import jwt from "jsonwebtoken";
 import checkDataDB from "../../functions/checkDataDB";
 import { ProductsArray } from "../../interfaces/interfaces";
 
 export default async function getProduct(req: Request, res: Response) {
+ 
   //   try {
   //     // if (verifyAuthority(req, authorityList.User, authorityList.Seller)) {
   //     //   const token = req.headers.authorization || req.headers.Authorization;
@@ -22,10 +23,11 @@ export default async function getProduct(req: Request, res: Response) {
   //     } else {
   //   if (verifyAuthority(req, authorityList.Admin)) {
   // check orders for some user : {"user_id" : 2}
-  if (req.body?.product_id) {
+
+  if (req.params.id) {
     try {
-      const product_id = req.body.product_id;
-      const realProduct = await checkDataDB(product_id, "products");
+      const product_id = ''+req.params.id;
+      const realProduct = await checkDataDB(Number(product_id), "products");
       if (realProduct === false) {
         return res.status(404).json({ Error: "Cannot find a product" });
       }
@@ -59,7 +61,6 @@ export default async function getProduct(req: Request, res: Response) {
 
       // product.rows[0].colors = productColors.rows
       // return res.json(product.rows);
-
 
       const sql = `
   SELECT p.product_id, 
