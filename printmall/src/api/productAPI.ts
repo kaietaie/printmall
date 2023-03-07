@@ -4,7 +4,10 @@ import { products } from '../mochs/mProducts';
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const response = await axios.get('http://localhost:5000/products', {});
+    const response = await axios.get('http://localhost:5000/products', {data: {
+      "limit":2, "page": 1
+      }});
+      console.log(response)
     // return products;
     return response.data;
   } catch (error) {

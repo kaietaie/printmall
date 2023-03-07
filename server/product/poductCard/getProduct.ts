@@ -64,7 +64,8 @@ export default async function getProduct(req: Request, res: Response) {
       const sql = `
   SELECT p.product_id, 
          p.product_name, 
-         p.product_price, 
+         p.product_price,
+         p.product_discription, 
          s.seller_name,
          c.color,
          pi.product_image
@@ -83,6 +84,7 @@ export default async function getProduct(req: Request, res: Response) {
       const response = {
         product_id: product.rows[0].product_id,
         product_name: product.rows[0].product_name,
+        product_discription: product.rows[0].product_discription,
         product_price: product.rows[0].product_price,
         seller_name: product.rows[0].seller_name,
         colors: [],
@@ -149,10 +151,11 @@ export default async function getProduct(req: Request, res: Response) {
     //       return accumulator;
     //     }, []);
 
-
+ 
     //     res.json(mergedObj);
 
-    const { limit, page } = req.body
+    const limit = req.query.limit ? parseInt(req.query.limit  as string) : 9
+    const page = req.query.page ? parseInt(req.query.page as string) : 1
     const offset = (page - 1) * limit
     const sql = `SELECT p.product_id, 
                   p.product_name, 
@@ -185,7 +188,7 @@ export default async function getProduct(req: Request, res: Response) {
           product_image: tempImages[j]
                 }]
               
-      })
+      }) 
     }}
 
     const mergedObj = result.reduce((accumulator, current) => {

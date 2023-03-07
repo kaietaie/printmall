@@ -19,3 +19,5 @@ Tshirt marketplace
     * `CREATE USER printmall WITH PASSWORD 'market_0_o_place';` create new user
     * `CREATE DATABASE marketplacedb OWNER printmall;` create new database
     * `\q` for exit
+
+    Restore dump `psql -U printmall -d marketplacedb < marketplacedb.sql`
