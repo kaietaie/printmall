@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Product } from '../../types/Products';
-import { fetchProductsAsync } from './productThunk';
+import { fetchProductsThunk } from './productThunks';
 // import { fetchProducts } from './productAPI';
 
 interface ProductsState {
@@ -23,17 +23,17 @@ const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Action to be dispatched when the products are being fetched
-      .addCase(fetchProductsAsync.pending, (state) => {
+      .addCase(fetchProductsThunk.pending, (state) => {
         state.status = 'loading';
       })
       // Action to be dispatched when the products have been successfully fetched
-      .addCase(fetchProductsAsync.fulfilled, (state, action) => {
+      .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.items = action.payload;
         state.status = 'succeeded';
         state.error = null;
       })
       // Action to be dispatched when the products fetching fails
-      .addCase(fetchProductsAsync.rejected, (state, action) => {
+      .addCase(fetchProductsThunk.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message ?? 'Error fetching products';
       });
@@ -42,7 +42,7 @@ const productsSlice = createSlice({
 
 export const productsActions = {
   ...productsSlice.actions,
-  // fetchProductsAsync,
+  // fetchProductsThunk,
 };
 
 export default productsSlice.reducer;

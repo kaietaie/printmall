@@ -12,3 +12,8 @@ export interface Product {
   product_price: number;
   seller_rating: number;
 }
+
+export interface FetchProductsParams {
+  limit?: number;
+  page?: number;
+}

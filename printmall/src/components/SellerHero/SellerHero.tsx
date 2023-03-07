@@ -1,9 +1,11 @@
 import './SellerHero.sass';
+import Banner from './Banner';
 
 const SellerHero = () => {
   return (
-    <div>
-      <h1>Seller Page</h1>
+    <div className="seller-hero">
+      <Banner />
+      <h1>Seller Name</h1>
     </div>
   );
 };

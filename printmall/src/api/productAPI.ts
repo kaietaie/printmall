@@ -1,14 +1,21 @@
 import axios from 'axios';
-import { Product } from '../types/Products';
-import { products } from '../mochs/mProducts';
+import { FetchProductsParams, Product } from '../types/Products';
+// import { products } from '../mochs/mProducts';
 
-export const fetchProducts = async (): Promise<Product[]> => {
+export const fetchProducts = async (
+  props: FetchProductsParams
+): Promise<Product[]> => {
   try {
-    const response = await axios.get('http://localhost:5000/products', {data: {
-      "limit":2, "page": 1
-      }});
-      console.log(response)
+    const response = await axios.get(
+      `http://localhost:5000/products${
+        props ? `?limit=${props.limit}&page=${props.page}` : ''
+      }`
+    );
+
+    // console.log(response.data);
+    //
     // return products;
+
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch products');

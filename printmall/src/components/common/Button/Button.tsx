@@ -1,5 +1,5 @@
 import React from 'react';
-import squish from '../../Helpers/ClassNameHelper';
+import squish from '../../../Helpers/ClassNameHelper';
 import './Button.sass';
 
 interface ButtonProps {
