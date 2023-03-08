@@ -66,7 +66,8 @@ export default async function getProduct(req: Request, res: Response) {
   SELECT p.product_id, 
          p.product_name, 
          p.product_price,
-         p.product_discription, 
+         p.product_size,
+         p.product_description, 
          c.color,
          pi.product_image
   FROM products p 
@@ -83,8 +84,9 @@ export default async function getProduct(req: Request, res: Response) {
       const response = {
         product_id: product.rows[0].product_id,
         product_name: product.rows[0].product_name,
-        product_discription: product.rows[0].product_discription,
+        product_description: product.rows[0].product_description,
         product_price: product.rows[0].product_price,
+        product_size:(product.rows[0].product_size).split(","),
         seller_name: product.rows[0].seller_name,
         colors: [],
       };
