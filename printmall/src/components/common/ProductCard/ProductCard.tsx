@@ -2,8 +2,8 @@ import React, { memo, useState } from 'react';
 import { ReactComponent as StarIcon } from './icons/star.svg';
 import { Product } from '../../../types/Products';
 import { Link } from 'react-router-dom';
-import './ProductCard.sass';
 import Ellipsis from '../Ellipsis/Ellipsis';
+import './ProductCard.sass';
 
 interface ProductCardProps {
   product: Product;

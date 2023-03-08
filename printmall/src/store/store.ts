@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './rootReducer';
-import { fetchProductByIdThunk } from './products/productThunks';
+// import { fetchProductByIdThunk } from './products/productThunks';
 
 const store = configureStore({
   reducer: rootReducer,

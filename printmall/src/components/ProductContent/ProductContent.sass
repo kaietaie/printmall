@@ -1,12 +1,121 @@
+@import '../../styles/variables'
+
 .product-content
   padding-top: 32px
   display: flex
 
 .product-content-image
-  width: 495px
+  min-width: 495px
   margin-right: 20px
 
 .product-content-info-title
   font-size: 28px
   line-height: 36px
-  margin-bottom: 42px
+  margin: 0 0 40px
+
+.product-content-price
+  display: inline-block
+  font-weight: 700
+  font-size: 22px
+  line-height: 28px
+  margin-bottom: 40px
+
+.product-content-price-description
+  margin: 0 0 48px
+  font-size: 14px
+  line-height: 20px
+
+.product-content-pickers
+  display: flex
+  justify-content: space-between
+  margin-bottom: 72px
+
+.product-content-picker-title
+  display: inline-block
+  font-weight: 700
+  font-size: 12px
+  margin-bottom: 10px
+
+.product-content-color-picker-color
+  position: relative
+  width: 40px
+  height: 40px
+  border-radius: 50%
+  border: 1px solid $secondary
+  display: inline-block
+  margin: 0 5px 0 0
+  cursor: pointer
+
+  &.product-content-color-picker-color--selected:after
+    position: absolute
+    content: url('./icons/checked.svg')
+    color: red
+    font-size: 16px
+    top: -3px
+    right: -3px
+
+
+.product-content-quantity-picker-buttons
+  display: flex
+  align-items: flex-start
+  justify-content: center
+  width: fit-content
+  border: 1px solid $secondary-light
+  border-radius: 6px
+  height: 48px
+
+  button
+    color: $primary
+    border: none
+    outline: none
+    background: none
+    padding: 15px 15px
+    cursor: pointer
+
+  span
+    font-size: 14px
+    line-height: 20px
+    padding: 14px 0
+
+.product-content-size-picker
+  margin-right: 25px
+
+  select
+    -webkit-appearance: none
+    -moz-appearance: none
+    appearance: none
+    display: block
+    background-color: transparent
+    border: 1px solid $secondary-light
+    font-size: 14px
+    height: 48px
+    line-height: 20px
+    background-image: url('./icons/chevron_bottom.svg')
+    background-repeat: no-repeat
+    background-position-x: calc(100% - 0.3em)
+    background-position-y: center
+    border-radius: 6px
+    padding: 12px 36px 12px 12px
+
+.product-content-pickers-box
+  display: flex
+
+.product-content-actions
+  display: flex
+  align-items: center
+
+.product-content-support
+  display: flex
+  align-items: center
+  margin-left: 25px
+
+  svg
+    margin-right: 10px
+
+  a
+    text-decoration: underline
+    margin-left: 5px
+    cursor: pointer
+
+.product-content-support-text
+  font-size: 13px

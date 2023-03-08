@@ -12,9 +12,6 @@ export const fetchProductsThunk = createAsyncThunk<
 export const fetchProductByIdThunk = createAsyncThunk<Product, number>(
   'product/fetchProductById',
   async (id: number) => {
-    const response = await fetchProductById(id);
-    // console.log(response);
-
-    return response;
+    return await fetchProductById(id);
   }
 );

@@ -23,11 +23,11 @@ export const fetchProducts = async (
 };
 export const fetchProductById = async (id: number): Promise<Product> => {
   try {
-    const response = await axios.get('http://localhost:5000/products', {
-      data: {
-        product_id: id,
-      },
-    });
+    const response = await axios.get(
+      `http://localhost:5000/products${id ? `/${id}` : ''}`
+    );
+
+    // console.log(response.data);
 
     return response.data;
   } catch (error) {
