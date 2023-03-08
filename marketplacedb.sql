@@ -103,7 +103,7 @@ ALTER SEQUENCE public.colors_color_id_seq OWNED BY public.colors.color_id;
 CREATE TABLE public.products (
     product_id integer NOT NULL,
     product_name character varying(100) NOT NULL,
-    product_discription text,
+    product_description text,
     product_size character varying(5) NOT NULL,
     product_price real,
     product_seller_id integer NOT NULL,
@@ -234,7 +234,7 @@ CREATE TABLE public.sellers (
     seller_id integer NOT NULL,
     seller_name character varying(16) NOT NULL,
     seller_email character varying(100) NOT NULL,
-    seller_photo character varying(16) NOT NULL,
+    seller_photo character varying(100) NOT NULL,
     seller_cover_image character varying(100),
     seller_products integer,
     seller_password character varying(200) NOT NULL,
@@ -446,7 +446,7 @@ COPY public.colors (color_id, color) FROM stdin;
 -- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: printmall
 --
 
-COPY public.products (product_id, product_name, product_discription, product_size, product_price, product_seller_id, create_user_id, update_user_id, create_datetime, update_datetime) FROM stdin;
+COPY public.products (product_id, product_name, product_description, product_size, product_price, product_seller_id, create_user_id, update_user_id, create_datetime, update_datetime) FROM stdin;
 1	Herbi Vore T-Shirt	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	M	359	2	1	1	2023-03-04 16:30:46.207	2023-03-04 16:30:46.207
 2	Wildlife Adventure T-Shirt	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	L	24	2	1	1	2023-03-04 16:32:46.495	2023-03-04 16:32:46.495
 3	Bohemian Style Graphic Tee T-Shirt Collection	Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt	XL	63	2	1	1	2023-03-06 21:30:22.675	2023-03-06 21:30:22.675
@@ -583,8 +583,7 @@ COPY public.reviews (review_id, product_id, user_id, review_text, review_rating,
 
 COPY public.sellers (seller_id, seller_name, seller_email, seller_photo, seller_cover_image, seller_products, seller_password, seller_billing, seller_blocked, seller_email_varified, seller_access_token, seller_refresh_token, create_user_id, update_user_id, create_datetime, update_datetime, seller_rating, seller_announcement) FROM stdin;
 2	Solider	soleder@gss.com	photo path	cover path	\N	$2b$05$zMYPm38Q8Rgvz5j70ldpjOpE8qpV5FvCQPRc8.aqJON.Jahs4IMpK	\N	f	f	\N	\N	\N	\N	2023-03-04 14:17:03.697	2023-03-04 14:17:03.697	4.375	Hi friend and thanks for stopping by. Our mission is to create a collection neon lighting. We fabricate all of our products by hand.West Ninth Vintage is our pride and joy and it is our priority that it comes through in our work and our customer service. We make products that we love and we hope you do too.
-3	go-a	go-a@gss.com	/photo/path	/cover/path	\N	$2b$05$uL/Fr76Je0fMI20CfbMLeOj8cjqOtnGgYExs6M9w1kf0E/eXrq4w.	\N	f	f	\N	\N	\N	\N	2023-03-06 00:24:15.491	2023-03-06 00:24:15.491	\N	\N
-4	Go-A	go-a@gss.com	/photo/path	/cover/path	\N	$2b$05$Oursq4ceRykeX44dpd2...ywXKpW0hoo4.TE94LdFhUWvybDkmFm.	\N	f	f	\N	\N	\N	\N	2023-03-06 00:27:47.39	2023-03-06 00:27:47.39	\N	\N
+5	Go-A	go-a@gss.com	/home/kaieta/Downloads/go-a.jpeg	/home/kaieta/Downloads/go-a_cover.jpeg	\N	$2b$05$NooCr6iyT8x1D3ATasZe3eJRpnhPFfigh.OZ6hq2NDRIUKmiSMO12	\N	f	f	\N	\N	\N	\N	2023-03-07 23:39:48.558	2023-03-07 23:39:48.558	\N	Creating music for heart
 \.
 
 
@@ -645,7 +644,7 @@ SELECT pg_catalog.setval('public.reviews_review_id_seq', 8, true);
 -- Name: sellers_seller_id_seq; Type: SEQUENCE SET; Schema: public; Owner: printmall
 --
 
-SELECT pg_catalog.setval('public.sellers_seller_id_seq', 4, true);
+SELECT pg_catalog.setval('public.sellers_seller_id_seq', 5, true);
 
 
 --
