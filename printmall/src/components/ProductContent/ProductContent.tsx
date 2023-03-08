@@ -7,7 +7,7 @@ import ProductContentPickers from './ProductContentPickers';
 import { ReactComponent as BasketIcon } from '../images/shopping-basket.svg';
 import { ReactComponent as SupportIcon } from '../images/support-agent.svg';
 import Button from '../common/Button';
-
+import { useTranslation } from 'react-i18next';
 import './ProductContent.sass';
 
 const ProductContent = () => {
@@ -15,6 +15,7 @@ const ProductContent = () => {
   const product = useSelector(selectProductById(Number(productId)));
   const [selectedColor, setSelectedColor] = useState<string>('');
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -58,13 +59,15 @@ const ProductContent = () => {
           selectedColor={selectedColor}
         />
         <div className="product-content-actions">
-          <Button iconEnd={<BasketIcon />}>Add to cart</Button>
+          <Button iconEnd={<BasketIcon />}>{t('product.supportButton')}</Button>
           <div className="product-content-support">
             <SupportIcon />
             <span className="product-content-support-text">
-              Still have a question?
+              {t('product.supportText')}
             </span>
-            <a className="product-content-support-text">Write to us!</a>
+            <a className="product-content-support-text">
+              {t('product.supportLink')}
+            </a>
           </div>
         </div>
       </div>

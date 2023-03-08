@@ -21,5 +21,13 @@
   "bestCollections": {
     "title": "Найкращі колеції",
     "subTitle": "Магазин"
+  },
+  "product": {
+    "colorPicker": "Колір",
+    "sizePicker": "Розмір",
+    "quantityPicker": "Кількість",
+    "supportButton": "Додати в корзину",
+    "supportText": "Маєш питання?",
+    "supportLink": "Напиши нам!"
   }
 }
