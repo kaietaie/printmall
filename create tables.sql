@@ -63,7 +63,7 @@ CREATE TABLE sellers (
 CREATE TABLE products (
     product_id          serial PRIMARY KEY,
     product_name        varchar(100) NOT NULL,
-    product_discription text,
+    product_description text,
     product_size        varchar(5) NOT NULL,
     product_price       real,
     product_seller_id   integer REFERENCES sellers(seller_id) NOT NULL,
