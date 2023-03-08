@@ -1,8 +1,8 @@
 import { Request } from "express";
 
 export interface MyRequest extends Request {
-    authority: number;
-    name: string
+    authority?: number;
+    name?: string;
 }
 
 export interface ProductsArray extends Object {
@@ -15,3 +15,4 @@ export interface ProductsArray extends Object {
         product_image: string
     }]
 }
+

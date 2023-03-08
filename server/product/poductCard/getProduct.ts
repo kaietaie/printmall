@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
-import { authorityList } from "../../config/authorityList";
+// import { authorityList } from "../../config/authorityList";
 import { pool } from "../../dbConnection";
-import { verifyAuthority } from "../../middleware/verifyAuthority.js";
-import jwt from "jsonwebtoken";
+// import { verifyAuthority } from "../../middleware/verifyAuthority.js";
+// import jwt from "jsonwebtoken";
 import checkDataDB from "../../functions/checkDataDB";
 import { ProductsArray } from "../../interfaces/interfaces";
 
 export default async function getProduct(req: Request, res: Response) {
+ 
   //   try {
   //     // if (verifyAuthority(req, authorityList.User, authorityList.Seller)) {
   //     //   const token = req.headers.authorization || req.headers.Authorization;
@@ -22,10 +23,11 @@ export default async function getProduct(req: Request, res: Response) {
   //     } else {
   //   if (verifyAuthority(req, authorityList.Admin)) {
   // check orders for some user : {"user_id" : 2}
-  if (req.body?.product_id) {
+
+  if (req.params.id) {
     try {
-      const product_id = req.body.product_id;
-      const realProduct = await checkDataDB(product_id, "products");
+      const product_id = ''+req.params.id;
+      const realProduct = await checkDataDB(Number(product_id), "products");
       if (realProduct === false) {
         return res.status(404).json({ Error: "Cannot find a product" });
       }
@@ -60,17 +62,14 @@ export default async function getProduct(req: Request, res: Response) {
       // product.rows[0].colors = productColors.rows
       // return res.json(product.rows);
 
-
       const sql = `
   SELECT p.product_id, 
          p.product_name, 
          p.product_price,
          p.product_discription, 
-         s.seller_name,
          c.color,
          pi.product_image
   FROM products p 
-  JOIN sellers s ON s.seller_id = p.product_seller_id 
   JOIN products_colors pc ON pc.product_id = p.product_id
   JOIN colors c ON c.color_id = pc.color_id
   JOIN products_images pi ON pi.color_id = pc.color_id AND pi.product_id = p.product_id
@@ -160,15 +159,13 @@ export default async function getProduct(req: Request, res: Response) {
     const sql = `SELECT p.product_id, 
                   p.product_name, 
                   p.product_price, 
-                  s.seller_name,
                   string_agg(c.color, ',') as colors,
                   string_agg(pi.product_image, ',') as product_images
                   FROM products p 
-                  JOIN sellers s ON s.seller_id = p.product_seller_id 
                   JOIN products_colors pc ON pc.product_id = p.product_id
                   JOIN colors c ON c.color_id = pc.color_id
                   JOIN products_images pi ON pi.color_id = pc.color_id AND pi.product_id = p.product_id
-                  GROUP BY p.product_id, p.product_name, p.product_price, s.seller_name
+                  GROUP BY p.product_id, p.product_name, p.product_price
                   ORDER BY p.product_id
                   limit $1 offset $2;`
     var result: ProductsArray[] = []
@@ -231,3 +228,34 @@ export default async function getProduct(req: Request, res: Response) {
 //       .json({ Error: "Unauthorized", message: error.message });
 //   }
 // }
+// const sql = `SELECT p.product_id, 
+// p.product_name, 
+// p.product_price, 
+// s.seller_name,
+// string_agg(c.color, ',') as colors,
+// string_agg(pi.product_image, ',') as product_images
+// FROM products p 
+// JOIN sellers s ON s.seller_id = p.product_seller_id 
+// JOIN products_colors pc ON pc.product_id = p.product_id
+// JOIN colors c ON c.color_id = pc.color_id
+// JOIN products_images pi ON pi.color_id = pc.color_id AND pi.product_id = p.product_id
+// GROUP BY p.product_id, p.product_name, p.product_price, s.seller_name
+// ORDER BY p.product_id
+// limit $1 offset $2;`
+
+// const sql = `
+// SELECT p.product_id, 
+//        p.product_name, 
+//        p.product_price,
+//        p.product_discription, 
+//        s.seller_name,
+//        c.color,
+//        pi.product_image
+// FROM products p 
+// JOIN sellers s ON s.seller_id = p.product_seller_id 
+// JOIN products_colors pc ON pc.product_id = p.product_id
+// JOIN colors c ON c.color_id = pc.color_id
+// JOIN products_images pi ON pi.color_id = pc.color_id AND pi.product_id = p.product_id
+// WHERE p.product_id = $1
+// ORDER BY p.product_id, c.color;
+// `;
