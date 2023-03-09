@@ -12,6 +12,7 @@ export interface Product {
   seller_sales: number;
   product_price: number;
   seller_rating: number;
+  product_size: string[];
 }
 
 export interface FetchProductsParams {

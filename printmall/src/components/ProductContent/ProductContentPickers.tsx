@@ -15,12 +15,14 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
   onClick,
 }) => {
   const { t } = useTranslation();
+
   return (
     <div className="product-content-pickers">
       <div className="product-content-color-picker">
         <span className="product-content-picker-title">
           {t('product.colorPicker')}
         </span>
+
         <div className="product-content-color-picker-colors">
           {product?.colors.map(({ color }) => (
             <div
@@ -41,16 +43,18 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
           ))}
         </div>
       </div>
+
       <div className="product-content-pickers-box">
         <div className="product-content-size-picker">
           <label className="product-content-picker-title" htmlFor="size">
             {t('product.sizePicker')}
           </label>
           <select name="size" id="size">
-            <option value="XL">XL</option>
-            <option value="L">L</option>
-            <option value="XS">XS</option>
-            <option value="S">S</option>
+            {product.product_size.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -58,6 +62,7 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
           <span className="product-content-picker-title">
             {t('product.quantityPicker')}
           </span>
+
           <div className="product-content-quantity-picker-buttons">
             <button>-</button>
             <span>01</span>
