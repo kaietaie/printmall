@@ -25,7 +25,7 @@ export default async function getSeller(req: Request, res: Response) {
 
       const product = await pool.query(sql, [seller_name]);
 
-      return res.json(product.rows);
+      return res.json(product.rows[0]);
 
 
 
