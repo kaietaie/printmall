@@ -6,8 +6,9 @@ import { selectProductById } from '../../store/products/productSlice';
 import ProductContentPickers from './ProductContentPickers';
 import { ReactComponent as BasketIcon } from '../images/shopping-basket.svg';
 import { ReactComponent as SupportIcon } from '../images/support-agent.svg';
-import Button from '../common/Button';
+import Button from '../common/Buttons';
 import { useTranslation } from 'react-i18next';
+import ReturnButton from '../common/Buttons/ReturnButton';
 import './ProductContent.sass';
 
 const ProductContent = () => {
@@ -42,32 +43,39 @@ const ProductContent = () => {
 
   return (
     <div className="product-content">
-      <img
-        className="product-content-image"
-        src={serverUrl + (tShirtImage || defaultProductImage)}
-        alt="Product image"
-      />
-      <div className="product-content-info">
-        <h2 className="product-content-info-title">{product.product_name}</h2>
-        <span className="product-content-price">${product.product_price}</span>
-        <p className="product-content-price-description">
-          {product.product_description}
-        </p>
-        <ProductContentPickers
-          product={product}
-          onClick={handleColorPick}
-          selectedColor={selectedColor}
+      <ReturnButton />
+      <div className="product-content-section">
+        <img
+          className="product-content-image"
+          src={serverUrl + (tShirtImage || defaultProductImage)}
+          alt="Product image"
         />
-        <div className="product-content-actions">
-          <Button iconEnd={<BasketIcon />}>{t('product.supportButton')}</Button>
-          <div className="product-content-support">
-            <SupportIcon />
-            <span className="product-content-support-text">
-              {t('product.supportText')}
-            </span>
-            <a className="product-content-support-text">
-              {t('product.supportLink')}
-            </a>
+        <div className="product-content-info">
+          <h2 className="product-content-info-title">{product.product_name}</h2>
+          <span className="product-content-price">
+            ${product.product_price}
+          </span>
+          <p className="product-content-price-description">
+            {product.product_description}
+          </p>
+          <ProductContentPickers
+            product={product}
+            onClick={handleColorPick}
+            selectedColor={selectedColor}
+          />
+          <div className="product-content-actions">
+            <Button iconEnd={<BasketIcon />}>
+              {t('product.supportButton')}
+            </Button>
+            <div className="product-content-support">
+              <SupportIcon />
+              <span className="product-content-support-text">
+                {t('product.supportText')}
+              </span>
+              <a className="product-content-support-text">
+                {t('product.supportLink')}
+              </a>
+            </div>
           </div>
         </div>
       </div>
