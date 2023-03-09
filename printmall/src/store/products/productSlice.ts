@@ -14,14 +14,6 @@ const initialState: ProductState = {
   error: null,
 };
 
-// export const fetchProductByIdAsync = createAsyncThunk(
-//   'product/fetchById',
-//   async (id: string) => {
-//     const response = await fetchProductById(id);
-//     return response.data;
-//   }
-// );
-
 const productSlice = createSlice({
   name: 'product',
   initialState,
