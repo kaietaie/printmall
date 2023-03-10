@@ -8,9 +8,11 @@ export interface Product {
   product_name: string;
   colors: Color[];
   seller_name: string;
+  product_description: string;
   seller_sales: number;
   product_price: number;
   seller_rating: number;
+  product_size: string[];
 }
 
 export interface FetchProductsParams {

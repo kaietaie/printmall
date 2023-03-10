@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import FilterTabs from '../common/FilterTabs';
 import ProductCard from '../common/ProductCard';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
-import Button from '../common/Button';
+import Button from '../common/Buttons';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { Product } from '../../types/Products';

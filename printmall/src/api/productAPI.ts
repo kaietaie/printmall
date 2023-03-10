@@ -21,3 +21,16 @@ export const fetchProducts = async (
     throw new Error('Failed to fetch products');
   }
 };
+export const fetchProductById = async (id: number): Promise<Product> => {
+  try {
+    const response = await axios.get(
+      `http://localhost:5000/products${id ? `/${id}` : ''}`
+    );
+
+    // console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch products');
+  }
+};

@@ -21,6 +21,13 @@
   "bestCollections": {
     "title": "Best Collections",
     "subTitle": "Marketplace"
+  },
+  "product": {
+    "colorPicker": "Color",
+    "sizePicker": "Size",
+    "quantityPicker": "Quantity",
+    "supportButton": "Add to cart",
+    "supportText": "Still have a question?",
+    "supportLink": "Write to us!"
   }
-
 }

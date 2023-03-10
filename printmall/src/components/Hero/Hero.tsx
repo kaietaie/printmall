@@ -2,7 +2,7 @@ import React from 'react';
 import '../../i18n/config';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
-import Button from '../common/Button';
+import Button from '../common/Buttons';
 import firstImage from './images/img1.png';
 import secondImage from './images/img2.png';
 import thirdImage from './images/img3.png';

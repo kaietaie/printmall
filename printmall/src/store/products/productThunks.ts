@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchProducts } from '../../api/productAPI';
+import { fetchProductById, fetchProducts } from '../../api/productAPI';
 import { FetchProductsParams, Product } from '../../types/Products';
 
 export const fetchProductsThunk = createAsyncThunk<
@@ -8,3 +8,10 @@ export const fetchProductsThunk = createAsyncThunk<
 >('products/fetchProducts', async (props) => {
   return await fetchProducts(props);
 });
+
+export const fetchProductByIdThunk = createAsyncThunk<Product, number>(
+  'product/fetchProductById',
+  async (id: number) => {
+    return await fetchProductById(id);
+  }
+);

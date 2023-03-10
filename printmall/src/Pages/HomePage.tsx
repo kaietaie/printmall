@@ -3,7 +3,7 @@ import withNavBar from '../HOCS/withNavBar';
 import BestCollections from '../components/BestCollections';
 import { memo } from 'react';
 
-const Home = () => {
+const HomePage = () => {
   return (
     <>
       <Hero />
@@ -12,4 +12,4 @@ const Home = () => {
   );
 };
 
-export default memo(withNavBar({ wrappedComponent: Home }));
+export default memo(withNavBar({ wrappedComponent: HomePage }));

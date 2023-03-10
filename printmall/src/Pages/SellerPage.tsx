@@ -1,8 +1,8 @@
-import withNavBar from '../HOCS/withNavBar';
+import { memo } from 'react';
 import SellerHero from '../components/SellerHero';
 import SellerProducts from '../components/SellerProducts';
 
-const Seller = () => {
+const SellerPage = () => {
   return (
     <>
       <SellerHero />
@@ -10,4 +10,5 @@ const Seller = () => {
     </>
   );
 };
-export default withNavBar({ wrappedComponent: Seller });
+// export default withNavBar({ wrappedComponent: SellerPage });
+export default memo(SellerPage);

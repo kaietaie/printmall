@@ -1,8 +1,9 @@
 import React from 'react';
 import Header from './components/Header';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import Home from './Pages/Home';
-import Seller from './Pages/Seller';
+import HomePage from './Pages/HomePage';
+import SellerPage from './Pages/SellerPage';
+import ProductPage from './Pages/ProductPage';
 import './App.sass';
 
 function App() {
@@ -11,8 +12,9 @@ function App() {
       <Header />
       <div className="container">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/:sellerName" element={<Seller />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/seller/:sellerName" element={<SellerPage />} />
+          <Route path="/products/:productId" element={<ProductPage />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -2,6 +2,21 @@
 
 .product-card
   width: fit-content
+  outline-color: transparent
+  border-top-left-radius: 20px
+  border-top-right-radius: 20px
+  //transition: outline-color 0.2s ease-in-out
+  text-align: center
+  transition: transform 0.2s ease-in-out
+
+  &:hover
+    //outline: 2px solid $primary
+    //box-sizing: content-box
+    transform: scale(1.03)
+
+  &
+    a
+      text-decoration: none
 
 .product-card-img
   margin-bottom: 16px
@@ -20,14 +35,17 @@
   cursor: pointer
 
 .product-card-name
+  color: $typography
   display: block
   font-weight: 700
   line-height: 24px
-  margin-bottom: 20px
+  margin-bottom: 8px
 
+  //temporary display: none
 .product-card-seller-info
+  display: none
   margin-bottom: 20px
-  display: flex
+  //display: flex
   justify-content: space-between
   align-items: center
   color: $secondary

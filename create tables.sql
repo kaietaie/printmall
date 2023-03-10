@@ -246,7 +246,7 @@ values
 (2, 1, 'very good product', 5, to_timestamp(1678614758)),
 (2, 1, 'ok, can be better', 3, to_timestamp(1677307958));
 
-UPDATE products_images 
+UPDATE products_images
 SET color_id = 
   CASE products_images_id
     WHEN 1 THEN 2
@@ -255,6 +255,10 @@ SET color_id =
     WHEN 4 THEN 4
   END
 WHERE products_images_id IN (1, 2, 3, 4);
+
+UPDATE products
+SET product_size = 'XS, S, M, L, XL, XXL'
+WHERE product_id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 
 insert into users (
