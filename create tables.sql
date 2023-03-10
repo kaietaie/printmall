@@ -102,7 +102,7 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE seller_contact (
-    seller_contact_id   serial PRIMARY KEY,
+    seller_contact_id serial PRIMARY KEY,
     seller_id           integer REFERENCES sellers(seller_id),
     seller_contact_facebook      varchar(200),
     seller_contact_instagram      varchar(200),
@@ -110,6 +110,51 @@ CREATE TABLE seller_contact (
     seller_contact_apple_music      varchar(200),
     seller_contact_spotify      varchar(200)
 );
+
+
+CREATE TABLE user_cart (
+    user_cart_id        serial PRIMARY KEY,
+    user_session_key    varchar(200)
+);
+CREATE TABLE cart_product (
+    user_cart_id    integer REFERENCES user_cart(user_cart_id),
+    product_id    integer REFERENCES products(product_id)
+);
+
+CREATE TABLE shipping_info (
+    shipping_info_id    serial PRIMARY KEY,
+    first_name          varchar(50) NOT NULL,
+    last_name           varchar(50) NOT NULL,
+    phone               varchar(20) NOT NULL,
+    email               varchar(100) NOT NULL,
+    address_line_1      varchar(50) NOT NULL,
+    address_line_2      varchar(50),
+    city                varchar(50) NOT NULL,
+    country             varchar(50) NOT NULL,
+    region              varchar(50) NOT NULL,
+    zip                 varchar(10) NOT NULL    
+);
+
+CREATE TABLE orders (
+    order_id            serial PRIMARY KEY,
+    shipping_info_id    integer REFERENCES shipping_info(shipping_info_id),
+    payment_id          integer ,
+    finalized           boolean DEFAULT FALSE,
+    shipped             boolean DEFAULT FALSE,
+    delivered           boolean DEFAULT FALSE
+);
+
+CREATE TABLE order_lines (
+    order_id            integer REFERENCES orders(order_id),
+    product_id          integer REFERENCES products(product_id),
+    item_type           varchar(50),
+    price               real,
+    qty                 integer,
+    sub_total           integer,
+    tax                 real,
+    total               real
+);
+
 -- ----------------------------------------------------
 
 insert into seller_contact (
