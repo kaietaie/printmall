@@ -50,6 +50,7 @@
     color: $secondary
     background-color: transparent
 
+
 //ReturnButton
 .return-button
   font-weight: 500
@@ -67,3 +68,26 @@
 
   &:hover
     background-color: $surfacePrimary
+
+//QuantityChangeButton
+.quantity-change-buttons
+  display: flex
+  align-items: flex-start
+  justify-content: center
+  width: fit-content
+  border: 1px solid $secondary-light
+  border-radius: 6px
+  height: 48px
+
+  button
+    color: $primary
+    border: none
+    outline: none
+    background: none
+    padding: 15px 15px
+    cursor: pointer
+
+  span
+    font-size: 14px
+    line-height: 20px
+    padding: 14px 0

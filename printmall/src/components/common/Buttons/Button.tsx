@@ -3,6 +3,7 @@ import squish from '../../../Helpers/ClassNameHelper';
 import './Button.sass';
 
 interface ButtonProps {
+  onClick?: () => void;
   className?: string;
   isDisabled?: boolean;
   type?: 'primary' | 'secondary';
@@ -16,9 +17,11 @@ const Button: React.FC<ButtonProps> = ({
   type = 'primary',
   isDisabled = false,
   className,
+  onClick,
 }) => {
   return (
     <button
+      onClick={onClick}
       disabled={isDisabled}
       className={squish`
         button

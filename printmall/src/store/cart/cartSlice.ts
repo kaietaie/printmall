@@ -1,0 +1,109 @@
+// Interface for cart state
+import { CartProduct } from '../../types/Cart';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+export interface CartState {
+  items: CartProduct[];
+  cartTotalQuantity: number;
+  cartTotalAmount: number;
+}
+
+// Get the cart items from local storage, if any, and set it as initial cart items
+const storedCartItems = localStorage.getItem('cartItems');
+const initialCartItems =
+  storedCartItems != null ? JSON.parse(storedCartItems) : [];
+
+const initialState: CartState = {
+  items: initialCartItems,
+  cartTotalQuantity: 0,
+  cartTotalAmount: 0,
+};
+
+// Create a cart slice using Redux toolkit createSlice
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState,
+  reducers: {
+    // Add an item to the cart
+    addItem: (state, action: PayloadAction<CartProduct>) => {
+      const newItem = action.payload;
+      const itemIndex = state.items.findIndex(
+        (item) =>
+          item.product_id === newItem.product_id &&
+          item.product_size === newItem.product_size
+      );
+      if (itemIndex >= 0) {
+        state.items[itemIndex].quantity += 1;
+      } else {
+        const tempProduct = { ...newItem, quantity: 1 };
+        state.items.push(tempProduct);
+      }
+      localStorage.setItem('cartItems', JSON.stringify(state.items));
+    },
+
+    // addItem: (state, action: PayloadAction<CartProduct>) => {
+    //   const itemIndex = state.items.findIndex(
+    //     (item) => item.product_id === action.payload.product_id
+    //   );
+    //   if (itemIndex >= 0) {
+    //     state.items[itemIndex].quantity += 1;
+    //   } else {
+    //     const tempProduct = { ...action.payload, quantity: 1 };
+    //     state.items.push(tempProduct);
+    //   }
+    //   localStorage.setItem('cartItems', JSON.stringify(state.items));
+    // },
+    // Remove an item from the cart
+    removeItem: (state, action) => {
+      state.items = state.items.filter(
+        (item) => item.product_id !== action.payload
+      );
+      localStorage.setItem('cartItems', JSON.stringify(state.items));
+    },
+    // Decrease the quantity of an item in the cart
+    decreaseItem: (state, action) => {
+      const itemIndex = state.items.findIndex(
+        (item) => item.product_id === action.payload
+      );
+      if (state.items[itemIndex].quantity > 1) {
+        state.items[itemIndex].quantity -= 1;
+      } else if (state.items[itemIndex].quantity === 1) {
+        state.items = state.items.filter(
+          (item) => item.product_id !== action.payload
+        );
+      }
+      localStorage.setItem('cartItems', JSON.stringify(state.items));
+    },
+    // Clear the cart
+    clearCart: (state) => {
+      state.items = [];
+      localStorage.setItem('cartItems', JSON.stringify(state.items));
+    },
+    // Get the total cost and quantity of all items in the cart
+    getTotals: (state) => {
+      const { total, quantity } = state.items.reduce(
+        (cartTotal, item) => {
+          const { product_price, quantity } = item;
+          const itemTotal = product_price * quantity;
+
+          cartTotal.total += itemTotal;
+          cartTotal.quantity += quantity;
+
+          return cartTotal;
+        },
+        {
+          total: 0 as number,
+          quantity: 0 as number,
+        }
+      );
+
+      state.cartTotalQuantity = quantity;
+      state.cartTotalAmount = total;
+    },
+  },
+});
+
+export const { addItem, removeItem, decreaseItem, clearCart, getTotals } =
+  cartSlice.actions;
+
+export default cartSlice.reducer;

@@ -4,6 +4,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import SellerPage from './Pages/SellerPage';
 import ProductPage from './Pages/ProductPage';
+import CartPage from './Pages/CartPage';
 import './App.sass';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/seller/:sellerName" element={<SellerPage />} />
           <Route path="/products/:productId" element={<ProductPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </div>
     </BrowserRouter>

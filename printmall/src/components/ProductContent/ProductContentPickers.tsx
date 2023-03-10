@@ -1,18 +1,28 @@
-import squish from '../../Helpers/ClassNameHelper';
 import React, { memo } from 'react';
+import squish from '../../Helpers/ClassNameHelper';
 import { Product } from '../../types/Products';
 import { useTranslation } from 'react-i18next';
 
+import QuantityChangeButton from '../common/Buttons/QuantityChangeButton';
+
 interface ProductContentPickersProps {
   product: Product;
+  quantity: number;
   selectedColor: string;
   onClick: (color: string) => void;
+  onIncrease: () => void;
+  onDecrease: () => void;
+  onSizeChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
   product,
   selectedColor,
   onClick,
+  quantity,
+  onDecrease,
+  onIncrease,
+  onSizeChange,
 }) => {
   const { t } = useTranslation();
 
@@ -49,7 +59,12 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
           <label className="product-content-picker-title" htmlFor="size">
             {t('product.sizePicker')}
           </label>
-          <select name="size" id="size">
+          <select
+            onChange={onSizeChange}
+            name="size"
+            id="size"
+            defaultValue={product.product_size[0]}
+          >
             {product.product_size.map((size) => (
               <option key={size} value={size}>
                 {size}
@@ -63,11 +78,11 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
             {t('product.quantityPicker')}
           </span>
 
-          <div className="product-content-quantity-picker-buttons">
-            <button>-</button>
-            <span>01</span>
-            <button>+</button>
-          </div>
+          <QuantityChangeButton
+            quantity={quantity}
+            onIncrease={onIncrease}
+            onDecrease={onDecrease}
+          />
         </div>
       </div>
     </div>

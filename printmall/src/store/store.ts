@@ -8,6 +8,7 @@ const store = configureStore({
 });
 
 // store.dispatch(fetchProductByIdThunk(1));
+// store.dispatch(getTotals());
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
