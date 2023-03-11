@@ -9,29 +9,46 @@
   text-align: center
   margin-bottom: 32px
 
-
 .cart-products-container
   margin: 0 auto 76px
-  width: 804px
+  max-width: 804px
+
+  @media screen and (min-width: 640px)
+    min-width: 600px
+
 
 .cart-products-items
   background-color: $white
-  padding: 8px 32px
+  padding: 8px 0
   border-radius: 20px
+
+  @media screen and (min-width: 640px)
+    padding: 8px 32px
 
 
 .cart-product
-  display: flex
-  justify-content: space-between
-  align-items: center
-
   &:not(:last-child)
     margin-bottom: 16px
+
+  @media screen and (min-width: 640px)
+    display: flex
+    justify-content: space-between
+    align-items: center
+
 
 .cart-product-info,
 .cart-product-actions
   display: flex
   align-items: center
+
+.cart-product-info
+  @media screen and (max-width: 639px)
+    margin-bottom: 16px
+
+.cart-product-actions
+  @media screen and (max-width: 639px)
+    justify-content: center
+
 
 .cart-product-image
   height: 118px
