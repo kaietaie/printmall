@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import squish from '../../Helpers/ClassNameHelper';
 import { Product } from '../../types/Products';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ interface ProductContentPickersProps {
   product: Product;
   quantity: number;
   selectedColor: string;
-  onClick: (color: string) => void;
+  onColorPick: (color: string) => void;
   onIncrease: () => void;
   onDecrease: () => void;
   onSizeChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -18,13 +18,19 @@ interface ProductContentPickersProps {
 const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
   product,
   selectedColor,
-  onClick,
+  onColorPick,
   quantity,
   onDecrease,
   onIncrease,
   onSizeChange,
 }) => {
   const { t } = useTranslation();
+
+  // console.log(product.colors[0].color);
+
+  useEffect(() => {
+    onColorPick(selectedColor || product.colors[0].color);
+  }, []);
 
   return (
     <div className="product-content-pickers">
@@ -48,7 +54,7 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
               style={{
                 backgroundColor: color,
               }}
-              onClick={() => onClick(color)}
+              onClick={() => onColorPick(color)}
             ></div>
           ))}
         </div>

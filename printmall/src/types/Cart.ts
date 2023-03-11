@@ -6,5 +6,5 @@ export interface CartProduct {
   quantity: number;
   product_image: string;
   product_size: string;
-  // product_color: string;
+  product_color: string;
 }

@@ -35,10 +35,10 @@ const productSlice = createSlice({
   },
 });
 
-export const selectProductById =
-  (productId: number) => (state: { product: ProductState }) =>
-    state.product.product && state.product.product.product_id === productId
-      ? state.product.product
-      : null;
+// export const selectProductById =
+//   (productId: number) => (state: { product: ProductState }) =>
+//     state.product.product && state.product.product.product_id === productId
+//       ? state.product.product
+//       : null;
 
 export default productSlice.reducer;

@@ -23,16 +23,7 @@ const CartProducts: React.FC = () => {
       <ReturnButton />
       <h1 className="cart-products-title">Shopping Cart</h1>
       {items.map((item) => (
-        <CartProductItem
-          key={item.cart_product_id}
-          cart_product_id={item.cart_product_id}
-          product_id={item.product_id}
-          product_image={item.product_image}
-          product_name={item.product_name}
-          product_price={item.product_price}
-          quantity={item.quantity}
-          product_size={item.product_size}
-        />
+        <CartProductItem key={item.cart_product_id} product={item} />
       ))}
       <div className="cart-products-total">
         Total:&nbsp;

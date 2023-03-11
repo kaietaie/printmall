@@ -6,7 +6,10 @@ import { addItem, decreaseItem, removeItem } from '../../store/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 
-const CartProductItem: React.FC<CartProduct> = (product) => {
+interface CartProductItemProps {
+  product: CartProduct;
+}
+const CartProductItem: React.FC<CartProductItemProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleDecrease = (): void => {
@@ -32,8 +35,13 @@ const CartProductItem: React.FC<CartProduct> = (product) => {
           src={serverUrl + product.product_image}
           alt="Product image"
         />
-        <span className="cart-product-name">{product.product_name}</span>
-        <span>{product.product_size}</span>
+        <div>
+          <span className="cart-product-name">{product.product_name}</span>
+          <span>
+            {product.product_color}
+            {product.product_size}
+          </span>
+        </div>
       </div>
 
       <div className="cart-product-actions">
