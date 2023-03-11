@@ -212,7 +212,7 @@ SET color_id =
 WHERE products_images_id IN (1, 2, 3, 4);
 
 UPDATE products
-SET product_size = 'XS, S, M, L, XL, XXL'
+SET product_size = 'XS,S,M,L,XL,XXL'
 WHERE product_id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 
