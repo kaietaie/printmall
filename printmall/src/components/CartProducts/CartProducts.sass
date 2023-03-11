@@ -10,10 +10,12 @@
   margin-bottom: 32px
 
 
+.cart-products-container
+  margin: 0 auto 76px
+  width: 804px
+
 .cart-products-items
   background-color: $white
-  width: 804px
-  margin: 0 auto 76px
   padding: 8px 32px
   border-radius: 20px
 
@@ -51,7 +53,7 @@
   border: none
   background-color: transparent
   cursor: pointer
-  transition: background-color 0.2s
+  transition: background-color $transition
   margin-left: 12px
 
   &:hover
@@ -71,4 +73,17 @@
   span
     font-weight: 700
 
+.cart-products-delete-button
+  border: none
+  background-color: transparent
+  margin-left: auto
+  display: block
+  line-height: 24px
+  color: $secondary
+  cursor: pointer
+  padding: 10px
+  transition: color $transition
+
+  &:hover
+    color: $gray
 
