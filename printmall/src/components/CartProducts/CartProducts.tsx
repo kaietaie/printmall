@@ -4,7 +4,8 @@ import { AppDispatch, RootState } from '../../store/store';
 import { CartState, clearCart, getTotals } from '../../store/cart/cartSlice';
 import CartProductItem from './CartProductItem';
 import ReturnButton from '../common/Buttons/ReturnButton';
-
+import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
+import Button from '../common/Buttons';
 import './CartProducts.sass';
 
 const CartProducts: React.FC = () => {
@@ -42,9 +43,18 @@ const CartProducts: React.FC = () => {
             </button>
           </div>
           <div className="cart-products-total">
-            Total:&nbsp;
+            Subtotal:&nbsp;
             <span>${cartTotalAmount}</span>
           </div>
+          <Button
+            className="cart-products-checkout-button"
+            iconEnd={<ArrowForward />}
+          >
+            Proceed to checkout
+          </Button>
+          <span className="cart-products-bottom-text">
+            All the taxes will be calculated while checkout
+          </span>
         </>
       ) : (
         <div>Your cart is empty.</div>
@@ -52,4 +62,5 @@ const CartProducts: React.FC = () => {
     </div>
   );
 };
+
 export default memo(CartProducts);
