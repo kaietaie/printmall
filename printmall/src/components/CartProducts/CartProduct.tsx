@@ -10,7 +10,7 @@ const CartProductItem: React.FC<CartProduct> = (product) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleDecrease = (): void => {
-    dispatch(decreaseItem(product.product_id));
+    dispatch(decreaseItem(product.cart_product_id));
   };
 
   const handleIncrease = (): void => {
@@ -18,7 +18,7 @@ const CartProductItem: React.FC<CartProduct> = (product) => {
   };
 
   const handleRemove = (): void => {
-    dispatch(removeItem(product.product_id));
+    dispatch(removeItem(product.cart_product_id));
   };
 
   //todo: find better solution to access server images

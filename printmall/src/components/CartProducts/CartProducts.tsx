@@ -24,7 +24,8 @@ const CartProducts: React.FC = () => {
       <h1 className="cart-products-title">Shopping Cart</h1>
       {items.map((item) => (
         <CartProductItem
-          key={`${item.product_id}-${item.product_size}`}
+          key={item.cart_product_id}
+          cart_product_id={item.cart_product_id}
           product_id={item.product_id}
           product_image={item.product_image}
           product_name={item.product_name}

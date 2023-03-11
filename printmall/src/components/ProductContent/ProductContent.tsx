@@ -43,10 +43,11 @@ const ProductContent = () => {
   })?.product_image;
 
   const defaultProductImage = product.colors[0]?.product_image;
-  const asd = selectedSize === 'S' ? 1234234 : 0;
 
   const cartProduct: CartProduct = {
-    product_id: product.product_id + asd,
+    product_id: product.product_id,
+    cart_product_id:
+      product.product_name + (selectedSize || product.product_size[0]),
     product_name: product.product_name,
     product_image: tShirtImage || defaultProductImage,
     product_price: product.product_price,
