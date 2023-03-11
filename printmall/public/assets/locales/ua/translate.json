@@ -32,5 +32,12 @@
     "supportButton": "Додати в корзину",
     "supportText": "Маєш питання?",
     "supportLink": "Напиши нам!"
+  },
+  "cart": {
+    "title": "Кошик покупця",
+    "totalAmount": "Проміжна сума",
+    "deleteAllButton": "Видалити все",
+    "checkoutButton": "Оформити замовлення",
+    "emptyMessage": "Ваш кошик порожній."
   }
 }

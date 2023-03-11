@@ -32,5 +32,12 @@
     "supportButton": "Add to cart",
     "supportText": "Still have a question?",
     "supportLink": "Write to us!"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "totalAmount": "Subtotal",
+    "deleteAllButton": "Delete All",
+    "checkoutButton": "Proceed to checkout",
+    "emptyMessage": "Your cart is empty."
   }
 }
