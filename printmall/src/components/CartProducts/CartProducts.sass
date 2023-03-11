@@ -10,12 +10,21 @@
   margin-bottom: 32px
 
 
+.cart-products-items
+  background-color: $white
+  width: 804px
+  margin: 0 auto 76px
+  padding: 8px 32px
+  border-radius: 20px
+
+
 .cart-product
   display: flex
   justify-content: space-between
   align-items: center
-  width: 804px
-  margin: 0 auto
+
+  &:not(:last-child)
+    margin-bottom: 16px
 
 .cart-product-info,
 .cart-product-actions
@@ -27,10 +36,16 @@
   margin-right: 16px
 
 .cart-product-name
+  margin-bottom: 5px
   display: block
   font-weight: 700
   line-height: 24px
 
+.cart-product-options
+  color: $secondary
+  font-size: 14px
+  line-height: 20px
+  text-transform: capitalize
 
 .cart-product-close-button
   border: none

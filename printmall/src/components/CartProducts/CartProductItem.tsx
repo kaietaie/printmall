@@ -37,9 +37,8 @@ const CartProductItem: React.FC<CartProductItemProps> = ({ product }) => {
         />
         <div>
           <span className="cart-product-name">{product.product_name}</span>
-          <span>
-            {product.product_color}
-            {product.product_size}
+          <span className="cart-product-options">
+            {product.product_color}, {product.product_size}
           </span>
         </div>
       </div>

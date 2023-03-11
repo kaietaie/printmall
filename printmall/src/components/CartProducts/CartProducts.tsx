@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { CartState, getTotals } from '../../store/cart/cartSlice';
-import CartProductItem from './CartProduct';
+import CartProductItem from './CartProductItem';
 import ReturnButton from '../common/Buttons/ReturnButton';
 
 import './CartProducts.sass';
@@ -22,9 +22,11 @@ const CartProducts: React.FC = () => {
     <div className="cart-products">
       <ReturnButton />
       <h1 className="cart-products-title">Shopping Cart</h1>
-      {items.map((item) => (
-        <CartProductItem key={item.cart_product_id} product={item} />
-      ))}
+      <div className="cart-products-items">
+        {items.map((item) => (
+          <CartProductItem key={item.cart_product_id} product={item} />
+        ))}
+      </div>
       <div className="cart-products-total">
         Total:&nbsp;
         <span>${cartTotalAmount}</span>
