@@ -1,4 +1,7 @@
 {
+  "common": {
+    "returnButton": "Back"
+  },
   "header": {
     "liveChat": "Live Chat!"
   },
