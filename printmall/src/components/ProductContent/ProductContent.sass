@@ -6,10 +6,24 @@
 .product-content-section
   margin-top: 8px
   display: flex
+  flex-direction: column
+
+  @media screen and (min-width: 1280px)
+    flex-direction: row
+
 
 .product-content-image
-  min-width: 495px
-  margin-right: 20px
+  min-width: 300px
+  max-width: 495px
+  width: 100%
+
+  @media screen and (max-width: 639px)
+    margin-bottom: 24px
+
+  @media screen and (min-width: 1280px)
+    margin-right: 20px
+    width: 495px
+
 
 .product-content-info-title
   font-size: 28px
@@ -30,8 +44,13 @@
 
 .product-content-pickers
   display: flex
-  justify-content: space-between
-  margin-bottom: 72px
+  flex-direction: column
+  margin-bottom: 56px
+
+  @media screen and (min-width: 640px)
+    justify-content: space-between
+    flex-direction: row
+    margin-bottom: 72px
 
 .product-content-picker-title
   display: inline-block
@@ -48,6 +67,9 @@
   display: inline-block
   margin: 0 5px 0 0
   cursor: pointer
+
+  @media screen and (max-width: 639px)
+    margin-bottom: 32px
 
   &.product-content-color-picker-color--selected:after
     position: absolute
@@ -82,12 +104,26 @@
 
 .product-content-actions
   display: flex
+  flex-direction: column
   align-items: center
+  margin-bottom: 91px
+
+  @media screen and (max-width: 639px)
+    button
+      margin-bottom: 26px
+
+  @media screen and (min-width: 640px)
+    flex-direction: row
+
+  @media screen and (min-width: 1280px)
+    margin-bottom: 0
 
 .product-content-support
   display: flex
   align-items: center
-  margin-left: 25px
+
+  @media screen and (min-width: 640px)
+    margin-left: 25px
 
   svg
     margin-right: 10px
@@ -100,28 +136,55 @@
 .product-content-support-text
   font-size: 13px
 
+//Carousel
+.product-content-image-picker
+  display: flex
+  margin-bottom: 20px
+
+  @media screen and (max-width: 639px)
+    flex-direction: column-reverse
+
+  @media screen and (min-width: 1280px)
+    margin-bottom: 0
+
 
 .carousel
-  width: 300px
-  height: 611px
+  max-width: 600px
+  min-width: 83px
+  width: 100%
+
+  @media screen and (min-width: 640px)
+    width: 300px
+    height: 611px
+
+  .swiper-slide
+    text-align: center
+
+  &.swiper
+    @media screen and (min-width: 640px)
+      width: 83px
+      margin-right: 20px
+      margin-left: 0
 
   img
     width: 83px
 
-  .swiper-button-next,
-  .swiper-button-prev
-    color: $primary
-    left: 40%
-    transform: rotate(90deg)
-    transform-origin: left center
 
+  @media screen and (min-width: 640px)
 
-  .swiper-button-prev
-    top: 10px
+    .swiper-button-next,
+    .swiper-button-prev
+      color: $primary
+      left: 48%
+      transform: rotate(90deg)
+      transform-origin: left center
 
-  .swiper-button-next
-    top: auto
-    bottom: 10px
+    .swiper-button-prev
+      top: 10px
+
+    .swiper-button-next
+      top: auto
+      bottom: 10px
 
 .carousel-image
   cursor: pointer

@@ -3,6 +3,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Color } from '../../types/Products';
 import 'swiper/swiper-bundle.css';
+import useScreen from '../hooks/useScreen';
 // import 'swiper/css';
 
 // SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -13,24 +14,18 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({ colors, onColorPick }) => {
-  const handleSlideChange = (swiper: any) => {
-    console.log(swiper.activeIndex);
-  };
+  const { isMobile } = useScreen(639);
+  const isVertical = isMobile() ? 'horizontal' : 'vertical';
+  const previewQuantity = isMobile() ? 3 : 5;
   return (
     <Swiper
       className="carousel"
       modules={[Navigation, Pagination, Scrollbar]}
-      direction="vertical"
-      // height={850}
-      // width={10}
+      direction={isVertical}
       grabCursor={true}
       navigation
-      // pagination={{ clickable: true }}
-      // scrollbar={{ draggable: true }}
       spaceBetween={10}
-      slidesPerView={5}
-      onSlideChange={handleSlideChange}
-      onSwiper={(swiper) => console.log(swiper)}
+      slidesPerView={previewQuantity}
     >
       {colors.map((color, index) => (
         <SwiperSlide key={index}>

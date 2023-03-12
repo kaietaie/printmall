@@ -99,22 +99,14 @@ const ProductContent = () => {
     <div className="product-content">
       <ReturnButton />
       <div className="product-content-section">
-        {/*<Carousel*/}
-        {/*  colors={product.colors}*/}
-        {/*  onClick={handleColorPick}*/}
-        {/*  selectedImage={selectedImage}*/}
-        {/*/>*/}
-        <Carousel
-          onColorPick={handleColorPick}
-          colors={product.colors}
-          // onClick={handleColorPick}
-          // selectedImage={selectedImage}
-        />
-        <img
-          className="product-content-image"
-          src={serverUrl + (tShirtImage || defaultProductImage)}
-          alt="Product image"
-        />
+        <div className="product-content-image-picker">
+          <Carousel onColorPick={handleColorPick} colors={product.colors} />
+          <img
+            className="product-content-image"
+            src={selectedImage}
+            alt="Product image"
+          />
+        </div>
 
         <div className="product-content-info">
           <h2 className="product-content-info-title">{product_name}</h2>
@@ -122,6 +114,7 @@ const ProductContent = () => {
           <p className="product-content-price-description">
             {product_description}
           </p>
+
           <ProductContentPickers
             onSizeChange={handleSizeChange}
             onIncrease={handleIncreaseQuantity}
