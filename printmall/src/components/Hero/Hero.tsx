@@ -17,11 +17,15 @@ const Hero: React.FC<unknown> = () => {
       <div className="hero-titles">
         <span className="hero-sub-tittle">{t('hero.subTitle')}</span>
         <h1 className="hero-tittle">{t('hero.title')}</h1>
+      </div>
+
+      <div className="hero-buttons">
         <Button className="hero-primary-btn" iconEnd={<ArrowForward />}>
           {t('hero.primaryBtn')}
         </Button>
         <Button type="secondary">{t('hero.secondaryBtn')}</Button>
       </div>
+
       <div className="hero-images">
         <div className="hero-img-container hero-img-container--first">
           <img className="hero-img" alt="hero img" src={firstImage} />
