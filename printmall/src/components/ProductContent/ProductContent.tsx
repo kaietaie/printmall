@@ -13,6 +13,7 @@ import { CartProduct } from '../../types/Cart';
 import { addItem } from '../../store/cart/cartSlice';
 import { RootState } from '../../store/store';
 import './ProductContent.sass';
+import Carousel from './Carousel';
 
 const ProductContent = () => {
   const { t } = useTranslation();
@@ -92,15 +93,29 @@ const ProductContent = () => {
   //todo: find better solution to access server images
   const serverUrl = 'http://localhost:5000';
 
+  const selectedImage = serverUrl + (tShirtImage || defaultProductImage);
+
   return (
     <div className="product-content">
       <ReturnButton />
       <div className="product-content-section">
+        {/*<Carousel*/}
+        {/*  colors={product.colors}*/}
+        {/*  onClick={handleColorPick}*/}
+        {/*  selectedImage={selectedImage}*/}
+        {/*/>*/}
+        <Carousel
+          onColorPick={handleColorPick}
+          colors={product.colors}
+          // onClick={handleColorPick}
+          // selectedImage={selectedImage}
+        />
         <img
           className="product-content-image"
           src={serverUrl + (tShirtImage || defaultProductImage)}
           alt="Product image"
         />
+
         <div className="product-content-info">
           <h2 className="product-content-info-title">{product_name}</h2>
           <span className="product-content-price">${product_price}</span>
