@@ -1,12 +1,11 @@
 import React from 'react';
-import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper';
+import { Navigation, Pagination, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Color } from '../../types/Products';
-import 'swiper/swiper-bundle.css';
 import useScreen from '../hooks/useScreen';
-// import 'swiper/css';
-
-// SwiperCore.use([Navigation, Pagination, Scrollbar]);
+import ImageComponent from '../common/ImageComponent';
+import defaultProductImage from '../images/defaultImages/product_default.png';
+import 'swiper/swiper-bundle.css';
 
 interface CarouselProps {
   colors: Color[];
@@ -27,53 +26,19 @@ const Carousel: React.FC<CarouselProps> = ({ colors, onColorPick }) => {
       spaceBetween={10}
       slidesPerView={previewQuantity}
     >
-      {colors.map((color, index) => (
+      {colors.map(({ product_image, color }, index) => (
         <SwiperSlide key={index}>
-          <img
+          <ImageComponent
             className="carousel-image"
-            onClick={() => onColorPick(color.color)}
-            src={'http://localhost:5000' + color.product_image}
-            alt={`Slide ${index}`}
+            alt="product slide"
+            defaultImageUrl={defaultProductImage}
+            imageUrl={product_image}
+            onClick={() => onColorPick(color)}
           />
         </SwiperSlide>
       ))}
     </Swiper>
   );
-  // const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
-  //
-  // const handleSlideChange = (swiper: any) => {
-  //   setSelectedImageIndex(swiper.activeIndex);
-  // };
-  //
-  // return (
-  //   <div className="carousel">
-  //     <Swiper
-  //       direction="vertical"
-  //       spaceBetween={10}
-  //       slidesPerView={5}
-  //       onSlideChange={handleSlideChange}
-  //       navigation
-  //       pagination={{ clickable: true }}
-  //     >
-  //       {colors.map((color, index) => (
-  //         <SwiperSlide key={index}>
-  //           <img
-  //             src={'http://localhost:5000' + color.product_image}
-  //             alt={`Slide ${index}`}
-  //           />
-  //         </SwiperSlide>
-  //       ))}
-  //     </Swiper>
-  //     <div className="selected-image">
-  //       <img
-  //         src={
-  //           'http://localhost:5000' + colors[selectedImageIndex].product_image
-  //         }
-  //         alt={`Selected Slide ${selectedImageIndex}`}
-  //       />
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default Carousel;

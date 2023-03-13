@@ -12,8 +12,11 @@ import ReturnButton from '../common/Buttons/ReturnButton';
 import { CartProduct } from '../../types/Cart';
 import { addItem } from '../../store/cart/cartSlice';
 import { RootState } from '../../store/store';
-import './ProductContent.sass';
+import ImageComponent from '../common/ImageComponent';
+import defaultProductImage from '../images/defaultImages/product_default.png';
 import Carousel from './Carousel';
+
+import './ProductContent.sass';
 
 const ProductContent = () => {
   const { t } = useTranslation();
@@ -49,8 +52,8 @@ const ProductContent = () => {
     return color === selectedColor;
   })?.product_image;
 
-  const defaultProductImage = colors[0].product_image;
-  const productImage = tShirtImage || defaultProductImage;
+  const firstProductImage = colors[0].product_image;
+  const productImage = tShirtImage || firstProductImage;
   const cartProductId =
     product_name + (selectedSize || product_size[0]) + selectedColor;
   const productSize = selectedSize || product_size[0];
@@ -90,21 +93,17 @@ const ProductContent = () => {
     navigate(`/cart`);
   };
 
-  //todo: find better solution to access server images
-  const serverUrl = 'http://localhost:5000';
-
-  const selectedImage = serverUrl + (tShirtImage || defaultProductImage);
-
   return (
     <div className="product-content">
       <ReturnButton />
       <div className="product-content-section">
         <div className="product-content-image-picker">
           <Carousel onColorPick={handleColorPick} colors={product.colors} />
-          <img
+          <ImageComponent
             className="product-content-image"
-            src={selectedImage}
-            alt="Product image"
+            imageUrl={productImage}
+            defaultImageUrl={defaultProductImage}
+            alt="product"
           />
         </div>
 

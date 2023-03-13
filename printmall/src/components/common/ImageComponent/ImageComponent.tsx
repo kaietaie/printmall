@@ -1,10 +1,11 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 interface ImageComponentProps {
   imageUrl: string | undefined;
   defaultImageUrl: string;
   className?: string;
   alt: string;
+  onClick?: () => void;
 }
 
 const ImageComponent: React.FC<ImageComponentProps> = ({
@@ -12,10 +13,17 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
   defaultImageUrl,
   className,
   alt,
+  onClick,
 }) => {
   //todo: find better solution to access server images
-  const serverUrl = 'http://localhost:5000';
-  const [imgSrc, setImgSrc] = useState(serverUrl + imageUrl);
+  const withServerUrl = 'http://localhost:5000' + imageUrl;
+  const [imgSrc, setImgSrc] = useState('');
+
+  useEffect(() => {
+    if (imageUrl) {
+      setImgSrc(withServerUrl);
+    }
+  }, [imageUrl, withServerUrl]);
 
   const handleImgError = () => {
     setImgSrc(defaultImageUrl);
@@ -24,6 +32,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
   return (
     <img
       className={className}
+      onClick={onClick}
       src={imgSrc}
       onError={handleImgError}
       alt={alt}
