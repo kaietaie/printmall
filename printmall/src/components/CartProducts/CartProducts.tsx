@@ -8,8 +8,10 @@ import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import Button from '../common/Buttons';
 import './CartProducts.sass';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const CartProducts: React.FC = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { items, cartTotalAmount } = useSelector<RootState, CartState>(
     (state) => state.cart
@@ -23,6 +25,10 @@ const CartProducts: React.FC = () => {
 
   const handleClearCart = (): void => {
     dispatch(clearCart());
+  };
+
+  const handleGoToCheckout = () => {
+    navigate(`/checkout`);
   };
 
   return (
@@ -49,6 +55,7 @@ const CartProducts: React.FC = () => {
             <span>${cartTotalAmount}</span>
           </div>
           <Button
+            onClick={handleGoToCheckout}
             className="cart-products-checkout-button"
             iconEnd={<ArrowForward />}
           >
