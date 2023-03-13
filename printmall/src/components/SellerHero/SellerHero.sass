@@ -1,3 +1,5 @@
+@import '../../styles/variables'
+
 .seller-hero
   padding-top: 18px
   position: relative
@@ -21,3 +23,20 @@
 .seller-hero-announcement
   font-size: 14px
   line-height: 20px
+
+//Banner
+.banner
+  margin: 0 auto
+  width: 297px
+  height: 314px
+  background-color: $primary
+  border-radius: 20px
+  background-image: url('../images/defaultImages/cove_ mobile .jpg')
+
+  @media screen and (min-width: 640px)
+    width: 597px
+    background-image: url('../images/defaultImages/cover_tablet.jpg')
+
+  @media screen and (min-width: 1280px)
+    width: 1216px
+    background-image: url('../images/defaultImages/cover_desktop.jpg')
