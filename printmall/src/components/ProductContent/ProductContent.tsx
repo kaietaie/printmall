@@ -20,21 +20,13 @@ import './ProductContent.sass';
 
 const ProductContent = () => {
   const { t } = useTranslation();
-  const { productId } = useParams<{ productId: string }>();
   const product = useSelector((state: RootState) => state.product.product);
-  // const product = useSelector(selectProductById(Number(productId)));
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
-
-  useEffect(() => {
-    if (productId) {
-      dispatch(fetchProductByIdThunk(Number(productId)));
-    }
-  }, [dispatch, productId]);
 
   if (!product) {
     return <div>Loading...</div>;

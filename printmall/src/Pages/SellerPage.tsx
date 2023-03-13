@@ -10,14 +10,11 @@ import { fetchSellerByNameThunk } from '../store/seller/sellerThunks';
 
 const SellerPage = () => {
   const { sellerName } = useParams<{ sellerName: string }>();
-
   const dispatch = useDispatch<AppDispatch>();
-
   const productsStatus = useSelector(
     (state: RootState) => state.products.status
   );
   const sellerStatus = useSelector((state: RootState) => state.seller.status);
-
   const isLoading = productsStatus === 'loading' || sellerStatus === 'loading';
 
   useEffect(() => {
