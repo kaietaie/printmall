@@ -17,7 +17,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
 }) => {
   //todo: find better solution to access server images
   const withServerUrl = 'http://localhost:5000' + imageUrl;
-  const [imgSrc, setImgSrc] = useState('');
+  const [imgSrc, setImgSrc] = useState(withServerUrl);
 
   useEffect(() => {
     if (imageUrl) {

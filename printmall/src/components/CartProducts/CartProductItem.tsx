@@ -5,6 +5,8 @@ import QuantityChangeButton from '../common/Buttons/QuantityChangeButton';
 import { addItem, decreaseItem, removeItem } from '../../store/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
+import defaultProductImage from '../images/defaultImages/product_default.png';
+import ImageComponent from '../common/ImageComponent';
 
 interface CartProductItemProps {
   product: CartProduct;
@@ -24,17 +26,16 @@ const CartProductItem: React.FC<CartProductItemProps> = ({ product }) => {
     dispatch(removeItem(product.cart_product_id));
   };
 
-  //todo: find better solution to access server images
-  const serverUrl = 'http://localhost:5000';
-
   return (
     <div className="cart-product">
       <div className="cart-product-info">
-        <img
+        <ImageComponent
           className="cart-product-image"
-          src={serverUrl + product.product_image}
-          alt="Product image"
+          defaultImageUrl={defaultProductImage}
+          imageUrl={product.product_image}
+          alt="product"
         />
+
         <div>
           <span className="cart-product-name">{product.product_name}</span>
           <span className="cart-product-options">
