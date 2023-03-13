@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { memo, useEffect } from 'react';
 import { fetchSellerByNameThunk } from '../../store/seller/sellerThunks';
 import { RootState } from '../../store/store';
-import defaultAvatar from './images/default_avatar.png';
+import defaultAvatar from '../images/defaultImages/avatar_big.png';
 import './SellerHero.sass';
 
 const SellerHero = () => {
