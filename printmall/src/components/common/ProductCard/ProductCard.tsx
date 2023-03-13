@@ -3,7 +3,8 @@ import { ReactComponent as StarIcon } from './icons/star.svg';
 import { Product } from '../../../types/Products';
 import { Link } from 'react-router-dom';
 import Ellipsis from '../Ellipsis/Ellipsis';
-const defaultProductImage = '../../images/defaultImages/product_default.png';
+import defaultProductImage from '../../images/defaultImages/product_default.png';
+import ImageComponent from '../ImageComponent';
 import './ProductCard.sass';
 
 interface ProductCardProps {
@@ -31,19 +32,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     (color) => color.color === selectedColor
   )?.product_image;
 
-  //todo: find better solution to access server images
-  const serverUrl = 'http://localhost:5000';
-  const productImage = serverUrl + tShirtImage + 'dd' || defaultProductImage;
-  console.log(productImage);
   return (
     <div className="product-card">
       <Link to={`/products/${product_id}`}>
-        <img
+        <ImageComponent
           className="product-card-img"
-          // src={tShirtImage}
-          src={serverUrl + tShirtImage}
-          alt="T-shirt"
+          imageUrl={tShirtImage}
+          alt="product"
+          defaultImageUrl={defaultProductImage}
         />
+
         <div className="product-card-colors">
           {colors.map((color) => (
             <div
