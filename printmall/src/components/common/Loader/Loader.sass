@@ -1,0 +1,16 @@
+.loader-container
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 100%
+
+.loader-spinner
+  width: 100px
+  height: 100px
+  background-image: url("../../images/loader.png")
+  animation: loader-spin 1s linear infinite
+
+
+@keyframes loader-spin
+  to
+    transform: rotate(360deg)
