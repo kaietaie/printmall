@@ -1,5 +1,6 @@
 import './ErrorBanner.sass';
 import errorImage from '../../images/fail_banner.png';
+
 const ErrorBanner = () => {
   return (
     <div className="error-banner">
