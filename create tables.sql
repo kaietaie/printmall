@@ -44,7 +44,7 @@ CREATE TABLE sellers (
     seller_id           serial PRIMARY KEY,
     seller_name         varchar(16) NOT NULL,
     seller_email        varchar(100) NOT NULL,
-    seller_photo        varchar(16) NOT NULL,
+    seller_photo        varchar(100) NOT NULL,
     seller_cover_image  varchar(100),
     seller_products     integer,
     seller_password     varchar(200) NOT NULL,
@@ -60,35 +60,55 @@ CREATE TABLE sellers (
     update_datetime     timestamp without time zone NOT NULL    
 );
 
+CREATE TABLE colors (
+    color_id            serial PRIMARY KEY,
+    color               varchar(20)
+);
+CREATE TABLE sizes (
+    size_id            serial PRIMARY KEY,
+    size               varchar(5)
+);
+CREATE TABLE prod_types (
+    prod_type_id       serial PRIMARY KEY,
+    prod_type          varchar(15)
+);
+
 CREATE TABLE products (
     product_id          serial PRIMARY KEY,
+    is_base_product     boolean,
+    base_id             integer,
     product_name        varchar(100) NOT NULL,
+    product_type        integer REFERENCES prod_types(prod_type_id) , -- Clothes / Cups / Keyholders
     product_description text,
-    product_size        varchar(5) NOT NULL,
+    product_size        integer REFERENCES sizes(size_id) ,
+    product_color       integer REFERENCES colors(color_id),
     product_price       real,
+    sku                 varchar(20), -- product_seller_id-base_id-product_size-product_color
     product_seller_id   integer REFERENCES sellers(seller_id) NOT NULL,
     create_user_id      integer,
     update_user_id      integer,
     create_datetime     timestamp NOT NULL,
     update_datetime     timestamp NOT NULL  
 );
-
-CREATE TABLE colors (
-    color_id            serial PRIMARY KEY,
-    color               varchar(20)
-);
-
-CREATE TABLE products_colors (
-    color_id            integer REFERENCES colors(color_id),
-    product_id          integer REFERENCES products(product_id),
-    CONSTRAINT product_colors_pk PRIMARY KEY ( color_id, product_id)
-);
+-- CREATE TABLE products (
+--     product_id          serial PRIMARY KEY,
+--     product_name        varchar(100) NOT NULL,
+--     product_type        varchar(30) NOT NULL, -- Clothes / Cups / Keyholders
+--     product_description text,
+--     product_size        varchar(5) NOT NULL,
+--     product_price       real,
+--     product_seller_id   integer REFERENCES sellers(seller_id) NOT NULL,
+--     create_user_id      integer,
+--     update_user_id      integer,
+--     create_datetime     timestamp NOT NULL,
+--     update_datetime     timestamp NOT NULL  
+-- );
 
 CREATE TABLE products_images (
     products_images_id  serial PRIMARY KEY,
     product_id          integer REFERENCES products(product_id),
+    color_id            integer REFERENCES colors(color_id),
     products_images     varchar(200)
-    color_id            integer REFERENCES colors(color_id)
 );
 
 CREATE TABLE reviews (
@@ -173,6 +193,7 @@ values
 
 insert into products_colors (color_id, product_id)
 values 
+(1,1 ), (2, 1),(5, 1),(4, 1),(6, 1),
 (1, 3),(2, 3),(3, 3),(4, 3),
 (1, 4), (2, 4),(5, 4),(4, 4),(6, 4),
 (1, 5),(2, 5),(3, 5),(4, 5),
@@ -180,6 +201,7 @@ values
 (1, 7),(2, 7),(3, 7),(4, 7),
 (1, 8), (2, 8),(5, 8),(4, 8),(6, 8),
 (1, 9),(2, 9),(3, 9),(4, 9),
+(1, ), (2, ),(5, ),(4, ),(6, ),
 (1, 10), (2, 10),(5, 10),(4, 10),(6, 10);
 ----------------
 
@@ -205,11 +227,17 @@ insert into blog  values
  ( 5, 'grey' ),
  ( 6, 'violet' );
 
+ insert into prod_types values 
+ ( 1, 'CLothes' ),
+ ( 2, 'Cups' ),
+ ( 3, 'Keyholders' );
+
 -- ADD PHOTOS TO DB
 insert into products_images( product_id, product_image, color_id) values
 ( 10, '/public/product_images/10/black.png', 2),
 ( 10, '/public/product_images/10/white.png', 1),
 ( 10, '/public/product_images/10/yellow.png', 4),
+( 10, '/public/product_images/10/grey.png', 5),
 ( 10, '/public/product_images/10/grey.png', 5);
 ( 9, '/public/product_images/9/black.png', 2),
 ( 9, '/public/product_images/9/white.png', 1),
@@ -230,8 +258,24 @@ insert into products_images( product_id, product_image, color_id) values
 ( 8, '/public/product_images/8/black.png', 2),
 ( 8, '/public/product_images/8/white.png', 1),
 ( 8, '/public/product_images/8/yellow.png', 4),
-( 8, '/public/product_images/8/grey.png', 5);
-
+( 8, '/public/product_images/8/grey.png', 5),
+( 1, '/public/product_images/1/black.png', 2),
+( 1, '/public/product_images/1/white.png', 1),
+( 1, '/public/product_images/1/yellow.png', 4),
+( 1, '/public/product_images/1/grey.png', 5),
+( 1, '/public/product_images/1/grey.png', 5);
+( 2, '/public/product_images/2/green.png', 3),
+( 2, '/public/product_images/2/white.png', 1),
+( 2, '/public/product_images/2/yellow.png', 4),
+( 2, '/public/product_images/2/grey.png', 5);
+( 3, '/public/product_images/3/black.png', 2),
+( 3, '/public/product_images/3/white.png', 1),
+( 3, '/public/product_images/3/yellow.png', 4),
+( 3, '/public/product_images/3/grey.png', 5),
+( 4, '/public/product_images/4/black.png', 2),
+( 4, '/public/product_images/4/white.png', 1),
+( 4, '/public/product_images/4/green.png', 3),
+( 4, '/public/product_images/4/grey.png', 5);
 
 
 insert into reviews ( product_id,user_id,
@@ -246,20 +290,14 @@ values
 (2, 1, 'very good product', 5, to_timestamp(1678614758)),
 (2, 1, 'ok, can be better', 3, to_timestamp(1677307958));
 
-UPDATE products_images
-SET color_id = 
-  CASE products_images_id
-    WHEN 1 THEN 2
-    WHEN 2 THEN 1
-    WHEN 3 THEN 3
-    WHEN 4 THEN 4
-  END
-WHERE products_images_id IN (1, 2, 3, 4);
 
-UPDATE products
-SET product_size = 'XS,S,M,L,XL,XXL'
-WHERE product_id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-
+ insert into sizes values 
+ ( 1, 'XS' ),
+ ( 2, 'S' ),
+ ( 3, 'M' ),
+ ( 4, 'L' ),
+ ( 5, 'XL' ),
+ ( 6, 'XXL' );
 
 insert into users (
     user_name,
