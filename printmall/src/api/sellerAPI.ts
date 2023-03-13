@@ -7,8 +7,6 @@ export const fetchSellerByName = async (name: string): Promise<Seller> => {
       `http://localhost:5000/seller${name ? `/${name}` : ''}`
     );
 
-    // console.log(response.data);
-
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch products');

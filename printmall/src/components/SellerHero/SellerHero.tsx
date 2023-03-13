@@ -8,10 +8,6 @@ import './SellerHero.sass';
 const SellerHero = () => {
   const seller = useSelector((state: RootState) => state.seller.seller);
 
-  if (seller === null) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="seller-hero">
       <Banner />
@@ -21,9 +17,9 @@ const SellerHero = () => {
           src={defaultAvatar}
           alt="Seller avatar"
         />
-        <h1 className="seller-hero-title">{seller.seller_name}</h1>
+        <h1 className="seller-hero-title">{seller?.seller_name}</h1>
         <span className="seller-hero-announcement">
-          {seller.seller_announcement}
+          {seller?.seller_announcement}
         </span>
       </div>
     </div>

@@ -7,6 +7,7 @@ import Loader from '../components/common/Loader';
 import { fetchProductsThunk } from '../store/products/productThunks';
 import { useParams } from 'react-router-dom';
 import { fetchSellerByNameThunk } from '../store/seller/sellerThunks';
+import ErrorBanner from '../components/common/ErrorBanner';
 
 const SellerPage = () => {
   const { sellerName } = useParams<{ sellerName: string }>();
@@ -16,6 +17,7 @@ const SellerPage = () => {
   );
   const sellerStatus = useSelector((state: RootState) => state.seller.status);
   const isLoading = productsStatus === 'loading' || sellerStatus === 'loading';
+  const isError = productsStatus === 'failed' || sellerStatus === 'failed';
 
   useEffect(() => {
     if (sellerName) {
@@ -27,6 +29,10 @@ const SellerPage = () => {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (isError) {
+    return <ErrorBanner />;
   }
 
   return (

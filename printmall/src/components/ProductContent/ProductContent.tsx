@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductByIdThunk } from '../../store/products/productThunks';
 // import { selectProductById } from '../../store/products/productSlice';
 import ProductContentPickers from './ProductContentPickers';
 import { ReactComponent as BasketIcon } from '../images/shopping-basket.svg';
