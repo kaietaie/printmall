@@ -1,21 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { Product } from '../../types/Products';
-import React, { useEffect } from 'react';
-import { fetchProductsThunk } from '../../store/products/productThunks';
 import ProductCard from '../common/ProductCard/ProductCard';
 import './SellerProducts.sass';
 
 const SellerProducts = () => {
-  const dispatch = useDispatch();
-  const products = useSelector<RootState, Product[]>(
-    (state) => state.products.items
-  );
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    dispatch(fetchProductsThunk());
-  }, [dispatch]);
+  const products = useSelector((state: RootState) => state.products.items);
 
   return (
     <div className="seller-products-cards">

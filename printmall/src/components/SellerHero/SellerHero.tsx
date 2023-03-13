@@ -1,22 +1,12 @@
+import { memo } from 'react';
 import Banner from './Banner';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { memo, useEffect } from 'react';
-import { fetchSellerByNameThunk } from '../../store/seller/sellerThunks';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import defaultAvatar from '../images/defaultImages/avatar_big.png';
 import './SellerHero.sass';
 
 const SellerHero = () => {
-  const { sellerName } = useParams<{ sellerName: string }>();
-  const dispatch = useDispatch();
   const seller = useSelector((state: RootState) => state.seller.seller);
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    dispatch(fetchSellerByNameThunk(sellerName));
-  }, [dispatch, sellerName]);
 
   if (seller === null) {
     return <div>Loading...</div>;

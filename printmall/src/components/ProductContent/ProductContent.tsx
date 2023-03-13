@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { CartProduct } from '../../types/Cart';
 import { addItem } from '../../store/cart/cartSlice';
-import { RootState } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import ImageComponent from '../common/ImageComponent';
 import defaultProductImage from '../images/defaultImages/product_default.png';
 import Carousel from './Carousel';
@@ -24,16 +24,16 @@ const ProductContent = () => {
   const product = useSelector((state: RootState) => state.product.product);
   // const product = useSelector(selectProductById(Number(productId)));
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    dispatch(fetchProductByIdThunk(productId));
+    if (productId) {
+      dispatch(fetchProductByIdThunk(Number(productId)));
+    }
   }, [dispatch, productId]);
 
   if (!product) {

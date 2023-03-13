@@ -3,7 +3,7 @@ import { FetchProductsParams, Product } from '../types/Products';
 // import { products } from '../mochs/mProducts';
 
 export const fetchProducts = async (
-  props: FetchProductsParams
+  props: FetchProductsParams | undefined
 ): Promise<Product[]> => {
   try {
     const response = await axios.get(

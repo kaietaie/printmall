@@ -4,8 +4,8 @@ import { FetchProductsParams, Product } from '../../types/Products';
 
 export const fetchProductsThunk = createAsyncThunk<
   Product[],
-  FetchProductsParams
->('products/fetchProducts', async (props) => {
+  FetchProductsParams | undefined
+>('products/fetchProducts', async (props = undefined) => {
   return await fetchProducts(props);
 });
 
