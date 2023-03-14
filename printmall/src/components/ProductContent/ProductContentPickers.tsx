@@ -1,12 +1,15 @@
 import React, { memo, useEffect } from 'react';
 import squish from '../../Helpers/ClassNameHelper';
-import { Product } from '../../types/Products';
+import { Color, Product } from '../../types/Products';
 import { useTranslation } from 'react-i18next';
 
 import QuantityChangeButton from '../common/Buttons/QuantityChangeButton';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 interface ProductContentPickersProps {
-  product: Product;
+  // product: Product;
+  colors: Color[];
   quantity: number;
   selectedColor: string;
   onColorPick: (color: string) => void;
@@ -16,7 +19,8 @@ interface ProductContentPickersProps {
 }
 
 const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
-  product,
+  // product,
+  colors,
   selectedColor,
   onColorPick,
   quantity,
@@ -25,11 +29,12 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
   onSizeChange,
 }) => {
   const { t } = useTranslation();
-
+  // const sizes = useSelector((state: RootState) => state.product.product?.sizes);
   // console.log(product.colors[0].color);
+  const sizes = ['L', 'S', 'XL', 'XS'];
 
   useEffect(() => {
-    onColorPick(selectedColor || product.colors[0].color);
+    onColorPick(selectedColor || colors[0].color);
   }, []);
 
   return (
@@ -40,7 +45,7 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
         </span>
 
         <div className="product-content-color-picker-colors">
-          {product?.colors.map(({ color }) => (
+          {colors.map(({ color }) => (
             <div
               key={color}
               className={squish`
@@ -61,23 +66,25 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
       </div>
 
       <div className="product-content-pickers-box">
-        <div className="product-content-size-picker">
-          <label className="product-content-picker-title" htmlFor="size">
-            {t('product.sizePicker')}
-          </label>
-          <select
-            onChange={onSizeChange}
-            name="size"
-            id="size"
-            defaultValue={product.product_size[0]}
-          >
-            {product.product_size.map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
-        </div>
+        {sizes && (
+          <div className="product-content-size-picker">
+            <label className="product-content-picker-title" htmlFor="size">
+              {t('product.sizePicker')}
+            </label>
+            <select
+              onChange={onSizeChange}
+              name="size"
+              id="size"
+              defaultValue={sizes[0]}
+            >
+              {sizes.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div className="product-content-quantity-picker">
           <span className="product-content-picker-title">

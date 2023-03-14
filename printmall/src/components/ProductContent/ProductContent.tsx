@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { memo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 // import { selectProductById } from '../../store/products/productSlice';
 import ProductContentPickers from './ProductContentPickers';
 import { ReactComponent as BasketIcon } from '../images/shopping-basket.svg';
@@ -10,16 +10,49 @@ import { useTranslation } from 'react-i18next';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { CartProduct } from '../../types/Cart';
 import { addItem } from '../../store/cart/cartSlice';
-import { AppDispatch, RootState } from '../../store/store';
+import { AppDispatch } from '../../store/store';
 import ImageComponent from '../common/ImageComponent';
 import defaultProductImage from '../images/defaultImages/product_default.png';
 import Carousel from './Carousel';
-
+import filterAvailableColorsBySize from '../../utils/filterAvailableColorsBySize';
 import './ProductContent.sass';
 
 const ProductContent = () => {
   const { t } = useTranslation();
-  const product = useSelector((state: RootState) => state.product.product);
+  const product = {
+    product_id: 63,
+    product_name: 'Tee Artistry Tenis',
+    product_description:
+      'Classic cut T-shirt for men, 100% cotton (Heather gray and heather ice blue are 95% cotton/5% viscose. Heather blue & charcoal gray are 80% cotton/20% polyester. Heather burgundy is 60% cotton/40% polyester. Heather oatmeal is 99% cotton/1% viscose) Brand: Spreadshirt',
+    colors: [
+      {
+        color: 'black',
+        product_image: '/public/product_images/10/black.png',
+      },
+      {
+        color: 'white',
+        product_image: '/public/product_images/10/white.png',
+      },
+      {
+        color: 'yellow',
+        product_image: '/public/product_images/10/yellow.png',
+      },
+      {
+        color: 'green',
+        product_image: '/public/product_images/10/green.png',
+      },
+    ],
+    size_color: {
+      L: ['green', 'white', 'yellow', 'black'],
+      S: ['green', 'yellow', 'black', 'white'],
+      XL: ['white', 'black', 'green', 'yellow'],
+      XS: ['yellow', 'green', 'black'],
+    },
+    sizes: ['L', 'S', 'XL', 'XS'],
+    seller_name: 'Go_A',
+    product_price: 72,
+  };
+  // const product = useSelector((state: RootState) => state.product.product);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -30,9 +63,12 @@ const ProductContent = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
+
   const {
     colors,
-    product_size,
+    size_color,
+    // product_size,
+    sizes,
     product_price,
     product_id,
     product_name,
@@ -46,8 +82,14 @@ const ProductContent = () => {
   const firstProductImage = colors[0].product_image;
   const productImage = tShirtImage || firstProductImage;
   const cartProductId =
-    product_name + (selectedSize || product_size[0]) + selectedColor;
-  const productSize = selectedSize || product_size[0];
+    product_name + (selectedSize || sizes[0]) + selectedColor;
+  const productSize = selectedSize || sizes[0];
+
+  const availableColors = filterAvailableColorsBySize(
+    colors,
+    productSize,
+    size_color
+  );
 
   const cartProduct: CartProduct = {
     product_id: product_id,
@@ -89,7 +131,7 @@ const ProductContent = () => {
       <ReturnButton />
       <div className="product-content-section">
         <div className="product-content-image-picker">
-          <Carousel onColorPick={handleColorPick} colors={product.colors} />
+          <Carousel onColorPick={handleColorPick} colors={availableColors} />
           <ImageComponent
             className="product-content-image"
             imageUrl={productImage}
@@ -109,7 +151,7 @@ const ProductContent = () => {
             onSizeChange={handleSizeChange}
             onIncrease={handleIncreaseQuantity}
             onDecrease={handleDecreaseQuantity}
-            product={product}
+            colors={availableColors}
             quantity={quantity}
             onColorPick={handleColorPick}
             selectedColor={selectedColor}
