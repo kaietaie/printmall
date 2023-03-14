@@ -8,6 +8,7 @@ import { blogRouter } from "./routes/blog.route";
 import { productRouter } from "./routes/product.route";
 import { sellerRouter } from "./routes/seller.route";
 import fileUpload from "express-fileupload";
+import { paymentRouter } from "./routes/payment.route";
 
 const host = process.env.HOST || "localhost";
 const port = process.env.SERVER_PORT || 5000;
@@ -25,13 +26,14 @@ app.use(cookieParser());
 app.use(express.json());
 // enable files upload
 app.use(fileUpload({
-  createParentPath: true
+  createParentPath: true 
 }));
 app.use('/public',express.static('public'));
 
 app.use('/blog', blogRouter);
 app.use('/products', productRouter);
 app.use('/seller', sellerRouter);
+app.use('/payment', paymentRouter);
 // app.use('/auth', );
 // app.use('/refresh', );
 // app.use('/logout',  );
