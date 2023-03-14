@@ -65,15 +65,16 @@ export default async function getProduct(req: Request, res: Response) {
       join sizes ss on ss.size_id = p.product_size 
       where p.is_base_product = false and p.base_id = $1)   as sizes,
     s.seller_name,
-    p.product_price 
+    p.product_price,
+    (SELECT json_object_agg(size, size_id) 
+    as sizes FROM sizes) as sku_size,
+    (SELECT json_object_agg(color, color_id) 
+    as colors FROM colors) as sku_color
 FROM products p 
 JOIN sellers s ON s.seller_id = p.product_seller_id
 WHERE p.product_id = $1 AND p.is_base_product = true
 GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price;
 `;
-
-
-
 
       const product = await pool.query(sql, [product_id]);
 
