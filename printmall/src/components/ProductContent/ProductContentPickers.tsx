@@ -1,14 +1,12 @@
 import React, { memo, useEffect } from 'react';
 import squish from '../../Helpers/ClassNameHelper';
-import { Color, Product } from '../../types/Products';
+import { Color } from '../../types/Products';
 import { useTranslation } from 'react-i18next';
-
 import QuantityChangeButton from '../common/Buttons/QuantityChangeButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 
 interface ProductContentPickersProps {
-  // product: Product;
   colors: Color[];
   quantity: number;
   selectedColor: string;
@@ -19,7 +17,6 @@ interface ProductContentPickersProps {
 }
 
 const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
-  // product,
   colors,
   selectedColor,
   onColorPick,
@@ -29,9 +26,7 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
   onSizeChange,
 }) => {
   const { t } = useTranslation();
-  // const sizes = useSelector((state: RootState) => state.product.product?.sizes);
-  // console.log(product.colors[0].color);
-  const sizes = ['L', 'S', 'XL', 'XS'];
+  const sizes = useSelector((state: RootState) => state.product.product?.sizes);
 
   useEffect(() => {
     onColorPick(selectedColor || colors[0].color);
