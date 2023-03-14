@@ -16,6 +16,7 @@
     margin-left: 8px
     fill: $white
 
+
 .button-primary
   background-color: $accent
   color: $white
@@ -33,6 +34,7 @@
     background-color: $secondary
     box-shadow: none
     cursor: auto
+
 
 .button-secondary
   background-color: transparent
@@ -53,6 +55,37 @@
     background-color: transparent
 
 
+.button-quaternary
+  background-color: transparent
+  border: 2px solid $accent
+
+  svg
+    fill: $typography
+    transition: fill $transition,
+
+  &:hover
+    color: $white
+    background-color: $accent
+
+    svg
+      fill: $white
+
+  &:active
+    color: $typography
+    background-color: transparent
+
+    svg
+      fill: $typography
+
+  &:disabled
+    border-color: $secondary
+    cursor: auto
+    color: $secondary
+    background-color: transparent
+
+    svg
+      fill: $secondary
+
 //ReturnButton
 .return-button
   font-weight: 500
@@ -70,6 +103,7 @@
 
   &:hover
     background-color: $surface-primary
+
 
 //QuantityChangeButton
 .quantity-change-buttons

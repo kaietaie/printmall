@@ -6,7 +6,7 @@ interface ButtonProps {
   onClick?: () => void;
   className?: string;
   isDisabled?: boolean;
-  type?: 'primary' | 'secondary';
+  type?: 'primary' | 'secondary' | 'quaternary';
   children: string;
   iconEnd?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
 }
