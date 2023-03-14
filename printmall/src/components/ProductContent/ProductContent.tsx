@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { memo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import { selectProductById } from '../../store/products/productSlice';
 import ProductContentPickers from './ProductContentPickers';
@@ -14,12 +14,17 @@ import { AppDispatch, RootState } from '../../store/store';
 import ImageComponent from '../common/ImageComponent';
 import defaultProductImage from '../images/defaultImages/product_default.png';
 import Carousel from './Carousel';
-
+import filterAvailableColorsBySize from '../../utils/filterAvailableColorsBySize';
+import { Product } from '../../types/Products';
+import ErrorBanner from '../common/ErrorBanner';
 import './ProductContent.sass';
 
 const ProductContent = () => {
   const { t } = useTranslation();
-  const product = useSelector((state: RootState) => state.product.product);
+
+  const product: Product | null = useSelector(
+    (state: RootState) => state.product.product
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -28,11 +33,13 @@ const ProductContent = () => {
   const [selectedSize, setSelectedSize] = useState('');
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <ErrorBanner />;
   }
+
   const {
     colors,
-    product_size,
+    size_color,
+    sizes,
     product_price,
     product_id,
     product_name,
@@ -46,8 +53,8 @@ const ProductContent = () => {
   const firstProductImage = colors[0].product_image;
   const productImage = tShirtImage || firstProductImage;
   const cartProductId =
-    product_name + (selectedSize || product_size[0]) + selectedColor;
-  const productSize = selectedSize || product_size[0];
+    product_name + (selectedSize || sizes[0]) + selectedColor;
+  const productSize = selectedSize || sizes[0];
 
   const cartProduct: CartProduct = {
     product_id: product_id,
@@ -79,17 +86,23 @@ const ProductContent = () => {
     setSelectedSize(event.target.value);
   };
 
-  const handleAddToCart = (): void => {
+  const handleAddToCart = () => {
     dispatch(addItem(cartProduct));
     navigate(`/cart`);
   };
+
+  const availableColors = filterAvailableColorsBySize(
+    colors,
+    productSize,
+    size_color
+  );
 
   return (
     <div className="product-content">
       <ReturnButton />
       <div className="product-content-section">
         <div className="product-content-image-picker">
-          <Carousel onColorPick={handleColorPick} colors={product.colors} />
+          <Carousel onColorPick={handleColorPick} colors={availableColors} />
           <ImageComponent
             className="product-content-image"
             imageUrl={productImage}
@@ -109,7 +122,7 @@ const ProductContent = () => {
             onSizeChange={handleSizeChange}
             onIncrease={handleIncreaseQuantity}
             onDecrease={handleDecreaseQuantity}
-            product={product}
+            colors={availableColors}
             quantity={quantity}
             onColorPick={handleColorPick}
             selectedColor={selectedColor}

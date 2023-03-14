@@ -12,7 +12,10 @@ export interface Product {
   seller_sales: number;
   product_price: number;
   seller_rating: number;
-  product_size: string[];
+  size_color: {
+    [key: string]: string[];
+  };
+  sizes: string[];
 }
 
 export interface FetchProductsParams {
