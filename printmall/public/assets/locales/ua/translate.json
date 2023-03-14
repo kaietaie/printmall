@@ -39,5 +39,10 @@
     "deleteAllButton": "Видалити все",
     "checkoutButton": "Оформити замовлення",
     "emptyMessage": "Ваш кошик порожній."
+  },
+  "errorBanner": {
+    "title": "От халепа!",
+    "message": "Шось пішло не так!",
+    "button": "До сторінки продавця"
   }
 }

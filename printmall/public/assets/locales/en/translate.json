@@ -39,5 +39,10 @@
     "deleteAllButton": "Delete All",
     "checkoutButton": "Proceed to checkout",
     "emptyMessage": "Your cart is empty."
+  },
+  "errorBanner": {
+    "title": "Oops!",
+    "message": "Something went wrong!",
+    "button": "Back to seller page"
   }
 }
