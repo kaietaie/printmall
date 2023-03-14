@@ -17,12 +17,13 @@ export default async function createProduct(req: Request, res: Response) {
             product_name,
             product_description,
             is_base_product,
+            product_price,
             product_seller_id,
             create_user_id, 
             update_user_id, 
             create_datetime, 
             update_datetime)
-            values($1, $2, $3, $4, $5,$6, to_timestamp($7 / 1000.0), to_timestamp($8 / 1000.0))
+            values($1, $2, $3, $4, $5, $6, $7, to_timestamp($8 / 1000.0), to_timestamp($9 / 1000.0))
             RETURNING product_id;`
         pool.query(query0, [ product_name,
             product_description, 
@@ -49,7 +50,6 @@ export default async function createProduct(req: Request, res: Response) {
                             product_size,
                             product_color,
                             product_type,
-                            product_price,
                             product_seller_id,
                             create_user_id, 
                             update_user_id, 
@@ -58,9 +58,9 @@ export default async function createProduct(req: Request, res: Response) {
                             base_id,
                             is_base_product,
                             sku ) 
-                            values ($1, $2, $3, $4, $5, $6, $7, $8, 
-                                to_timestamp($9 / 1000.0), to_timestamp($10 / 1000.0),
-                                $11, $12, $13)
+                            values ($1, $2, $3, $4, $5, $6, $7, 
+                                to_timestamp($8 / 1000.0), to_timestamp($9 / 1000.0),
+                                $10, $11, $12)
                             RETURNING product_id;`;
 
                             const params = [

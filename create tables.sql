@@ -148,7 +148,7 @@ CREATE TABLE shipping_info (
     phone               varchar(20) NOT NULL,
     email               varchar(100) NOT NULL,
     address_line_1      varchar(50) NOT NULL,
-    address_line_2      varchar(50),
+    address_line_PRIMARYPRIMARY2      varchar(50),
     city                varchar(50) NOT NULL,
     country             varchar(50) NOT NULL,
     region              varchar(50) NOT NULL,
@@ -234,23 +234,23 @@ insert into blog  values
 
 -- ADD PHOTOS TO DB
 insert into products_images( product_id, product_image, color_id) values
-( 10, '/public/product_images/10/black.png', 2),
-( 10, '/public/product_images/10/white.png', 1),
-( 10, '/public/product_images/10/yellow.png', 4),
-( 10, '/public/product_images/10/grey.png', 5),
-( 10, '/public/product_images/10/grey.png', 5);
-( 9, '/public/product_images/9/black.png', 2),
-( 9, '/public/product_images/9/white.png', 1),
-( 9, '/public/product_images/9/yellow.png', 4),
-( 9, '/public/product_images/9/grey.png', 5);
-( 5, '/public/product_images/5/black.png', 2),
-( 5, '/public/product_images/5/white.png', 1),
-( 5, '/public/product_images/5/yellow.png', 4),
-( 5, '/public/product_images/5/grey.png', 5),
-( 6, '/public/product_images/6/black.png', 2),
-( 6, '/public/product_images/6/white.png', 1),
-( 6, '/public/product_images/6/yellow.png', 4),
-( 6, '/public/product_images/6/grey.png', 5),
+( 63, '/public/product_images/10/black.png', 2),
+( 63, '/public/product_images/10/white.png', 1),
+( 63, '/public/product_images/10/yellow.png', 4),
+( 63, '/public/product_images/10/grey.png', 5),
+( 63, '/public/product_images/10/grey.png', 5);
+( 80, '/public/product_images/9/black.png', 2),
+( 80, '/public/product_images/9/white.png', 1),
+( 80, '/public/product_images/9/yellow.png', 4),
+( 80, '/public/product_images/9/grey.png', 5);
+( 93, '/public/product_images/5/black.png', 2),
+( 93, '/public/product_images/5/white.png', 1),
+( 93, '/public/product_images/5/yellow.png', 4),
+( 93, '/public/product_images/5/grey.png', 5),
+( 106, '/public/product_images/6/black.png', 2),
+( 106, '/public/product_images/6/white.png', 1),
+( 106, '/public/product_images/6/yellow.png', 4),
+( 106, '/public/product_images/6/grey.png', 5);
 ( 7, '/public/product_images/7/black.png', 2),
 ( 7, '/public/product_images/7/white.png', 1),
 ( 7, '/public/product_images/7/yellow.png', 4),
@@ -412,3 +412,75 @@ FROM sellers s
 JOIN products p ON s.seller_id = p.product_seller_id
 GROUP BY s.seller_name;
 ------
+
+SELECT 
+  p.product_id, 
+  p.product_name, 
+  c.color as color_name,
+  pi.image,
+  p.seller,
+  p.price
+FROM products p
+INNER JOIN colors c ON p.product_id = c.product_id
+INNER JOIN product_image pi ON pi.product_id = c.product_id;
+-----------------------------------------------
+SELECT 
+    p.product_id AS id,
+    p.product_name AS name,
+    c.color AS color_name,
+    pi.products_images AS image,
+    s.seller_name AS seller,
+    p.product_price AS price
+FROM products p
+INNER JOIN colors c ON c.color_id = p.product_color  JOIN products_images pi ON pi.color_id = p.product_color AND pi.product_id = p.product_id
+INNER JOIN sellers s ON s.seller_id = p.product_seller_id
+WHERE p.is_base_product = true
+AND p.product_id IN (
+    SELECT product_id FROM colors WHERE is_base_product = false AND base_id = p.product_id
+);
+
+
+-------------------------------------
+marketplacedb=> SELECT json_object_agg(size, colors) as size_colors
+FROM (
+  SELECT DISTINCT ss.size, array_agg(c.color) as colors
+  FROM products p
+  JOIN sizes ss ON ss.size_id = p.product_size
+  JOIN colors c ON c.color_id = p.product_color  
+  WHERE p.base_id = 80 
+  GROUP BY ss.size, c.color
+) as sizes
+GROUP BY sizes.size;
+                                 size_colors                                 
+-----------------------------------------------------------------------------
+ { "L" : ["green"], "L" : ["grey"], "L" : ["violet"], "L" : ["yellow"] }
+ { "S" : ["green"], "S" : ["grey"], "S" : ["violet"], "S" : ["yellow"] }
+ { "XL" : ["green"], "XL" : ["grey"], "XL" : ["violet"], "XL" : ["yellow"] }
+(3 rows)
+
+
+
+---------------------------------------
+marketplacedb=> SELECT json_object_agg(size, colors) as size_colors
+FROM (
+  SELECT ss.size, array_agg(c.color) as colors
+  FROM products p
+  JOIN sizes ss ON ss.size_id = p.product_size
+  JOIN colors c ON c.color_id = p.product_color  
+  WHERE p.base_id = 80 
+  GROUP BY ss.size
+) as sizes;
+                                                            size_colors                                                            
+-----------------------------------------------------------------------------------------------------------------------------------
+ { "L" : ["yellow","grey","violet","green"], "S" : ["green","violet","grey","yellow"], "XL" : ["grey","green","yellow","violet"] }
+(1 row)
+
+---------------------------------------
+marketplacedb=> select DISTINCT ss.size from products p join sizes ss on ss.size_id = p.product_size where p.is_base_product = false and p.base_id = 63;
+ size 
+------
+ S
+ XS
+ XL
+ L
+(4 rows)

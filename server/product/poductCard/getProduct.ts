@@ -44,44 +44,62 @@ export default async function getProduct(req: Request, res: Response) {
 
       const sql = `
       SELECT p.product_id, 
-      p.product_name, 
-      p.product_description,
-      (
-        SELECT 
-          json_agg(json_build_object('color', v.product_color, 'size', v.product_size)) 
-        FROM products v 
-        WHERE v.base_id = p.product_id AND v.is_base_product = false
-      ) as sizes
-      FROM products p 
-      WHERE p.is_base_product = true
-      GROUP BY p.product_id , p.product_name, p.product_size;
+    p.product_name, 
+    p.product_description,
+    (SELECT json_agg(json_build_object('color', colors.color, 'product_image', pi.products_images))
+     FROM (SELECT DISTINCT v.product_color FROM products v WHERE v.base_id = p.product_id AND v.is_base_product = false) AS v
+     JOIN colors ON colors.color_id = v.product_color
+     JOIN products_images pi ON pi.product_id = p.product_id AND pi.color_id = v.product_color
+    ) AS colors,
+    (SELECT json_object_agg(size, colors) as size_colors
+    FROM (
+      SELECT ss.size, array_agg(c.color) as colors
+      FROM products p
+      JOIN sizes ss ON ss.size_id = p.product_size
+      JOIN colors c ON c.color_id = p.product_color  
+      WHERE p.base_id = $1 
+      GROUP BY ss.size
+    ) as sizes) as size_color,
+    ( select array_agg( DISTINCT ss.size )
+      from products p 
+      join sizes ss on ss.size_id = p.product_size 
+      where p.is_base_product = false and p.base_id = $1)   as sizes,
+    s.seller_name,
+    p.product_price 
+FROM products p 
+JOIN sellers s ON s.seller_id = p.product_seller_id
+WHERE p.product_id = $1 AND p.is_base_product = true
+GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price;
 `;
+
+
+
 
       const product = await pool.query(sql, [product_id]);
 
       // Construct the response object
-      const response = {
-        product_id: product.rows[0].product_id,
-        product_name: product.rows[0].product_name,
-        product_description: product.rows[0].product_description,
-        product_price: product.rows[0].product_price,
-        product_size:(product.rows[0].product_size).split(","),
-        seller_name: product.rows[0].seller_name,
-        colors: [],
-      };
+      // const response = {
+      //   product_id: product.rows[0].product_id,
+      //   product_name: product.rows[0].product_name,
+      //   product_description: product.rows[0].product_description,
+      //   product_price: product.rows[0].product_price,
+      //   product_size:(product.rows[0].product_size).split(","),
+      //   seller_name: product.rows[0].seller_name,
+      //   colors: [],
+      // };
 
       // Add color and product image data to the response object
-      for (const row of product.rows) {
-        const color = row.color;
-        const productImage = row.product_image;
-        response.colors.push({ color, product_image: productImage });
-      }
+      // for (const row of product.rows) {
+      //   const color = row.color;
+      //   const productImage = row.product_image;
+      //   response.colors.push({ color, product_image: productImage });
+      // }
 
 
 
 
 
-      return res.json(response);
+      return res.json(product.rows[0]);
     } catch (error) {
       return res.json({ Error: error.message });
     }
@@ -137,18 +155,33 @@ export default async function getProduct(req: Request, res: Response) {
     const limit = req.query.limit ? parseInt(req.query.limit  as string) : 9
     const page = req.query.page ? parseInt(req.query.page as string) : 1
     const offset = (page - 1) * limit
+    // const products = [
+    //   {
+    //     id: 1,
+    //     name: 'Bold Statement Graphic Tee',
+    //     colors: [
+    //       { name: 'white', image: tw },
+    //       { name: 'black', image: tb },
+    //       { name: 'green', image: tg },
+    //     ],
+    //     seller: 'Solider',
+    //     rating: 4.8,
+    //     sales: 2310,
+    //     price: 29.99,
+    //   }]
     const sql = `SELECT p.product_id, 
-        p.product_name, 
-        p.product_description,
-        (
-          SELECT 
-            json_agg(json_build_object('color', v.product_color, 'size', v.product_size)) 
-          FROM products v 
-          WHERE v.base_id = p.product_id AND v.is_base_product = false
-        ) as sizes
-        FROM products p 
-        WHERE p.is_base_product = true
-        GROUP BY p.product_id , p.product_name, p.product_size
+    p.product_name, 
+    (SELECT json_agg(json_build_object('color', colors.color, 'product_image', pi.products_images))
+     FROM (SELECT DISTINCT v.product_color FROM products v WHERE v.base_id = p.product_id AND v.is_base_product = false) AS v
+     JOIN colors ON colors.color_id = v.product_color
+     JOIN products_images pi ON pi.product_id = p.product_id AND pi.color_id = v.product_color
+    ) AS colors,
+    s.seller_name,
+    p.product_price 
+FROM products p 
+JOIN sellers s ON s.seller_id = p.product_seller_id
+WHERE p.is_base_product = true
+GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price
                   limit $1 offset $2;`
     var result: ProductsArray[] = []
     const products = await pool.query(sql, [limit, offset]);
