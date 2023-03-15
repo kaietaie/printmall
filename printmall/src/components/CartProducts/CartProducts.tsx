@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { CartState, clearCart, getTotals } from '../../store/cart/cartSlice';
@@ -6,9 +6,10 @@ import CartProductItem from './CartProductItem';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import Button from '../common/Buttons';
-import './CartProducts.sass';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+
+import './CartProducts.sass';
 
 const CartProducts: React.FC = () => {
   const navigate = useNavigate();

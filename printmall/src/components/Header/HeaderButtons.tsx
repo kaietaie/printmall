@@ -1,3 +1,4 @@
+import { memo } from 'react';
 // import { ReactComponent as HeartIcon } from '../images/header-heart.svg';
 // import { ReactComponent as SearchIcon } from '../images/header-search.svg';
 import { ReactComponent as BasketIcon } from '../images/shopping-basket.svg';
@@ -30,4 +31,4 @@ const HeaderButtons = () => {
   );
 };
 
-export default HeaderButtons;
+export default memo(HeaderButtons);

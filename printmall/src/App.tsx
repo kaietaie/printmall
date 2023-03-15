@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Header from './components/Header';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import SellerPage from './Pages/SellerPage';
 import ProductPage from './Pages/ProductPage';
 import CartPage from './Pages/CartPage';
-import './App.sass';
 import CheckoutPage from './Pages/CheckoutPage';
+import './App.sass';
 
 function App() {
   return (
@@ -25,4 +25,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import '../../i18n/config';
 import { ReactComponent as PhoneIcon } from '../images/phone.svg';
 // import { ReactComponent as Burger } from '../images/burger.svg';
@@ -28,4 +29,4 @@ const HeaderContent = () => {
     </div>
   );
 };
-export default HeaderContent;
+export default memo(HeaderContent);

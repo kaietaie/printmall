@@ -10,11 +10,11 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <Suspense fallback={<Loader />}>
-    <React.StrictMode>
-      <Provider store={store}>
+  <React.StrictMode>
+    <Provider store={store}>
+      <Suspense fallback={<Loader />}>
         <App />
-      </Provider>
-    </React.StrictMode>
-  </Suspense>
+      </Suspense>
+    </Provider>
+  </React.StrictMode>
 );

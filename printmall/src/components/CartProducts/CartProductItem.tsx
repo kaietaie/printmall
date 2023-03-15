@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { ReactComponent as CloseIcon } from '../images/close-icon.svg';
 import { CartProduct } from '../../types/Cart';
 import QuantityChangeButton from '../common/Buttons/QuantityChangeButton';
@@ -63,4 +63,4 @@ const CartProductItem: React.FC<CartProductItemProps> = ({ product }) => {
   );
 };
 
-export default CartProductItem;
+export default memo(CartProductItem);

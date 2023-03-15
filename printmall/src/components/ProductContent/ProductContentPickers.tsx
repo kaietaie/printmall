@@ -30,7 +30,7 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
 
   useEffect(() => {
     onColorPick(selectedColor || colors[0].color);
-  }, []);
+  }, [colors, onColorPick, selectedColor]);
 
   return (
     <div className="product-content-pickers">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Navigation, Pagination, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Color } from '../../types/Products';
@@ -16,6 +16,7 @@ const Carousel: React.FC<CarouselProps> = ({ colors, onColorPick }) => {
   const { isMobile } = useScreen(639);
   const isVertical = isMobile() ? 'horizontal' : 'vertical';
   const previewQuantity = isMobile() ? 3 : 5;
+
   return (
     <Swiper
       className="carousel"
@@ -41,4 +42,4 @@ const Carousel: React.FC<CarouselProps> = ({ colors, onColorPick }) => {
   );
 };
 
-export default Carousel;
+export default memo(Carousel);

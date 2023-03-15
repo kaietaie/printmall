@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import squish from '../../Helpers/ClassNameHelper';
 import './Badge.sass';
 
@@ -11,7 +11,7 @@ interface BadgeProps {
 const Badge: React.FC<BadgeProps> = ({
   content = 0,
   children,
-  className = ''
+  className = '',
 }) => {
   if (!content) {
     return <>{children}</>;
@@ -24,11 +24,12 @@ const Badge: React.FC<BadgeProps> = ({
       className={squish`
       badge-container
       ${className}
-    `}>
+    `}
+    >
       <span className="badge">{finalContent}</span>
       {children}
     </div>
   );
 };
 
-export default Badge;
+export default memo(Badge);

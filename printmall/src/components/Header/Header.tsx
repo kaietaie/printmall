@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Logo from './Logo';
 import HeaderContent from './HeaderContent';
 import './Header.sass';
@@ -13,4 +14,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);
