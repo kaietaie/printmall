@@ -15,9 +15,9 @@ import ImageComponent from '../common/ImageComponent';
 import defaultProductImage from '../images/defaultImages/product_default.png';
 import Carousel from './Carousel';
 import filterAvailableColorsBySize from '../../utils/filterAvailableColorsBySize';
-import ErrorBanner from '../common/ErrorBanner';
 import { selectProduct } from '../../store/products/productsSelectors';
 import { Product } from '../../types/Product';
+import Loader from '../common/Loader';
 
 import './ProductContent.sass';
 
@@ -32,7 +32,7 @@ const ProductContent = () => {
   const [selectedSize, setSelectedSize] = useState('');
 
   if (!product) {
-    return <ErrorBanner />;
+    return <Loader />;
   }
 
   const {
@@ -45,15 +45,21 @@ const ProductContent = () => {
     product_description,
   } = product;
 
-  const tShirtImage = colors.find(({ color }) => {
+  const productSize = selectedSize || sizes[0];
+  const availableColors = filterAvailableColorsBySize(
+    colors,
+    productSize,
+    size_color
+  );
+
+  const tShirtImage = availableColors.find(({ color }) => {
     return color === selectedColor;
   })?.product_image;
 
-  const firstProductImage = colors[0].product_image;
+  const firstProductImage = availableColors[0].product_image;
   const productImage = tShirtImage || firstProductImage;
   const cartProductId =
     product_name + (selectedSize || sizes[0]) + selectedColor;
-  const productSize = selectedSize || sizes[0];
 
   const cartProduct: CartProduct = {
     product_id: product_id,
@@ -89,12 +95,6 @@ const ProductContent = () => {
     dispatch(addItem(cartProduct));
     navigate(`/cart`);
   };
-
-  const availableColors = filterAvailableColorsBySize(
-    colors,
-    productSize,
-    size_color
-  );
 
   return (
     <div className="product-content">

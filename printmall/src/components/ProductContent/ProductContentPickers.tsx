@@ -35,6 +35,12 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
     onColorPick(selectedColor || colors[0].color);
   }, [colors, onColorPick, selectedColor]);
 
+  const handleColorPick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.currentTarget.dataset.color) {
+      onColorPick(e.currentTarget.dataset.color);
+    }
+  };
+
   return (
     <div className="product-content-pickers">
       <div className="product-content-color-picker">
@@ -45,6 +51,7 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
         <div className="product-content-color-picker-colors">
           {colors.map(({ color }) => (
             <div
+              data-color={color}
               key={color}
               className={squish`
                   product-content-color-picker-color
@@ -57,7 +64,7 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
               style={{
                 backgroundColor: color,
               }}
-              onClick={() => onColorPick(color)}
+              onClick={handleColorPick}
             ></div>
           ))}
         </div>

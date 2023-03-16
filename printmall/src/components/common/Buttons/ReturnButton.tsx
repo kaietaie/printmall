@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ReactComponent as ArrowRightIcon } from '../../images/arrow_back.svg';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,4 +19,4 @@ const ReturnButton = () => {
   );
 };
 
-export default ReturnButton;
+export default memo(ReturnButton);

@@ -25,8 +25,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const [selectedColor, setSelectedColor] = useState<string>(colors[0].color);
 
-  const handleColorPick = (color: string) => {
-    setSelectedColor(color);
+  const handleColorPick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.currentTarget.dataset.color) {
+      setSelectedColor(e.currentTarget.dataset.color);
+    }
   };
 
   const tShirtImage = colors.find(
@@ -46,12 +48,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="product-card-colors">
           {colors.map((color) => (
             <div
+              data-color={color.color}
               key={color.color}
               className="product-card-color"
               style={{
                 backgroundColor: color.color,
               }}
-              onMouseEnter={() => handleColorPick(color.color)}
+              onMouseEnter={handleColorPick}
             ></div>
           ))}
         </div>

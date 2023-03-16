@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { clearCart, getTotals } from '../../store/cart/cartSlice';
@@ -35,9 +35,9 @@ const CartProducts: React.FC = () => {
     dispatch(clearCart());
   };
 
-  const handleGoToCheckout = () => {
+  const handleGoToCheckout = useCallback(() => {
     navigate(`/checkout`);
-  };
+  }, [navigate]);
 
   return (
     <div className="cart-products">
