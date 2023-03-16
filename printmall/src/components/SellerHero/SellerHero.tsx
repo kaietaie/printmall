@@ -3,10 +3,13 @@ import Banner from './Banner';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import defaultAvatar from '../images/defaultImages/avatar_big.png';
+import { selectSeller } from '../../store/seller/sellerSelectors';
+import { Seller } from '../../types/Sellers';
+
 import './SellerHero.sass';
 
 const SellerHero = () => {
-  const seller = useSelector((state: RootState) => state.seller.seller);
+  const seller = useSelector<RootState, Seller | null>(selectSeller);
 
   return (
     <div className="seller-hero">

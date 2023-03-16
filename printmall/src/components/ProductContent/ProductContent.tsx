@@ -15,16 +15,15 @@ import ImageComponent from '../common/ImageComponent';
 import defaultProductImage from '../images/defaultImages/product_default.png';
 import Carousel from './Carousel';
 import filterAvailableColorsBySize from '../../utils/filterAvailableColorsBySize';
-import { Product } from '../../types/Products';
 import ErrorBanner from '../common/ErrorBanner';
+import { selectProduct } from '../../store/products/productsSelectors';
+import { Product } from '../../types/Product';
+
 import './ProductContent.sass';
 
 const ProductContent = () => {
   const { t } = useTranslation();
-
-  const product: Product | null = useSelector(
-    (state: RootState) => state.product.product
-  );
+  const product = useSelector<RootState, Product | null>(selectProduct);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 

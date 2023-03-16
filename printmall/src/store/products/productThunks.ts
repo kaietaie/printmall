@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchProductById, fetchProducts } from '../../api/productAPI';
-import { FetchProductsParams, Product } from '../../types/Products';
+import { FetchProductsParams } from '../../types/Products';
+import { Product } from '../../types/Product';
 
 export const fetchProductsThunk = createAsyncThunk<
   Product[],

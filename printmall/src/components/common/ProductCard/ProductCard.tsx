@@ -1,10 +1,11 @@
 import React, { memo, useState } from 'react';
 import { ReactComponent as StarIcon } from './icons/star.svg';
-import { Product } from '../../../types/Products';
 import { Link } from 'react-router-dom';
 import Ellipsis from '../Ellipsis/Ellipsis';
 import defaultProductImage from '../../images/defaultImages/product_default.png';
 import ImageComponent from '../ImageComponent';
+import { Product } from '../../../types/Product';
+
 import './ProductCard.sass';
 
 interface ProductCardProps {

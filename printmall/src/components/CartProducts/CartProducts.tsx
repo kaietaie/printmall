@@ -1,21 +1,28 @@
-import React, { memo, useEffect, useMemo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { CartState, clearCart, getTotals } from '../../store/cart/cartSlice';
+import { clearCart, getTotals } from '../../store/cart/cartSlice';
 import CartProductItem from './CartProductItem';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import Button from '../common/Buttons';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { CartState } from '../../types/Cart';
+import {
+  selectCartItems,
+  selectCartTotalAmount,
+} from '../../store/cart/cartSelectors';
 
 import './CartProducts.sass';
 
 const CartProducts: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { items, cartTotalAmount } = useSelector<RootState, CartState>(
-    (state) => state.cart
+  const items = useSelector<RootState, CartState['items']>(selectCartItems);
+
+  const cartTotalAmount = useSelector<RootState, CartState['cartTotalAmount']>(
+    selectCartTotalAmount
   );
 
   const dispatch = useDispatch<AppDispatch>();

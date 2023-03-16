@@ -8,14 +8,19 @@ import { fetchProductsThunk } from '../store/products/productThunks';
 import { useParams } from 'react-router-dom';
 import { fetchSellerByNameThunk } from '../store/seller/sellerThunks';
 import ErrorBanner from '../components/common/ErrorBanner';
+import { selectProductsStatus } from '../store/products/productsSelectors';
+import { SellerState } from '../types/Sellers';
+import { selectSellerStatus } from '../store/seller/sellerSelectors';
 
 const SellerPage = () => {
   const { sellerName } = useParams<{ sellerName: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const productsStatus = useSelector(
-    (state: RootState) => state.products.status
+  const productsStatus = useSelector<RootState, SellerState['status']>(
+    selectProductsStatus
   );
-  const sellerStatus = useSelector((state: RootState) => state.seller.status);
+  const sellerStatus = useSelector<RootState, SellerState['status']>(
+    selectSellerStatus
+  );
   const isLoading = productsStatus === 'loading' || sellerStatus === 'loading';
   const isError = productsStatus === 'failed' || sellerStatus === 'failed';
 

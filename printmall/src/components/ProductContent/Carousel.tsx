@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 import { Navigation, Pagination, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Color } from '../../types/Products';
 import useScreen from '../hooks/useScreen';
 import ImageComponent from '../common/ImageComponent';
 import defaultProductImage from '../images/defaultImages/product_default.png';
+import { Color } from '../../types/Product';
 import 'swiper/swiper-bundle.css';
 
 interface CarouselProps {

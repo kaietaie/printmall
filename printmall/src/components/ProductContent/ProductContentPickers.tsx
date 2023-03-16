@@ -1,10 +1,11 @@
 import React, { memo, useEffect } from 'react';
 import squish from '../../Helpers/ClassNameHelper';
-import { Color } from '../../types/Products';
 import { useTranslation } from 'react-i18next';
 import QuantityChangeButton from '../common/Buttons/QuantityChangeButton';
 import { useSelector } from 'react-redux';
+import { selectProductSizes } from '../../store/products/productsSelectors';
 import { RootState } from '../../store/store';
+import { Color, Product } from '../../types/Product';
 
 interface ProductContentPickersProps {
   colors: Color[];
@@ -26,7 +27,9 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
   onSizeChange,
 }) => {
   const { t } = useTranslation();
-  const sizes = useSelector((state: RootState) => state.product.product?.sizes);
+  const sizes = useSelector<RootState, Product['sizes'] | undefined>(
+    selectProductSizes
+  );
 
   useEffect(() => {
     onColorPick(selectedColor || colors[0].color);

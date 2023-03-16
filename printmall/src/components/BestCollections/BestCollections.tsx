@@ -7,15 +7,17 @@ import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import Button from '../common/Buttons';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { Product } from '../../types/Products';
 import { fetchProductsThunk } from '../../store/products/productThunks';
+import { ProductsState } from '../../types/Products';
+import { selectProductsItems } from '../../store/products/productsSelectors';
+
 import './BestCollections.sass';
 
 const BestCollections = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
-  const products = useSelector<RootState, Product[]>(
-    (state) => state.products.items
+  const products = useSelector<RootState, ProductsState['items']>(
+    selectProductsItems
   );
 
   useEffect(() => {

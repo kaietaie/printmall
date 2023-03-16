@@ -1,4 +1,4 @@
-import { Color } from '../types/Products';
+import { Color } from '../types/Product';
 
 export default function filterAvailableColorsBySize(
   colors: Color[],

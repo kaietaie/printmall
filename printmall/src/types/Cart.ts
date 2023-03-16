@@ -8,3 +8,9 @@ export interface CartProduct {
   product_size: string;
   product_color: string;
 }
+
+export interface CartState {
+  items: CartProduct[];
+  cartTotalQuantity: number;
+  cartTotalAmount: number;
+}

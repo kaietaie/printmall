@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { FetchProductsParams, Product } from '../types/Products';
+import { FetchProductsParams } from '../types/Products';
+import { Product } from '../types/Product';
 
 export const fetchProducts = async (
   props: FetchProductsParams | undefined

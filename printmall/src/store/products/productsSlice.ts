@@ -1,13 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Product } from '../../types/Products';
+import { ProductsState } from '../../types/Products';
 import { fetchProductsThunk } from './productThunks';
 // import { fetchProducts } from './productAPI';
-
-interface ProductsState {
-  items: Product[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-}
 
 const initialState: ProductsState = {
   items: [],

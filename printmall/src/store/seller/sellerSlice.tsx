@@ -1,12 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Seller } from '../../types/Sellers';
+import { SellerState } from '../../types/Sellers';
 import { fetchSellerByNameThunk } from './sellerThunks';
-
-interface SellerState {
-  seller: Seller | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-}
 
 const initialState: SellerState = {
   seller: null,

@@ -6,11 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import Loader from '../components/common/Loader';
 import ErrorBanner from '../components/common/ErrorBanner';
+import { selectProductStatus } from '../store/products/productsSelectors';
+import { ProductState } from '../types/Product';
 
 const ProductPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const status = useSelector((state: RootState) => state.product.status);
+  const status = useSelector<RootState, ProductState['status']>(
+    selectProductStatus
+  );
   const isLoading = status === 'loading';
   const isError = status === 'failed';
 

@@ -1,12 +1,6 @@
 // Interface for cart state
-import { CartProduct } from '../../types/Cart';
+import { CartProduct, CartState } from '../../types/Cart';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface CartState {
-  items: CartProduct[];
-  cartTotalQuantity: number;
-  cartTotalAmount: number;
-}
 
 // Get the cart items from local storage, if any, and set it as initial cart items
 const storedCartItems = localStorage.getItem('cartItems');
