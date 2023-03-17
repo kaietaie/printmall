@@ -63,6 +63,7 @@ export default async function getProduct(req, res) {
       join sizes ss on ss.size_id = p.product_size 
       where p.is_base_product = false and p.base_id = $1)   as sizes,
     s.seller_name,
+    p.product_seller_id as seller_id,
     p.product_price,
     (SELECT json_object_agg(size, size_id) 
     as sizes FROM sizes) as sku_size,
