@@ -7,6 +7,7 @@ import { selectSeller } from '../../store/seller/sellerSelectors';
 import { Seller } from '../../types/Sellers';
 
 import './SellerHero.sass';
+import AvatarUpload from './AvatarUpload';
 
 const SellerHero = () => {
   const seller = useSelector<RootState, Seller | null>(selectSeller);
@@ -15,11 +16,8 @@ const SellerHero = () => {
     <div className="seller-hero">
       <Banner />
       <div className="seller-hero-info">
-        <img
-          className="seller-hero-image"
-          src={defaultAvatar}
-          alt="Seller avatar"
-        />
+        <AvatarUpload />
+
         <h1 className="seller-hero-title">{seller?.seller_name}</h1>
         <span className="seller-hero-announcement">
           {seller?.seller_announcement}
