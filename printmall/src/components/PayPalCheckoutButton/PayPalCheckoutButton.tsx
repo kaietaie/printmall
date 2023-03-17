@@ -23,13 +23,11 @@ export default function PayPalCheckoutButton(product: Producto) {
       // use the "body" param to optionally pass additional order information
       // like product skus and quantities
       body: JSON.stringify({
-        cart: [
-          {
-            description: product.description,
-            quantity: '2',
-            price: product.price,
-          },
-        ],
+        cart: {
+          description: product.description,
+          quantity: '2',
+          sku: product.sku,
+        },
       }),
     })
       .then((response) => response.json())

@@ -2,10 +2,11 @@ import PayPalCheckoutButton from "../components/PayPalCheckoutButton/PayPalCheck
 interface Producto {
   description: string,
   price: number
+  sku: string
 }
 
 const CheckoutPage = () => {
-  const cart: Producto= { description: 'product', price: 10 };
+  const cart: Producto= { description: 'product', price: 10, sku: '1-106-1-2' };
   return <PayPalCheckoutButton product={cart} />;
 };
 
