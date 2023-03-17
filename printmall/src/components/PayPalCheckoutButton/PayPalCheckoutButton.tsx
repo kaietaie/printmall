@@ -1,20 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom"
-const PayPalButton = paypal.Buttons.driver("react", { React: window.React,
-    ReactDOM: window.ReactDOM });
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+const PayPalButton = paypal.Buttons.driver('react', {
+  React: window.React,
+  ReactDOM: window.ReactDOM,
+});
 
 interface Producto {
-    description: string,
-    price: number
-  }
+  description: string;
+  price: number;
+}
 
 export default function PayPalCheckoutButton(product: Producto) {
   const createOrder = (data: any) => {
     // Order is created on the server and the order id is returned
-    return fetch("http://localhost:5000/payment/create-paypal-order", {
-      method: "POST",
-       headers: {
-        "Content-Type": "application/json",
+    return fetch('http://localhost:5000/payment/create-paypal-order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
       // use the "body" param to optionally pass additional order information
       // like product skus and quantities
@@ -22,27 +26,26 @@ export default function PayPalCheckoutButton(product: Producto) {
         cart: [
           {
             description: product.description,
-            quantity: "2",
-            price: product.price
+            quantity: '2',
+            price: product.price,
           },
         ],
       }),
     })
-    .then((response) => response.json())
-    .then((order) => order.id);
+      .then((response) => response.json())
+      .then((order) => order.id);
   };
   const onApprove = (data: any) => {
-     // Order is captured on the server and the response is returned to the browser
-     return fetch("http://localhost:5000/payment/capture-paypal-order", {
-      method: "POST",
-       headers: {
-        "Content-Type": "application/json",
+    // Order is captured on the server and the response is returned to the browser
+    return fetch('http://localhost:5000/payment/capture-paypal-order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        orderID: data.orderID
-      })
-    })
-    .then((response) => response.json());
+        orderID: data.orderID,
+      }),
+    }).then((response) => response.json());
   };
   return (
     <PayPalButton
@@ -51,30 +54,29 @@ export default function PayPalCheckoutButton(product: Producto) {
     />
   );
 }
-
+//
 // import { PayPalButtons } from '@paypal/react-paypal-js';
-// import { useState } from 'react';
-
+//
 // const PayPalCheckoutButton = (props: any) => {
 //   const { product } = props;
-
+//
 //   const [paidFor, setPaidFor] = useState(false);
 //   const [error, setError] = useState('');
-
+//
 //   const handleApprove = (orderID: string) => {
 //     //call backend function to fulfill order
 //     setPaidFor(true);
 //     //refresh user`s account or subscription status
-
+//
 //     //if response returns error
 //     // setError('Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at mail@mail for assistance')
 //   };
-
+//
 //   if (paidFor) {
 //     //display success message
 //     alert('Thanks for purchase');
 //   }
-
+//
 //   if (error) {
 //     //display error message
 //     alert(error);
@@ -91,7 +93,7 @@ export default function PayPalCheckoutButton(product: Producto) {
 //       onClick={(data, actions) => {
 //         //validate on button click on client or server side
 //         const hasAlreadyBoughtProduct = false;
-
+//
 //         if (hasAlreadyBoughtProduct) {
 //           setError('You already bought this product');
 //           return actions.reject();
@@ -114,7 +116,7 @@ export default function PayPalCheckoutButton(product: Producto) {
 //       onApprove={async (data, actions) => {
 //         const order = await actions.order?.capture();
 //         console.log(order);
-
+//
 //         handleApprove(data.orderID);
 //       }}
 //       onCancel={() => {
@@ -129,5 +131,5 @@ export default function PayPalCheckoutButton(product: Producto) {
 //     />
 //   );
 // };
-
+//
 // export default PayPalCheckoutButton;

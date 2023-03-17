@@ -22,7 +22,7 @@ const cartSlice = createSlice({
     addItem: (state, action: PayloadAction<CartProduct>) => {
       const newItem = action.payload;
       const itemIndex = state.items.findIndex(
-        (item) => item.cart_product_id === newItem.cart_product_id
+        (item) => item.sku_cart_product_id === newItem.sku_cart_product_id
       );
       if (itemIndex >= 0) {
         state.items[itemIndex].quantity += 1;
@@ -36,7 +36,7 @@ const cartSlice = createSlice({
     // Remove an item from the cart
     removeItem: (state, action) => {
       state.items = state.items.filter(
-        (item) => item.cart_product_id !== action.payload
+        (item) => item.sku_cart_product_id !== action.payload
       );
       localStorage.setItem('cartItems', JSON.stringify(state.items));
     },
@@ -44,13 +44,13 @@ const cartSlice = createSlice({
     // Decrease the quantity of an item in the cart
     decreaseItem: (state, action) => {
       const itemIndex = state.items.findIndex(
-        (item) => item.cart_product_id === action.payload
+        (item) => item.sku_cart_product_id === action.payload
       );
       if (state.items[itemIndex].quantity > 1) {
         state.items[itemIndex].quantity -= 1;
       } else if (state.items[itemIndex].quantity === 1) {
         state.items = state.items.filter(
-          (item) => item.cart_product_id !== action.payload
+          (item) => item.sku_cart_product_id !== action.payload
         );
       }
       localStorage.setItem('cartItems', JSON.stringify(state.items));
@@ -84,6 +84,23 @@ const cartSlice = createSlice({
       state.cartTotalAmount = total;
     },
   },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(createOrder.pending, (state) => {
+  //       state.status = 'loading';
+  //     })
+  //     .addCase(createOrder.fulfilled, (state) => {
+  //       console.log('sdf');
+  //       state.items = [];
+  //       localStorage.setItem('cartItems', JSON.stringify(state.items));
+  //       state.status = 'succeeded';
+  //       state.error = null;
+  //     })
+  //     .addCase(createOrder.rejected, (state, action) => {
+  //       state.status = 'failed';
+  //       state.error = action.payload ?? 'Error creating order';
+  //     });
+  // },
 });
 
 export const { addItem, removeItem, decreaseItem, clearCart, getTotals } =
