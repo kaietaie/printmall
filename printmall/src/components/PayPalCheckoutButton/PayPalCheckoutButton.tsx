@@ -1,11 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import { PayPalButtons } from '@paypal/react-paypal-js';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-const PayPalButton = paypal.Buttons.driver('react', {
-  React: window.React,
-  ReactDOM: window.ReactDOM,
-});
+// const PayPalButton = paypal.Buttons.driver('react', {
+//   React: window.React,
+//   ReactDOM: window.ReactDOM,
+// });
 
 interface Producto {
   description: string;
@@ -46,7 +47,7 @@ export default function PayPalCheckoutButton(product: Producto) {
     }).then((response) => response.json());
   };
   return (
-    <PayPalButton
+    <PayPalButtons
       createOrder={(data: any) => createOrder(data)}
       onApprove={(data: any) => onApprove(data)}
     />
