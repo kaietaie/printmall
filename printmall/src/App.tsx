@@ -16,7 +16,7 @@ import './App.sass';
 
 function App() {
   return (
-     <PayPalScriptProvider
+    <PayPalScriptProvider
       options={{
         'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID || '',
       }}

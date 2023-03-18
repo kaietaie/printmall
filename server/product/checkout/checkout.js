@@ -1,11 +1,14 @@
 import getPrice from "../../functions/getPrice.js";
+import * as paypal from "./paypal-api.js";
 
 export default async function checkout (req, res) {
  // cart (sku, qty), need to find prices and calculate sub_total amount
- const order = req.body.order; // "order": [ { "sku": "1-80-5-4", "quantity": 4 },...]
+ const skus = req.body; // "skus": [ { "sku": "1-80-5-4", "quantity": 4 },...]
  let sub_total = 0;
- 
- const price = await getPrice(order.sku);
- sub_total = price * Number(order.quantity)
-return res.status(200).json({sub_total})
+ console.log(skus)
+ const price = await getPrice(skus.sku);
+ sub_total = price * Number(skus.quantity)
+ const client_token = await paypal.generateClientToken()
+ console.log(client_token)
+return res.status(200).json({client_token})
 }

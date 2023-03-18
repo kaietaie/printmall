@@ -42,6 +42,22 @@ export async function capturePayment(orderId) {
   return handleResponse(response);
 }
 
+// call this function to create your client token
+export async function generateClientToken() {
+  const accessToken = await generateAccessToken();
+  const response = await fetch(`${base}/v1/identity/generate-token`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Accept-Language": "en_US",
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data.client_token;
+}
+
+// access token is used to authenticate all REST API requests
 export async function generateAccessToken() {
   const auth = Buffer.from(PAYPAL_CLIENT_ID + ":" + PAYPAL_CLIENT_SECRET).toString("base64");
   const response = await fetch(`${base}/v1/oauth2/token`, {
