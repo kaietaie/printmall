@@ -9,13 +9,13 @@ import { PayPalButtons } from '@paypal/react-paypal-js';
 // });
 
 interface Producto {
-  price: number;
-  sku: string
+  sku: string;
   quantity: number
 }
 
-export default function PayPalCheckoutButton(product: Producto) {
-    const {sku , quantity} = product.product
+export default function PayPalCheckoutButton(product: Producto[]) {
+    const cart = product.product
+    console.log(cart)
   const createOrder = (data: any) => {
     // Order is created on the server and the order id is returned
     return fetch('http://localhost:5000/payment/create-paypal-order', {
@@ -26,10 +26,7 @@ export default function PayPalCheckoutButton(product: Producto) {
       // use the "body" param to optionally pass additional order information
       // like product skus and quantities
       body: JSON.stringify({
-        cart: {
-          quantity: '2',
-          sku: product.product.sku,
-        },
+        cart: cart
       }),
     })
       .then((response) => response.json())

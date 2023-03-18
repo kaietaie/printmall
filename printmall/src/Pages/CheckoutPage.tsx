@@ -11,10 +11,19 @@ interface Producto {
 
 const CheckoutPage = () => {
   // cart треба зробити щоб підтягувався з реальної корзини. з цими полями що я вказав.
-  const cart: Producto = {
-    sku: "1-106-1-2",
-    quantity: 1,
-  };
+  const cart: Producto[] = [
+    {
+      sku: '1-106-1-2',
+      quantity: 1,
+    },
+    {
+      sku: '1-63-1-2',
+      quantity: 2,
+    }, {
+      sku: '1-80-1-2',
+      quantity: 1,
+    },
+  ];
   return (
     <>
       <ReturnButton />

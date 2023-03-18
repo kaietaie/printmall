@@ -19,12 +19,27 @@ export async function createOrder(order) {
           amount: {
             currency_code: "EUR",
             value: order.total,
+            breakdown: {
+              item_total: {
+                currency_code: "EUR",
+                value: order.total,
+              }
+            },
           },
+          items: order.cart.map( ({name, quantity, price}) => {
+            return {
+              name: name,
+              unit_amount: {
+                currency_code: "EUR",
+                value: price,
+              },
+              quantity: quantity,
+            }
+          })
         },
       ],
     }),
   });
-
   return handleResponse(response);
 }
 
@@ -38,7 +53,6 @@ export async function capturePayment(orderId) {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-
   return handleResponse(response);
 }
 

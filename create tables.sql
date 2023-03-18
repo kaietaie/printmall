@@ -174,7 +174,11 @@ CREATE TABLE order_lines (
     tax                 real,
     total               real
 );
-
+CREATE TABLE payments (
+    payment_id          serial PRIMARY KEY,
+    paymentgateway_order_id     varchar(30),
+    payment_processer_responce		text
+);
 -- ----------------------------------------------------
 
 insert into seller_contact (
