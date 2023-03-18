@@ -11,14 +11,23 @@ import CheckoutPage from './Pages/CheckoutPage';
 // dotenv.config();
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // require('dotenv').config();
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
+import { CartState } from './types/Cart';
+import { selectClientToken } from './store/cart/cartSelectors';
 
 import './App.sass';
 
 function App() {
+  const clientToken = useSelector<RootState, CartState['clientToken']>(
+    selectClientToken
+  );
+
   return (
     <PayPalScriptProvider
       options={{
         'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID || '',
+        'token:': clientToken,
       }}
     >
       <BrowserRouter>
