@@ -27,7 +27,7 @@ function App() {
     <PayPalScriptProvider
       options={{
         'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID || '',
-        'token:': clientToken,
+        currency:"EUR",
       }}
     >
       <BrowserRouter>
