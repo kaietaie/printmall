@@ -1,7 +1,5 @@
 import * as paypal from "./paypal-api.js";
 
-const total_price = 125;
-
 // Call API with your client and get a response for your call
 export default async function capturePayPalOrder(req, res) {
   const { orderID } = req.body;

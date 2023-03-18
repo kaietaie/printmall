@@ -5,14 +5,15 @@ import PayPalCheckoutButton from '../components/PayPalCheckoutButton/PayPalCheck
 import ReturnButton from '../components/common/Buttons/ReturnButton';
 
 interface Producto {
-  price: number;
   sku: string;
+  quantity: number
 }
 
 const CheckoutPage = () => {
+  // cart треба зробити щоб підтягувався з реальної корзини. з цими полями що я вказав.
   const cart: Producto = {
-    price: 22,
     sku: "1-106-1-2",
+    quantity: 1,
   };
   return (
     <>

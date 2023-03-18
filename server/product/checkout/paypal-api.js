@@ -6,7 +6,6 @@ const base = "https://api-m.sandbox.paypal.com";
 export async function createOrder(order) {
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
-  console.log("create Order")
   const response = await fetch(url, {
     method: "post",
     headers: {
@@ -69,7 +68,6 @@ export async function generateAccessToken() {
     },
   });
   const jsonData = await handleResponse(response);
-  console.log("jsonData.access_token: "+ jsonData.access_token)
   return jsonData.access_token;
 }
 
