@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { PayPalButtons } from '@paypal/react-paypal-js';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 // const PayPalButton = paypal.Buttons.driver('react', {
 //   React: window.React,
 //   ReactDOM: window.ReactDOM,

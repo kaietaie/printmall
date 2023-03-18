@@ -5,7 +5,7 @@ export const sendSkus = async (skus: SkuCartItem[]) => {
   try {
     console.log(skus);
     const response = await axios.post(
-      'http://localhost:5000/payment/createOrder',
+      'http://localhost:5000/payment/checkout',
       { skus }
     );
     return response.data;
