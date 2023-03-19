@@ -7,27 +7,16 @@ import SellerPage from './Pages/SellerPage';
 import ProductPage from './Pages/ProductPage';
 import CartPage from './Pages/CartPage';
 import CheckoutPage from './Pages/CheckoutPage';
-// import dotenv from 'dotenv';
-// dotenv.config();
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// require('dotenv').config();
-import { useSelector } from 'react-redux';
-import { RootState } from './store/store';
-import { CartState } from './types/Cart';
-import { selectClientToken } from './store/cart/cartSelectors';
+import CompletePage from './Pages/CompletePage';
 
 import './App.sass';
 
 function App() {
-  const clientToken = useSelector<RootState, CartState['clientToken']>(
-    selectClientToken
-  );
-
   return (
     <PayPalScriptProvider
       options={{
         'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID || '',
-        currency:"EUR",
+        currency: 'EUR',
       }}
     >
       <BrowserRouter>
@@ -39,6 +28,7 @@ function App() {
             <Route path="/products/:productId" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/complete" element={<CompletePage />} />
           </Routes>
         </div>
       </BrowserRouter>

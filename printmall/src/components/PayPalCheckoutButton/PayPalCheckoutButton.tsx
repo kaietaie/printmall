@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import { SkuCartItem } from '../../types/Cart';
 import { useDispatch, useSelector } from 'react-redux';
@@ -5,6 +6,7 @@ import { AppDispatch, RootState } from '../../store/store';
 import { selectPayPalCartItems } from '../../store/cart/cartSelectors';
 import axios from 'axios';
 import { clearCart } from '../../store/cart/cartSlice';
+import { useNavigate } from 'react-router-dom';
 // const PayPalButton = paypal.Buttons.driver('react', {
 //   React: window.React,
 //   ReactDOM: window.ReactDOM,
@@ -12,6 +14,8 @@ import { clearCart } from '../../store/cart/cartSlice';
 
 const PayPalCheckoutButton = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const [paidFor, setPaidFor] = useState(false);
   const skuCartItems = useSelector<RootState, SkuCartItem[]>(
     selectPayPalCartItems
   );
@@ -44,6 +48,7 @@ const PayPalCheckoutButton = () => {
 
       if (response.data.status === 'COMPLETED') {
         dispatch(clearCart());
+        setPaidFor(true);
       }
 
       return response.data;
@@ -51,6 +56,10 @@ const PayPalCheckoutButton = () => {
       console.error(error);
     }
   };
+
+  if (paidFor) {
+    navigate('/complete');
+  }
 
   return (
     <PayPalButtons
