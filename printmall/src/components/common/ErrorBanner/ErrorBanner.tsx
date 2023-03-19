@@ -2,9 +2,9 @@ import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
 import errorImage from '../../images/fail_banner.png';
 import Button from '../Buttons';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import './ErrorBanner.sass';
-import { useTranslation } from 'react-i18next';
 
 const ErrorBanner = () => {
   const navigate = useNavigate();
