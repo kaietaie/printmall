@@ -15,14 +15,7 @@ const CheckoutPage = () => {
     {
       sku: '1-106-1-2',
       quantity: 1,
-    },
-    {
-      sku: '1-63-1-2',
-      quantity: 2,
-    }, {
-      sku: '1-80-1-2',
-      quantity: 1,
-    },
+    }
   ];
   return (
     <>

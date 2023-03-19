@@ -12,15 +12,10 @@ export default async function createPayPalOrder(req, res) {
     cart[i].name = name.product_name;
     cart[i].price = price.product_price;
   }
-  console.log(cart);
   const order = { total, cart };
   try {
-    const createData = await paypal.createOrder(order);
-    const paymentId = await saveToDB(createData);
-    if(createData.status === "CREATED") {
-      // const makeOrder = await makeOrder()
-    }
-    res.json(paymentId);
+    const createData = await paypal.createOrder(order);  
+    res.json(createData);
   } catch (err) {
     res.status(500).send(err.message);
   }

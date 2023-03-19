@@ -1,12 +1,12 @@
 import { pool } from "../dbConnection.js";
 
-export default async function saveToDB(createData) {
+export default async function saveToDB(captureData) {
   try {
     const sql = `insert into payments( paymentgateway_order_id, payment_processer_responce ) 
     values ($1, $2)
     RETURNING payment_id;`;
     
-    const request = await pool.query(sql, [createData.id, createData]);
+    const request = await pool.query(sql, [captureData.id, captureData]);
     // if (
     //   find?.rows[0]?.archivated === true ||
     //   find?.rows[0]?.enabled === false

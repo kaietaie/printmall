@@ -42,7 +42,7 @@ export default function PayPalCheckoutButton(product: Producto[]) {
       body: JSON.stringify({
         orderID: data.orderID,
       }),
-    }).then((response) => response.json());
+    }).then((response) =>  response.json());
   };
   return (
     <PayPalButtons
