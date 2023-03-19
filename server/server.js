@@ -9,6 +9,7 @@ import { productRouter } from "./routes/product.route.js";
 import { sellerRouter } from "./routes/seller.route.js";
 import fileUpload from "express-fileupload";
 import { paymentRouter } from "./routes/payment.route.js";
+import { newslistRouter } from "./routes/newslist.route.js";
 
 const host = process.env.HOST || "localhost";
 const port = process.env.SERVER_PORT || 5000;
@@ -29,7 +30,7 @@ app.use(fileUpload({
   createParentPath: true 
 }));
 app.use('/public',express.static('public'));
-
+app.use('/newslist', newslistRouter);
 app.use('/blog', blogRouter);
 app.use('/products', productRouter);
 app.use('/seller', sellerRouter);
