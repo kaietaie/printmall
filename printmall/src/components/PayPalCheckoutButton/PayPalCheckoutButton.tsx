@@ -7,23 +7,20 @@ import { selectPayPalCartItems } from '../../store/cart/cartSelectors';
 import axios from 'axios';
 import { clearCart } from '../../store/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
-// const PayPalButton = paypal.Buttons.driver('react', {
-//   React: window.React,
-//   ReactDOM: window.ReactDOM,
-// });
+import ErrorBanner from '../common/ErrorBanner';
 
 const PayPalCheckoutButton = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [paidFor, setPaidFor] = useState(false);
+  const [paidFor, setPaidFor] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
   const skuCartItems = useSelector<RootState, SkuCartItem[]>(
     selectPayPalCartItems
   );
 
-  const createOrder = async (data: any) => {
-    // Order is created on the server and the order id is returned
+  const handleCreateOrder = async (data: any): Promise<string> => {
     try {
-      const response = await axios.post(
+      const response = await axios.post<{ id: string }>(
         'http://localhost:5000/payment/create-paypal-order',
         {
           cart: skuCartItems,
@@ -33,13 +30,14 @@ const PayPalCheckoutButton = () => {
       return response.data.id;
     } catch (error) {
       console.error(error);
+      setError('Failed to create PayPal order');
       throw new Error('Failed to create PayPal order');
     }
   };
 
-  const handleApprove = async (data: any) => {
+  const handleApprove = async (data: any): Promise<void> => {
     try {
-      const response = await axios.post(
+      const response = await axios.post<{ status: string }>(
         'http://localhost:5000/payment/capture-paypal-order',
         {
           orderID: data.orderID,
@@ -50,10 +48,9 @@ const PayPalCheckoutButton = () => {
         dispatch(clearCart());
         setPaidFor(true);
       }
-
-      return response.data;
     } catch (error) {
       console.error(error);
+      setError('Error capturing PayPal order');
     }
   };
 
@@ -61,15 +58,26 @@ const PayPalCheckoutButton = () => {
     navigate('/complete');
   }
 
+  if (error) {
+    return <ErrorBanner />;
+  }
+
   return (
     <PayPalButtons
-      createOrder={(data: any) => createOrder(data)}
-      onApprove={(data: any) => handleApprove(data)}
+      // fundingSource={FUNDING.PAYPAL}
+      createOrder={handleCreateOrder}
+      onApprove={handleApprove}
+      onError={(err) => {
+        setError(err.toString());
+        console.error('PayPal Checkout onError', err);
+      }}
+      style={{ color: 'blue', shape: 'pill', height: 55 }}
     />
   );
 };
 
 export default PayPalCheckoutButton;
+
 //
 // import { PayPalButtons } from '@paypal/react-paypal-js';
 //
