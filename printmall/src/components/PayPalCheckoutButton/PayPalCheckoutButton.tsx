@@ -4,10 +4,10 @@ import { SkuCartItem } from '../../types/Cart';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { selectPayPalCartItems } from '../../store/cart/cartSelectors';
-import axios from 'axios';
 import { clearCart } from '../../store/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import ErrorBanner from '../common/ErrorBanner';
+import { capturePayPalOrder, createPayPalOrder } from '../../api/paymentApi';
 
 const PayPalCheckoutButton = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,14 +20,7 @@ const PayPalCheckoutButton = () => {
 
   const handleCreateOrder = async (data: any): Promise<string> => {
     try {
-      const response = await axios.post<{ id: string }>(
-        'http://localhost:5000/payment/create-paypal-order',
-        {
-          cart: skuCartItems,
-        }
-      );
-
-      return response.data.id;
+      return await createPayPalOrder(skuCartItems);
     } catch (error) {
       console.error(error);
       setError('Failed to create PayPal order');
@@ -37,14 +30,9 @@ const PayPalCheckoutButton = () => {
 
   const handleApprove = async (data: any): Promise<void> => {
     try {
-      const response = await axios.post<{ status: string }>(
-        'http://localhost:5000/payment/capture-paypal-order',
-        {
-          orderID: data.orderID,
-        }
-      );
+      const response = await capturePayPalOrder(data.orderID);
 
-      if (response.data.status === 'COMPLETED') {
+      if (response.status === 'COMPLETED') {
         dispatch(clearCart());
         setPaidFor(true);
       }
