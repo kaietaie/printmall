@@ -9,8 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import ErrorBanner from '../common/ErrorBanner';
 import { capturePayPalOrder, createPayPalOrder } from '../../api/paymentApi';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const PayPalCheckoutButton = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [paidFor, setPaidFor] = useState<boolean>(false);
@@ -61,7 +63,7 @@ const PayPalCheckoutButton = () => {
         console.error('PayPal Checkout onError', err);
       }}
       onCancel={() => {
-        toast.info('You canceled purchasing');
+        toast.info(t('checkout.cancelMessage'));
       }}
       style={{ color: 'blue', shape: 'pill', height: 55 }}
     />

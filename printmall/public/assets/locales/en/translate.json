@@ -44,5 +44,8 @@
     "title": "Oops!",
     "message": "Something went wrong!",
     "button": "Back to seller page"
+  },
+  "checkout": {
+    "cancelMessage": "You canceled purchasing"
   }
 }
