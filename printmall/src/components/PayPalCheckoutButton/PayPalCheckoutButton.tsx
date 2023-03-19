@@ -8,6 +8,7 @@ import { clearCart } from '../../store/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import ErrorBanner from '../common/ErrorBanner';
 import { capturePayPalOrder, createPayPalOrder } from '../../api/paymentApi';
+import { toast } from 'react-toastify';
 
 const PayPalCheckoutButton = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -58,6 +59,9 @@ const PayPalCheckoutButton = () => {
       onError={(err) => {
         setError(err.toString());
         console.error('PayPal Checkout onError', err);
+      }}
+      onCancel={() => {
+        toast.info('You canceled purchasing');
       }}
       style={{ color: 'blue', shape: 'pill', height: 55 }}
     />

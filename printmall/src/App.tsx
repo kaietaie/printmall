@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import Header from './components/Header';
+import { ToastContainer } from 'react-toastify';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import Header from './components/Header';
 import HomePage from './Pages/HomePage';
 import SellerPage from './Pages/SellerPage';
 import ProductPage from './Pages/ProductPage';
@@ -9,6 +10,7 @@ import CartPage from './Pages/CartPage';
 import CheckoutPage from './Pages/CheckoutPage';
 import CompletePage from './Pages/CompletePage';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './App.sass';
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
       }}
     >
       <BrowserRouter>
+        <ToastContainer />
         <Header />
         <div className="container">
           <Routes>
