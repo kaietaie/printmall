@@ -1,5 +1,5 @@
 import { pool } from "../dbConnection.js";
-
+// 
 export default async function getPriceOrName(sku, value) {
   try {
     const product_id = sku.split('-')[1];
