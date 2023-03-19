@@ -1,56 +1,66 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { PayPalButtons } from '@paypal/react-paypal-js';
+import { SkuCartItem } from '../../types/Cart';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { selectPayPalCartItems } from '../../store/cart/cartSelectors';
+import axios from 'axios';
+import { clearCart } from '../../store/cart/cartSlice';
 // const PayPalButton = paypal.Buttons.driver('react', {
 //   React: window.React,
 //   ReactDOM: window.ReactDOM,
 // });
 
-interface Producto {
-  sku: string;
-  quantity: number
-}
+const PayPalCheckoutButton = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const skuCartItems = useSelector<RootState, SkuCartItem[]>(
+    selectPayPalCartItems
+  );
 
-export default function PayPalCheckoutButton(product: Producto[]) {
-    const cart = product.product
-    console.log(cart)
-  const createOrder = (data: any) => {
+  const createOrder = async (data: any) => {
     // Order is created on the server and the order id is returned
-    return fetch('http://localhost:5000/payment/create-paypal-order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // use the "body" param to optionally pass additional order information
-      // like product skus and quantities
-      body: JSON.stringify({
-        cart: cart
-      }),
-    })
-      .then((response) => response.json())
-      .then((order) => order.id);
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/payment/create-paypal-order',
+        {
+          cart: skuCartItems,
+        }
+      );
+
+      return response.data.id;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to create PayPal order');
+    }
   };
-  const onApprove = (data: any) => {
-    // Order is captured on the server and the response is returned to the browser
-    return fetch('http://localhost:5000/payment/capture-paypal-order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        orderID: data.orderID,
-      }),
-    }).then((response) =>  response.json());
+
+  const handleApprove = async (data: any) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/payment/capture-paypal-order',
+        {
+          orderID: data.orderID,
+        }
+      );
+
+      if (response.data.status === 'COMPLETED') {
+        dispatch(clearCart());
+      }
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <PayPalButtons
       createOrder={(data: any) => createOrder(data)}
-      onApprove={(data: any) => onApprove(data)}
+      onApprove={(data: any) => handleApprove(data)}
     />
   );
-}
+};
+
+export default PayPalCheckoutButton;
 //
 // import { PayPalButtons } from '@paypal/react-paypal-js';
 //
