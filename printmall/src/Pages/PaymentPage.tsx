@@ -17,8 +17,10 @@ const PaymentPage = () => {
   return (
     <div className="payment-page">
       <ReturnButton />
-      <PayPalCheckoutButton />
-      <OrderDetails />
+      <div className="payment-page-content">
+        <PayPalCheckoutButton />
+        <OrderDetails />
+      </div>
     </div>
   );
 };

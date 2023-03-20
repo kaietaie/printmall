@@ -1,12 +1,18 @@
 import React, { memo } from 'react';
-import { ReactComponent as CloseIcon } from '../images/close-icon.svg';
-import { CartProduct } from '../../types/Cart';
-import QuantityChangeButton from '../common/Buttons/QuantityChangeButton';
-import { addItem, decreaseItem, removeItem } from '../../store/cart/cartSlice';
+import { ReactComponent as CloseIcon } from '../../images/close-icon.svg';
+import { CartProduct } from '../../../types/Cart';
+import QuantityChangeButton from '../Buttons/QuantityChangeButton';
+import {
+  addItem,
+  decreaseItem,
+  removeItem,
+} from '../../../store/cart/cartSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store/store';
-import defaultProductImage from '../images/defaultImages/product_default.png';
-import ImageComponent from '../common/ImageComponent';
+import { AppDispatch } from '../../../store/store';
+import defaultProductImage from '../../images/defaultImages/product_default.png';
+import ImageComponent from '../ImageComponent';
+
+import './CartProductItem.sass';
 
 interface CartProductItemProps {
   product: CartProduct;
