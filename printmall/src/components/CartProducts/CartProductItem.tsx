@@ -15,7 +15,7 @@ const CartProductItem: React.FC<CartProductItemProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleDecrease = (): void => {
-    dispatch(decreaseItem(product.cart_product_id));
+    dispatch(decreaseItem(product.sku_cart_product_id));
   };
 
   const handleIncrease = (): void => {
@@ -23,7 +23,7 @@ const CartProductItem: React.FC<CartProductItemProps> = ({ product }) => {
   };
 
   const handleRemove = (): void => {
-    dispatch(removeItem(product.cart_product_id));
+    dispatch(removeItem(product.sku_cart_product_id));
   };
 
   return (

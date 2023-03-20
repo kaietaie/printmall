@@ -18,6 +18,7 @@ import filterAvailableColorsBySize from '../../utils/filterAvailableColorsBySize
 import { selectProduct } from '../../store/products/productsSelectors';
 import { Product } from '../../types/Product';
 import Loader from '../common/Loader';
+import makeSku from '../../utils/makeSku';
 
 import './ProductContent.sass';
 
@@ -36,13 +37,16 @@ const ProductContent = () => {
   }
 
   const {
+    product_id,
+    seller_id,
     colors,
     size_color,
     sizes,
     product_price,
-    product_id,
     product_name,
     product_description,
+    sku_color,
+    sku_size,
   } = product;
 
   const productSize = selectedSize || sizes[0];
@@ -58,23 +62,29 @@ const ProductContent = () => {
 
   const firstProductImage = availableColors[0].product_image;
   const productImage = tShirtImage || firstProductImage;
-  const cartProductId =
-    product_name + (selectedSize || sizes[0]) + selectedColor;
 
+  const sku_cart_product_id = makeSku({
+    seller_id,
+    product_id,
+    product_size: sku_size[selectedSize || sizes[0]],
+    product_color: sku_color[selectedColor],
+  });
   const cartProduct: CartProduct = {
-    product_id: product_id,
-    cart_product_id: cartProductId,
-    product_name: product_name,
+    product_id,
+    sku_cart_product_id,
+    product_name,
     product_image: productImage,
-    product_price: product_price,
+    product_price,
     product_color: selectedColor,
     product_size: productSize,
-    quantity: quantity,
+    quantity,
   };
 
-  const handleColorPick = (color: string) => {
-    setSelectedColor(color);
-  };
+  function handleColorPick(color: string | undefined) {
+    if (color) {
+      setSelectedColor(color);
+    }
+  }
 
   const handleIncreaseQuantity = () => {
     dispatch(addItem(cartProduct));
@@ -95,6 +105,7 @@ const ProductContent = () => {
     dispatch(addItem(cartProduct));
     navigate(`/cart`);
   };
+
 
   return (
     <div className="product-content">

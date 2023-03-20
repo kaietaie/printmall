@@ -13,6 +13,7 @@ import {
   selectCartItems,
   selectCartTotalAmount,
 } from '../../store/cart/cartSelectors';
+import { createOrder } from '../../store/cart/cartThunks';
 
 import './CartProducts.sass';
 
@@ -36,8 +37,12 @@ const CartProducts: React.FC = () => {
   };
 
   const handleGoToCheckout = useCallback(() => {
+    const cartItemIds = items.map((item) => {
+      return { sku: item.sku_cart_product_id, quantity: item.quantity };
+    });
+    dispatch(createOrder(cartItemIds));
     navigate(`/checkout`);
-  }, [navigate]);
+  }, [dispatch, items, navigate]);
 
   return (
     <div className="cart-products">
@@ -48,7 +53,10 @@ const CartProducts: React.FC = () => {
           <div className="cart-products-container">
             <div className="cart-products-items">
               {items.map((item) => (
-                <CartProductItem key={item.cart_product_id} product={item} />
+                <CartProductItem
+                  key={item.sku_cart_product_id}
+                  product={item}
+                />
               ))}
             </div>
             <button
