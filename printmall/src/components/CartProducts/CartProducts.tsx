@@ -45,9 +45,7 @@ const CartProducts: React.FC = () => {
   }, [dispatch, items, navigate]);
 
   return (
-    <div className="cart-products">
-      <ReturnButton />
-      <h1 className="cart-products-title">{t('cart.title')}</h1>
+    <>
       {items.length > 0 ? (
         <>
           <div className="cart-products-container">
@@ -84,7 +82,7 @@ const CartProducts: React.FC = () => {
       ) : (
         <div>{t('cart.emptyMessage')}</div>
       )}
-    </div>
+    </>
   );
 };
 

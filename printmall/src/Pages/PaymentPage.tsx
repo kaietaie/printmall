@@ -1,10 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React, { useEffect } from 'react';
-import PayPalCheckoutButton from '../components/PayPalCheckoutButton/PayPalCheckoutButton';
 import ReturnButton from '../components/common/Buttons/ReturnButton';
 import OrderDetails from '../components/OrderDetails';
 import PaymentOptions from '../components/PaymentOptions/PaymentOptions';
+import PurchaseStatus from '../components/common/PurchaseStatus';
 
 const PaymentPage = () => {
   useEffect(() => {
@@ -18,6 +16,7 @@ const PaymentPage = () => {
   return (
     <div className="payment-page">
       <ReturnButton />
+      <PurchaseStatus currentStep="payment" />
       <div className="payment-page-content">
         <PaymentOptions />
         <OrderDetails />

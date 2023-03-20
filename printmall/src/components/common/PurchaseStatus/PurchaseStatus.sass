@@ -1,0 +1,39 @@
+@import '../../../styles/variables'
+
+.purchase-status
+  margin: 35px auto 5px
+  width: fit-content
+
+.purchase-status-indicators
+  width: fit-content
+  margin: 0 auto 5px
+  display: flex
+  align-items: center
+  //margin-bottom: 5px
+
+.purchase-status-indicator
+  background-color: $secondary
+  border-radius: 50%
+  width: 16px
+  height: 16px
+
+  &.active
+    background-color: $primary
+
+
+.purchase-status-line
+  border: 1px solid $secondary
+  width: 135px
+
+.purchase-status-page-names
+  width: 380px
+  display: flex
+  justify-content: space-between
+
+.purchase-status-page-name
+  color: $secondary
+  font-size: 14px
+  line-height: 20px
+
+  &.active
+    color: $typography
