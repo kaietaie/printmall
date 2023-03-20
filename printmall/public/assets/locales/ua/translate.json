@@ -1,6 +1,7 @@
 {
   "common": {
-    "returnButton": "Назад"
+    "returnButton": "Назад",
+    "cartItemQuantity": "шт"
   },
   "header": {
     "liveChat": "Живий Чат!"
@@ -44,5 +45,11 @@
     "title": "От халепа!",
     "message": "Шось пішло не так!",
     "button": "До сторінки продавця"
+  },
+  "payment": {
+    "cancelMessage": "Ви скасували платіж",
+    "optionsTitle": "Оберіть спосіб оплати",
+    "orderDetailsTitle": "Деталі замовлення",
+    "orderDetailsMessage": "Вартість доставки залежить від вашого місцезнаходження"
   }
 }

@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { clearCart, getTotals } from '../../store/cart/cartSlice';
-import CartProductItem from './CartProductItem';
+import CartProductItem from '../common/CartProductItem/CartProductItem';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import Button from '../common/Buttons';
@@ -41,14 +41,11 @@ const CartProducts: React.FC = () => {
       return { sku: item.sku_cart_product_id, quantity: item.quantity };
     });
     dispatch(createOrder(cartItemIds));
-    dispatch(clearCart());
-    navigate(`/checkout`);
+    navigate(`/payment`);
   }, [dispatch, items, navigate]);
 
   return (
-    <div className="cart-products">
-      <ReturnButton />
-      <h1 className="cart-products-title">{t('cart.title')}</h1>
+    <>
       {items.length > 0 ? (
         <>
           <div className="cart-products-container">
@@ -85,7 +82,7 @@ const CartProducts: React.FC = () => {
       ) : (
         <div>{t('cart.emptyMessage')}</div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,13 +1,10 @@
-import CartProducts from '../components/CartProducts';
 import React, { useEffect } from 'react';
-import './Pages.sass';
 import ReturnButton from '../components/common/Buttons/ReturnButton';
-import { useTranslation } from 'react-i18next';
+import OrderDetails from '../components/OrderDetails';
+import PaymentOptions from '../components/PaymentOptions/PaymentOptions';
 import PurchaseStatus from '../components/common/PurchaseStatus';
 
-const CartPage = () => {
-  const { t } = useTranslation();
-
+const PaymentPage = () => {
   useEffect(() => {
     document.body.classList.add('purchasing-page');
 
@@ -17,13 +14,15 @@ const CartPage = () => {
   }, []);
 
   return (
-    <div className="cart-products">
+    <div className="payment-page">
       <ReturnButton />
-      <PurchaseStatus currentStep="cart" />
-      <h1 className="cart-products-title">{t('cart.title')}</h1>
-      <CartProducts />
+      <PurchaseStatus currentStep="payment" />
+      <div className="payment-page-content">
+        <PaymentOptions />
+        <OrderDetails />
+      </div>
     </div>
   );
 };
 
-export default CartPage;
+export default PaymentPage;

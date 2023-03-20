@@ -1,56 +1,80 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import { useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
-// const PayPalButton = paypal.Buttons.driver('react', {
-//   React: window.React,
-//   ReactDOM: window.ReactDOM,
-// });
+import { SkuCartItem } from '../../types/Cart';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { selectPayPalCartItems } from '../../store/cart/cartSelectors';
+import { clearCart } from '../../store/cart/cartSlice';
+import { useNavigate } from 'react-router-dom';
+import ErrorBanner from '../common/ErrorBanner';
+import { capturePayPalOrder, createPayPalOrder } from '../../api/paymentApi';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
-interface Producto {
-  sku: string;
-  quantity: number
-}
+import './PayPalCheckoutButton.sass';
 
-export default function PayPalCheckoutButton(product: Producto[]) {
-    const cart = product.product
-    console.log(cart)
-  const createOrder = (data: any) => {
-    // Order is created on the server and the order id is returned
-    return fetch('http://localhost:5000/payment/create-paypal-order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // use the "body" param to optionally pass additional order information
-      // like product skus and quantities
-      body: JSON.stringify({
-        cart: cart
-      }),
-    })
-      .then((response) => response.json())
-      .then((order) => order.id);
+const PayPalCheckoutButton = () => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const [paidFor, setPaidFor] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const skuCartItems = useSelector<RootState, SkuCartItem[]>(
+    selectPayPalCartItems
+  );
+
+  const handleCreateOrder = async (data: any): Promise<string> => {
+    try {
+      return await createPayPalOrder(skuCartItems);
+    } catch (error) {
+      console.error(error);
+      setError('Failed to create PayPal order');
+      throw new Error('Failed to create PayPal order');
+    }
   };
-  const onApprove = (data: any) => {
-    // Order is captured on the server and the response is returned to the browser
-    return fetch('http://localhost:5000/payment/capture-paypal-order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        orderID: data.orderID,
-      }),
-    }).then((response) =>  response.json());
+
+  const handleApprove = async (data: any): Promise<void> => {
+    try {
+      const response = await capturePayPalOrder(data.orderID);
+
+      if (response.status === 'COMPLETED') {
+        dispatch(clearCart());
+        setPaidFor(true);
+      }
+    } catch (error) {
+      console.error(error);
+      setError('Error capturing PayPal order');
+    }
   };
+
+  if (paidFor) {
+    navigate('/complete');
+  }
+
+  if (error) {
+    return <ErrorBanner />;
+  }
+
   return (
     <PayPalButtons
-      createOrder={(data: any) => createOrder(data)}
-      onApprove={(data: any) => onApprove(data)}
+      className="pay-pal-buttons"
+      // fundingSource={FUNDING.PAYPAL}
+      createOrder={handleCreateOrder}
+      onApprove={handleApprove}
+      onError={(err) => {
+        setError(err.toString());
+        console.error('PayPal Checkout onError', err);
+      }}
+      onCancel={() => {
+        toast.info(t('payment.cancelMessage'));
+      }}
+      style={{ color: 'blue', shape: 'pill', height: 55 }}
     />
   );
-}
+};
+
+export default PayPalCheckoutButton;
+
 //
 // import { PayPalButtons } from '@paypal/react-paypal-js';
 //

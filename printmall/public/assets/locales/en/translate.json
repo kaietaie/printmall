@@ -1,6 +1,7 @@
 {
   "common": {
-    "returnButton": "Back"
+    "returnButton": "Back",
+    "cartItemQuantity": "pc"
   },
   "header": {
     "liveChat": "Live Chat!"
@@ -44,5 +45,11 @@
     "title": "Oops!",
     "message": "Something went wrong!",
     "button": "Back to seller page"
+  },
+  "payment": {
+    "cancelMessage": "You canceled purchasing",
+    "optionsTitle": "Choose a payment method",
+    "orderDetailsTitle": "Order details",
+    "orderDetailsMessage": "Shipping costs depend on your location"
   }
 }
