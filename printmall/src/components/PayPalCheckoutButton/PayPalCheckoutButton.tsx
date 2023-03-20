@@ -11,6 +11,8 @@ import { capturePayPalOrder, createPayPalOrder } from '../../api/paymentApi';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
+import './PayPalCheckoutButton.sass';
+
 const PayPalCheckoutButton = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
@@ -55,6 +57,7 @@ const PayPalCheckoutButton = () => {
 
   return (
     <PayPalButtons
+      className="pay-pal-buttons"
       // fundingSource={FUNDING.PAYPAL}
       createOrder={handleCreateOrder}
       onApprove={handleApprove}
@@ -63,7 +66,7 @@ const PayPalCheckoutButton = () => {
         console.error('PayPal Checkout onError', err);
       }}
       onCancel={() => {
-        toast.info(t('checkout.cancelMessage'));
+        toast.info(t('payment.cancelMessage'));
       }}
       style={{ color: 'blue', shape: 'pill', height: 55 }}
     />

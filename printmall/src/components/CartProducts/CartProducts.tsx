@@ -41,7 +41,7 @@ const CartProducts: React.FC = () => {
       return { sku: item.sku_cart_product_id, quantity: item.quantity };
     });
     dispatch(createOrder(cartItemIds));
-    navigate(`/checkout`);
+    navigate(`/payment`);
   }, [dispatch, items, navigate]);
 
   return (

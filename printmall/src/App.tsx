@@ -7,7 +7,7 @@ import HomePage from './Pages/HomePage';
 import SellerPage from './Pages/SellerPage';
 import ProductPage from './Pages/ProductPage';
 import CartPage from './Pages/CartPage';
-import CheckoutPage from './Pages/CheckoutPage';
+import PaymentPage from './Pages/PaymentPage';
 import CompletePage from './Pages/CompletePage';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,7 +30,7 @@ function App() {
             <Route path="/seller/:sellerName" element={<SellerPage />} />
             <Route path="/products/:productId" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
             <Route path="/complete" element={<CompletePage />} />
           </Routes>
         </div>

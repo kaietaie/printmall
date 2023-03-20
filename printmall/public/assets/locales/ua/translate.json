@@ -45,7 +45,7 @@
     "message": "Шось пішло не так!",
     "button": "До сторінки продавця"
   },
-  "checkout": {
+  "payment": {
     "cancelMessage": "Ви скасували платіж"
   }
 }

@@ -45,7 +45,7 @@
     "message": "Something went wrong!",
     "button": "Back to seller page"
   },
-  "checkout": {
+  "payment": {
     "cancelMessage": "You canceled purchasing"
   }
 }

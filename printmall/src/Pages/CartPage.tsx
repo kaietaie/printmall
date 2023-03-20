@@ -4,10 +4,10 @@ import './Pages.sass';
 
 const CartPage = () => {
   useEffect(() => {
-    document.body.classList.add('cart-page');
+    document.body.classList.add('purchasing-page');
 
     return () => {
-      document.body.classList.remove('cart-page');
+      document.body.classList.remove('purchasing-page');
     };
   }, []);
 
