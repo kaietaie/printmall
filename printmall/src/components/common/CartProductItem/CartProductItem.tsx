@@ -13,11 +13,17 @@ import defaultProductImage from '../../images/defaultImages/product_default.png'
 import ImageComponent from '../ImageComponent';
 
 import './CartProductItem.sass';
+import { useTranslation } from 'react-i18next';
 
 interface CartProductItemProps {
   product: CartProduct;
+  isOrderDetails?: boolean;
 }
-const CartProductItem: React.FC<CartProductItemProps> = ({ product }) => {
+const CartProductItem: React.FC<CartProductItemProps> = ({
+  product,
+  isOrderDetails,
+}) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleDecrease = (): void => {
@@ -44,18 +50,25 @@ const CartProductItem: React.FC<CartProductItemProps> = ({ product }) => {
 
         <div>
           <span className="cart-product-name">{product.product_name}</span>
-          <span className="cart-product-options">
-            {product.product_color}, {product.product_size}
-          </span>
+          <div className="cart-product-options">
+            <span className="cart-product-options-color">
+              {product.product_color}
+            </span>
+            <span>{`, ${product.product_size}`}</span>
+            {isOrderDetails &&
+              ` x ${product.quantity}${t('common.cartItemQuantity')}`}
+          </div>
         </div>
       </div>
 
       <div className="cart-product-actions">
-        <QuantityChangeButton
-          quantity={product.quantity}
-          onIncrease={handleIncrease}
-          onDecrease={handleDecrease}
-        />
+        {!isOrderDetails && (
+          <QuantityChangeButton
+            quantity={product.quantity}
+            onIncrease={handleIncrease}
+            onDecrease={handleDecrease}
+          />
+        )}
 
         <span className="cart-product-price">
           ${product.product_price * product.quantity}

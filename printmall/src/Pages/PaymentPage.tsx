@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import PayPalCheckoutButton from '../components/PayPalCheckoutButton/PayPalCheckoutButton';
 import ReturnButton from '../components/common/Buttons/ReturnButton';
 import OrderDetails from '../components/OrderDetails';
+import PaymentOptions from '../components/PaymentOptions/PaymentOptions';
 
 const PaymentPage = () => {
   useEffect(() => {
@@ -18,7 +19,7 @@ const PaymentPage = () => {
     <div className="payment-page">
       <ReturnButton />
       <div className="payment-page-content">
-        <PayPalCheckoutButton />
+        <PaymentOptions />
         <OrderDetails />
       </div>
     </div>
