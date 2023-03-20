@@ -2,9 +2,12 @@
 
 .order-details
   background-color: $white
-  width: 392px
+  max-width: 392px
   padding: 24px 21px
   border-radius: 20px
+
+  @media screen and (max-width: 1279px)
+    margin: 0 auto
 
 .order-details-title
   text-align: center
@@ -30,4 +33,3 @@
   font-weight: 700
   font-size: 14px
   line-height: 20px
-
