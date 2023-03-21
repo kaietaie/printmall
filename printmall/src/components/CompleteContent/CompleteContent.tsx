@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import GeneralInfo from './GeneralInfo';
 import CompleteDetails from './CompleteDetails';
 
@@ -17,4 +18,4 @@ const CompleteContent = () => {
   );
 };
 
-export default CompleteContent;
+export default memo(CompleteContent);

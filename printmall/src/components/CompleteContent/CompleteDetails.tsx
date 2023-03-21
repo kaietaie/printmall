@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Button from '../common/Buttons';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
@@ -6,13 +7,6 @@ import { useNavigate } from 'react-router-dom';
 const CompleteDetails = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const order_details = [
-    { title: 'Custom Printed T-Shirt', value: '230', quantity: 1 },
-    { title: 'Taxes:', value: '10' },
-    { title: 'Shipping:', value: '10' },
-    { title: 'Payment method:', value: 'PayPal' },
-    { title: 'Total:', value: '250' },
-  ];
 
   const data = {
     products: [
@@ -82,4 +76,4 @@ const CompleteDetails = () => {
   );
 };
 
-export default CompleteDetails;
+export default memo(CompleteDetails);
