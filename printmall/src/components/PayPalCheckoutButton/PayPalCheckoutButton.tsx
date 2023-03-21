@@ -36,8 +36,8 @@ const PayPalCheckoutButton = () => {
   const handleApprove = async (data: any): Promise<void> => {
     try {
       const response = await capturePayPalOrder(data.orderID);
-
-      if (response.status === 'COMPLETED') {
+      console.log(response)
+      if (response.respon.status === 'COMPLETED') {
         dispatch(clearCart());
         setPaidFor(true);
       }
@@ -74,83 +74,3 @@ const PayPalCheckoutButton = () => {
 };
 
 export default PayPalCheckoutButton;
-
-//
-// import { PayPalButtons } from '@paypal/react-paypal-js';
-//
-// const PayPalCheckoutButton = (props: any) => {
-//   const { product } = props;
-//
-//   const [paidFor, setPaidFor] = useState(false);
-//   const [error, setError] = useState('');
-//
-//   const handleApprove = (orderID: string) => {
-//     //call backend function to fulfill order
-//     setPaidFor(true);
-//     //refresh user`s account or subscription status
-//
-//     //if response returns error
-//     // setError('Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at mail@mail for assistance')
-//   };
-//
-//   if (paidFor) {
-//     //display success message
-//     alert('Thanks for purchase');
-//   }
-//
-//   if (error) {
-//     //display error message
-//     alert(error);
-//   }
-//   return (
-//     <PayPalButtons
-//       style={{
-//         color: 'blue',
-//         // layout: 'horizontal',
-//         height: 55,
-//         // tagline: true,
-//         shape: 'pill',
-//       }}
-//       onClick={(data, actions) => {
-//         //validate on button click on client or server side
-//         const hasAlreadyBoughtProduct = false;
-//
-//         if (hasAlreadyBoughtProduct) {
-//           setError('You already bought this product');
-//           return actions.reject();
-//         } else {
-//           return actions.resolve();
-//         }
-//       }}
-//       createOrder={(data, actions) => {
-//         return actions.order.create({
-//           purchase_units: [
-//             {
-//               description: product.description,
-//               amount: {
-//                 value: product.price,
-//               },
-//             },
-//           ],
-//         });
-//       }}
-//       onApprove={async (data, actions) => {
-//         const order = await actions.order?.capture();
-//         console.log(order);
-//
-//         handleApprove(data.orderID);
-//       }}
-//       onCancel={() => {
-//         //Display cancel massage or redirect to cart
-//       }}
-//       onError={(err) => {
-//         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//         // @ts-ignore
-//         setError(err);
-//         console.error('PayPal Checkout onError', err);
-//       }}
-//     />
-//   );
-// };
-//
-// export default PayPalCheckoutButton;
