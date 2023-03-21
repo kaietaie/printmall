@@ -56,5 +56,17 @@
     "cart": "Корзина",
     "payment": "Оплата",
     "complete": "Завершити"
+  },
+  "complete": {
+    "gratitudeBanner": "Дякуюємо. Ваше замовлення отримано.",
+    "orderNumber": "Номер замовлення:",
+    "date": "Дата:",
+    "total": "Загальна сума:",
+    "paymentMethod": "Спосіб оплати:",
+    "detailsTitle": "Деталі замовлення",
+    "product": "Товар",
+    "details": "Деталі",
+    "taxes": "Податки:",
+    "shipping": "Доставка:"
   }
 }

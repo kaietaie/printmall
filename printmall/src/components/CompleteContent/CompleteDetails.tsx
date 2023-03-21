@@ -27,12 +27,12 @@ const CompleteDetails = () => {
 
   return (
     <div>
-      <h2 className="complete-details-title">Order details</h2>
+      <h2 className="complete-details-title">{t('complete.detailsTitle')}</h2>
       <table className="complete-details-table">
         <thead>
           <tr>
-            <th>Product</th>
-            <th>Total</th>
+            <th>{t('complete.product')}</th>
+            <th>{t('complete.details')}</th>
           </tr>
         </thead>
         <tbody>
@@ -47,19 +47,19 @@ const CompleteDetails = () => {
           ))}
 
           <tr>
-            <td>Taxes:</td>
+            <td>{t('complete.taxes')}</td>
             <td>${data.taxes}</td>
           </tr>
           <tr>
-            <td>Shipping:</td>
+            <td>{t('complete.shipping')}</td>
             <td>${data.shipping}</td>
           </tr>
           <tr>
-            <td>Payment method:</td>
+            <td>{t('complete.paymentMethod')}</td>
             <td>{data.payment_method}</td>
           </tr>
           <tr>
-            <td>Total:</td>
+            <td>{t('complete.total')}</td>
             <td>${data.total}</td>
           </tr>
         </tbody>

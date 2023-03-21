@@ -1,6 +1,9 @@
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const GeneralInfo = () => {
+  const { t } = useTranslation();
+
   const data = {
     products: [
       { title: 'Custom Printed T-Shirt', value: '230', quantity: 1 },
@@ -17,22 +20,26 @@ const GeneralInfo = () => {
   return (
     <div className="general-info">
       <div className="general-info-item">
-        <span className="general-info-item-title">Order number:</span>
+        <span className="general-info-item-title">
+          {t('complete.orderNumber')}
+        </span>
         <span className="general-info-item-value">{data.order_number}</span>
       </div>
 
       <div className="general-info-item">
-        <span className="general-info-item-title">Date :</span>
+        <span className="general-info-item-title">{t('complete.date')}</span>
         <span className="general-info-item-value">{data.date}</span>
       </div>
 
       <div className="general-info-item">
-        <span className="general-info-item-title">Total :</span>
-        <span className="general-info-item-value">{data.total}</span>
+        <span className="general-info-item-title">{t('complete.total')}</span>
+        <span className="general-info-item-value">${data.total}</span>
       </div>
 
       <div className="general-info-item">
-        <span className="general-info-item-title">Payment method:</span>
+        <span className="general-info-item-title">
+          {t('complete.paymentMethod')}
+        </span>
         <span className="general-info-item-value">{data.payment_method}</span>
       </div>
     </div>

@@ -59,6 +59,14 @@
   },
   "complete": {
     "gratitudeBanner": "Thank you. Your order has been received.",
-    "orderNumber": "Order number"
+    "orderNumber": "Order number:",
+    "date": "Date:",
+    "total": "Total:",
+    "paymentMethod": "Payment method:",
+    "detailsTitle": "Order details",
+    "product": "Product",
+    "details": "Details",
+    "taxes": "Taxes:",
+    "shipping": "Shipping:"
   }
 }
