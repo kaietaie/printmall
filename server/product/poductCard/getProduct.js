@@ -21,13 +21,13 @@ export default async function getProduct(req, res) {
     ) AS colors,
     (SELECT json_object_agg(size, colors) as size_colors
     FROM (
-      SELECT ss.size, array_agg(c.color) as colors
+      SELECT c.color, array_agg(ss.size) as sizes
       FROM products p
       JOIN sizes ss ON ss.size_id = p.product_size
       JOIN colors c ON c.color_id = p.product_color  
       WHERE p.base_id = $1 
-      GROUP BY ss.size
-    ) as sizes) as size_color,
+      GROUP BY c.color
+    ) as colors) as color_sizes,
     ( select array_agg( DISTINCT ss.size )
       from products p 
       join sizes ss on ss.size_id = p.product_size 
