@@ -25,5 +25,6 @@ Tshirt marketplace
     1. `DROP DATABASE marketplacedb;`
     2. `CREATE DATABASE marketplacedb OWNER printmall;`
     3. `\q` 
-    Restore dump from normal terminal
+   
+   Restore dump from normal terminal
      `psql -U printmall -d marketplacedb < marketplacedb.sql`
