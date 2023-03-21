@@ -51,5 +51,10 @@
     "optionsTitle": "Choose a payment method",
     "orderDetailsTitle": "Order details",
     "orderDetailsMessage": "Shipping costs depend on your location"
+  },
+  "purchaseStatus": {
+    "cart": "Cart total",
+    "payment": "Payment",
+    "complete": "Complete"
   }
 }

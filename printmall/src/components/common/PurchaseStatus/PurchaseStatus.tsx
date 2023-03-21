@@ -1,12 +1,14 @@
 import React from 'react';
 import './PurchaseStatus.sass';
 import squish from '../../../Helpers/ClassNameHelper';
+import { useTranslation } from 'react-i18next';
 
 interface StepClassNameProps {
   currentStep: 'cart' | 'payment' | 'complete';
 }
 
 const PurchaseStatus: React.FC<StepClassNameProps> = ({ currentStep }) => {
+  const { t } = useTranslation();
   const getStepClassName = (step: StepClassNameProps['currentStep']) => {
     if (step === currentStep) {
       return 'active';
@@ -45,7 +47,7 @@ const PurchaseStatus: React.FC<StepClassNameProps> = ({ currentStep }) => {
             ${getStepClassName('cart')}
           `}
         >
-          Cart total
+          {t('purchaseStatus.cart')}
         </span>
         <span
           className={squish`
@@ -53,7 +55,7 @@ const PurchaseStatus: React.FC<StepClassNameProps> = ({ currentStep }) => {
             ${getStepClassName('payment')}
           `}
         >
-          Payment
+          {t('purchaseStatus.payment')}
         </span>
         <span
           className={squish`
@@ -61,7 +63,7 @@ const PurchaseStatus: React.FC<StepClassNameProps> = ({ currentStep }) => {
             ${getStepClassName('complete')}
           `}
         >
-          Complete
+          {t('purchaseStatus.complete')}
         </span>
       </div>
     </div>

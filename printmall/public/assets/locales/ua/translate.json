@@ -51,5 +51,10 @@
     "optionsTitle": "Оберіть спосіб оплати",
     "orderDetailsTitle": "Деталі замовлення",
     "orderDetailsMessage": "Вартість доставки залежить від вашого місцезнаходження"
+  },
+  "purchaseStatus": {
+    "cart": "Корзина",
+    "payment": "Оплата",
+    "complete": "Завершити"
   }
 }
