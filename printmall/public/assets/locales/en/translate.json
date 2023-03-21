@@ -56,5 +56,9 @@
     "cart": "Cart total",
     "payment": "Payment",
     "complete": "Complete"
+  },
+  "complete": {
+    "gratitudeBanner": "Thank you. Your order has been received.",
+    "orderNumber": "Order number"
   }
 }

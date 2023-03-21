@@ -14,6 +14,19 @@ const CompleteDetails = () => {
     { title: 'Total:', value: '250' },
   ];
 
+  const data = {
+    products: [
+      { title: 'Custom Printed T-Shirt', value: '230', quantity: 1 },
+      { title: 'Ocean View Tee', value: '240', quantity: 1 },
+    ],
+    taxes: 10,
+    shipping: 10,
+    payment_method: 'PayPal',
+    total: 500,
+    date: 123423413,
+    order_number: 234,
+  };
+
   const handleButtonClick = () => {
     navigate(`/seller/Go_A`);
   };
@@ -29,18 +42,32 @@ const CompleteDetails = () => {
           </tr>
         </thead>
         <tbody>
-          {order_details.map((item, index) => (
+          {data.products.map((item, index) => (
             <tr key={index}>
               <td>
                 {item.title}
-                {item?.quantity && <span>{` x ${item.quantity}`}</span>}
+                {` x ${item.quantity}`}
               </td>
-              <td>
-                {!(item.title === 'Payment method:') && '$'}
-                {item.value}
-              </td>
+              <td>${item.value}</td>
             </tr>
           ))}
+
+          <tr>
+            <td>Taxes:</td>
+            <td>${data.taxes}</td>
+          </tr>
+          <tr>
+            <td>Shipping:</td>
+            <td>${data.shipping}</td>
+          </tr>
+          <tr>
+            <td>Payment method:</td>
+            <td>{data.payment_method}</td>
+          </tr>
+          <tr>
+            <td>Total:</td>
+            <td>${data.total}</td>
+          </tr>
         </tbody>
       </table>
       <Button
