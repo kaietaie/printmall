@@ -1,5 +1,7 @@
-import './CompleteContent.sass';
 import GeneralInfo from './GeneralInfo';
+import CompleteDetails from './CompleteDetails';
+
+import './CompleteContent.sass';
 
 const CompleteContent = () => {
   return (
@@ -10,6 +12,7 @@ const CompleteContent = () => {
         </span>
       </div>
       <GeneralInfo />
+      <CompleteDetails />
     </div>
   );
 };

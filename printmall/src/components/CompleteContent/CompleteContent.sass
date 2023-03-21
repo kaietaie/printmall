@@ -37,3 +37,43 @@
 .general-info-item-value
   font-size: 14px
   line-height: 20px
+
+.complete-details-table
+  border-collapse: collapse
+  width: 100%
+  margin-bottom: 88px
+
+  th
+    line-height: 24px
+    padding: 16px 0
+
+  td
+    padding: 32px 0 16px
+    font-size: 14px
+    line-height: 20px
+
+  th,
+  td
+    border-bottom: 1px solid $secondary
+    //padding: 8px
+    text-align: left
+
+  th:nth-child(2),
+  td:nth-child(2)
+    text-align: right
+
+
+  tr
+    &:last-child
+      td
+        border-bottom: unset
+        font-weight: 700
+        font-size: 16px
+
+
+.complete-details-title
+  line-height: 32px
+  margin-bottom: 16px
+
+.complete-details-button
+  margin: 0 auto

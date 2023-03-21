@@ -1,7 +1,8 @@
 {
   "common": {
     "returnButton": "Back",
-    "cartItemQuantity": "pc"
+    "cartItemQuantity": "pc",
+    "backToHomeButton": "Back to seller page"
   },
   "header": {
     "liveChat": "Live Chat!"
@@ -43,8 +44,7 @@
   },
   "errorBanner": {
     "title": "Oops!",
-    "message": "Something went wrong!",
-    "button": "Back to seller page"
+    "message": "Something went wrong!"
   },
   "payment": {
     "cancelMessage": "You canceled purchasing",

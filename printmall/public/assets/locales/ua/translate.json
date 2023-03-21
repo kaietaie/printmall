@@ -1,7 +1,8 @@
 {
   "common": {
     "returnButton": "Назад",
-    "cartItemQuantity": "шт"
+    "cartItemQuantity": "шт",
+    "backToHomeButton": "До сторінки продавця"
   },
   "header": {
     "liveChat": "Живий Чат!"
@@ -43,8 +44,7 @@
   },
   "errorBanner": {
     "title": "От халепа!",
-    "message": "Шось пішло не так!",
-    "button": "До сторінки продавця"
+    "message": "Шось пішло не так!"
   },
   "payment": {
     "cancelMessage": "Ви скасували платіж",
