@@ -35,7 +35,7 @@ const ProductContent = () => {
   if (!product) {
     return <Loader />;
   }
-
+console.log(product)
   const {
     product_id,
     seller_id,
