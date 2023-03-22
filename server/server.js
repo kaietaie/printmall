@@ -36,7 +36,7 @@ app.use('/blog', blogRouter);
 app.use('/products', productRouter);
 app.use('/seller', sellerRouter);
 app.use('/payment', paymentRouter);
-app.use('contactus', contactRouter)
+app.use('/contactus', contactRouter)
 // app.use('/auth', );
 // app.use('/refresh', );
 // app.use('/logout',  );
