@@ -8,6 +8,8 @@ export default async function contactUs(req, res) {
     emails: [email],
     subject: "Thanks for contact us!",
     text: `Thank you, ${fname}, for contacting us! We have received your message and will get back to you as soon as possible.`,
+    html: `<b>Have you already buy our t-shirts?</b> <br>
+    <img src="https://media.makeameme.org/created/consumers-buy-more.jpg" alt="mem">`,
   };
 
   const sendMail = mailSend(data);

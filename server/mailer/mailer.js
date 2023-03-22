@@ -5,6 +5,7 @@ export default async function mailSend(data) {
   //   emails: [],
   //   subject: '',
   //   text: '',
+  //   html: ``
   //   }
   const emails = data.emails.toString();
   const transporter = nodemailer.createTransport({
@@ -27,11 +28,10 @@ export default async function mailSend(data) {
 
   const info = await transporter.sendMail({
     from: `"KRAM Market" ${process.env.MAILER_LOGIN}`, // sender address
-    to: `${emails}`, // list of receivers
-    subject: `${data.subject}`, // Subject line
-    text: `${data.text}`, // plain text body
-    html: `<b>Have you already buy our t-shirts?</b> 
-    <img src="https://media.makeameme.org/created/consumers-buy-more.jpg" alt="mem">`, // html body
-  });
+    to: emails, // list of receivers
+    subject: data.subject, // Subject line
+    text: data.text, // plain text body
+    html: data.html, // html body
+  }); 
   console.dir(info);
 }
