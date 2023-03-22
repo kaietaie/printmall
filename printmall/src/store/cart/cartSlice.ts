@@ -12,7 +12,7 @@ const initialState: CartState = {
   items: initialCartItems,
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
-  clientToken: null,
+  // clientToken: null,
   status: 'idle',
   error: null,
 };
@@ -89,21 +89,23 @@ const cartSlice = createSlice({
       state.cartTotalAmount = total;
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(createOrder.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(createOrder.fulfilled, (state, action) => {
-        state.clientToken = action.payload.client_token;
-        state.status = 'succeeded';
-        state.error = null;
-      })
-      .addCase(createOrder.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload ?? 'Error creating order';
-      });
-  },
+  //todo Implementation for tracking not purchased carts
+
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(createOrder.pending, (state) => {
+  //       state.status = 'loading';
+  //     })
+  //     .addCase(createOrder.fulfilled, (state, action) => {
+  //       state.clientToken = action.payload.client_token;
+  //       state.status = 'succeeded';
+  //       state.error = null;
+  //     })
+  //     .addCase(createOrder.rejected, (state, action) => {
+  //       state.status = 'failed';
+  //       state.error = action.payload ?? 'Error creating order';
+  //     });
+  // },
 });
 
 export const { addItem, removeItem, decreaseItem, clearCart, getTotals } =

@@ -36,7 +36,7 @@ const PayPalCheckoutButton = () => {
   const handleApprove = async (data: any): Promise<void> => {
     try {
       const response = await capturePayPalOrder(data.orderID);
-      console.log(response)
+
       if (response.data.status === 'COMPLETED') {
         dispatch(clearCart());
         setPaidFor(true);
