@@ -1,21 +1,23 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const GeneralInfo = () => {
+interface GeneralInfoProps {
+  date: string;
+  total: number;
+  payment_method: string;
+  order_number: number;
+}
+
+const GeneralInfo: React.FC<GeneralInfoProps> = ({
+  date,
+  total,
+  payment_method,
+  order_number,
+}) => {
   const { t } = useTranslation();
 
-  const data = {
-    products: [
-      { title: 'Custom Printed T-Shirt', value: '230', quantity: 1 },
-      { title: 'Ocean View Tee', value: '240', quantity: 1 },
-    ],
-    taxes: 10,
-    shipping: 10,
-    payment_method: 'PayPal',
-    total: 500,
-    date: 123423413,
-    order_number: 234,
-  };
+  const dateObj = new Date(date);
+  const formattedDate = dateObj.toLocaleDateString('en-GB');
 
   return (
     <div className="general-info">
@@ -23,24 +25,24 @@ const GeneralInfo = () => {
         <span className="general-info-item-title">
           {t('complete.orderNumber')}
         </span>
-        <span className="general-info-item-value">{data.order_number}</span>
+        <span className="general-info-item-value">{order_number}</span>
       </div>
 
       <div className="general-info-item">
         <span className="general-info-item-title">{t('complete.date')}</span>
-        <span className="general-info-item-value">{data.date}</span>
+        <span className="general-info-item-value">{formattedDate}</span>
       </div>
 
       <div className="general-info-item">
         <span className="general-info-item-title">{t('complete.total')}</span>
-        <span className="general-info-item-value">${data.total}</span>
+        <span className="general-info-item-value">${total}</span>
       </div>
 
       <div className="general-info-item">
         <span className="general-info-item-title">
           {t('complete.paymentMethod')}
         </span>
-        <span className="general-info-item-value">{data.payment_method}</span>
+        <span className="general-info-item-value">{payment_method}</span>
       </div>
     </div>
   );

@@ -1,19 +1,60 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import GeneralInfo from './GeneralInfo';
 import CompleteDetails from './CompleteDetails';
+import { useSelector } from 'react-redux';
+import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
+import { RootState } from '../../store/store';
+import { selectPayPalPaymentDetails } from '../../store/payment/paymentSelectors';
+import { PaymentDetails } from '../../types/Payment';
+import Button from '../common/Buttons';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import './CompleteContent.sass';
 
 const CompleteContent = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const orderDetails = useSelector<RootState, PaymentDetails | null>(
+    selectPayPalPaymentDetails
+  );
+
+  const handleButtonClick = () => {
+    navigate(`/seller/Go_A`);
+  };
+
   return (
     <div className="complete-content">
       <div className="complete-content-gratitude">
         <span className="complete-content-gratitude-message">
-          Thank you. Your order has been received.
+          {t('complete.gratitudeBanner')}
         </span>
       </div>
-      <GeneralInfo />
-      <CompleteDetails />
+      {orderDetails && (
+        <>
+          <GeneralInfo
+            date={orderDetails.date}
+            order_number={orderDetails.order_number}
+            total={orderDetails.total}
+            payment_method={orderDetails.payment_method}
+          />
+          <CompleteDetails
+            payment_method={orderDetails.payment_method}
+            total={orderDetails.total}
+            products={orderDetails.products}
+            taxes={orderDetails.taxes}
+            shipping={orderDetails.shipping}
+          />
+        </>
+      )}
+      <Button
+        className="complete-details-button"
+        onClick={handleButtonClick}
+        iconEnd={<ArrowForward />}
+        type="secondary"
+      >
+        {t('common.backToHomeButton')}
+      </Button>
     </div>
   );
 };

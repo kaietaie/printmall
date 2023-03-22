@@ -1,29 +1,20 @@
-import { memo } from 'react';
-import Button from '../common/Buttons';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
-import { useNavigate } from 'react-router-dom';
+import { PaymentDetails } from '../../types/Payment';
 
-const CompleteDetails = () => {
+type CompleteDetailsProps = Omit<
+  PaymentDetails,
+  'date' | 'status' | 'order_number'
+>;
+
+const CompleteDetails: React.FC<CompleteDetailsProps> = ({
+  payment_method,
+  total,
+  taxes,
+  products,
+  shipping,
+}) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  const data = {
-    products: [
-      { title: 'Custom Printed T-Shirt', value: '230', quantity: 1 },
-      { title: 'Ocean View Tee', value: '240', quantity: 1 },
-    ],
-    taxes: 10,
-    shipping: 10,
-    payment_method: 'PayPal',
-    total: 500,
-    date: 123423413,
-    order_number: 234,
-  };
-
-  const handleButtonClick = () => {
-    navigate(`/seller/Go_A`);
-  };
 
   return (
     <div>
@@ -36,7 +27,7 @@ const CompleteDetails = () => {
           </tr>
         </thead>
         <tbody>
-          {data.products.map((item, index) => (
+          {products.map((item, index) => (
             <tr key={index}>
               <td>
                 {item.title}
@@ -48,30 +39,22 @@ const CompleteDetails = () => {
 
           <tr>
             <td>{t('complete.taxes')}</td>
-            <td>${data.taxes}</td>
+            <td>${taxes}</td>
           </tr>
           <tr>
             <td>{t('complete.shipping')}</td>
-            <td>${data.shipping}</td>
+            <td>${shipping}</td>
           </tr>
           <tr>
             <td>{t('complete.paymentMethod')}</td>
-            <td>{data.payment_method}</td>
+            <td>{payment_method}</td>
           </tr>
           <tr>
             <td>{t('complete.total')}</td>
-            <td>${data.total}</td>
+            <td>${total}</td>
           </tr>
         </tbody>
       </table>
-      <Button
-        className="complete-details-button"
-        onClick={handleButtonClick}
-        iconEnd={<ArrowForward />}
-        type="secondary"
-      >
-        {t('common.backToHomeButton')}
-      </Button>
     </div>
   );
 };

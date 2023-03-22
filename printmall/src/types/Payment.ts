@@ -8,6 +8,7 @@ export interface PaymentDetails {
   products: PaymentDetailsProduct[];
   date: string;
   order_number: number;
+  shipping: number;
   taxes: number;
   total: number;
   payment_method: string;

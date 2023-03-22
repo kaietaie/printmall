@@ -6,3 +6,6 @@ export const selectPayPalPaymentStatus = (state: RootState) => {
   }
   return '';
 };
+
+export const selectPayPalPaymentDetails = (state: RootState) =>
+  state.payment.paymentDetails;
