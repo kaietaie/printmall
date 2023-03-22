@@ -1,8 +1,5 @@
 import { RootState } from '../store';
 
-export const selectProductSizes = (state: RootState) =>
-  state.product.product?.sizes;
-
 export const selectProduct = (state: RootState) => state.product.product;
 
 export const selectProductsStatus = (state: RootState) => state.products.status;

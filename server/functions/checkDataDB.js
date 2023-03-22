@@ -14,7 +14,6 @@ export default async function checkDataDB(id, table) {
       }
     }
     const find = await pool.query(sql);
-    console.log(find.rows )
     // if (
     //   find?.rows[0]?.archivated === true ||
     //   find?.rows[0]?.enabled === false

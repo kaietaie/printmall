@@ -158,7 +158,7 @@ CREATE TABLE shipping_info (
 CREATE TABLE orders (
     order_id            serial PRIMARY KEY,
     shipping_info_id    integer REFERENCES shipping_info(shipping_info_id),
-    payment_id          integer ,
+    payment_id          integer REFERENCES payments(payment_id ),
     finalized           boolean DEFAULT FALSE,
     shipped             boolean DEFAULT FALSE,
     delivered           boolean DEFAULT FALSE
