@@ -62,7 +62,7 @@ console.log({products})
     const data = {
       products: products,
       taxes: tax,
-      shopping: shipping,
+      shipping: shipping,
       payment_method:  'PayPal',
       total: order.total, 
       date: captureData.purchase_units[0].payments.captures[0].create_time,
