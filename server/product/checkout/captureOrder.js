@@ -8,7 +8,7 @@ export default async function capturePayPalOrder(req, res) {
     const captureData = await paypal.capturePayment(orderID);
     console.dir(captureData);
     const data = await saveOrder(captureData);
-    res.json({ date });
+    res.json({ data });
   } catch (err) {
     res.status(500).send(err.message);
   }
