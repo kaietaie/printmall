@@ -11,7 +11,11 @@ const initialState: PaymentState = {
 const paymentSlice = createSlice({
   name: 'payment',
   initialState,
-  reducers: {},
+  reducers: {
+    clearPaymentDetails: (state) => {
+      state.paymentDetails = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(capturePayPalOrderThunk.pending, (state) => {
@@ -28,5 +32,7 @@ const paymentSlice = createSlice({
       });
   },
 });
+
+export const { clearPaymentDetails } = paymentSlice.actions;
 
 export default paymentSlice.reducer;

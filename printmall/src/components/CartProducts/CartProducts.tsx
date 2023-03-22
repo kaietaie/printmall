@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { clearCart, getTotals } from '../../store/cart/cartSlice';
 import CartProductItem from '../common/CartProductItem/CartProductItem';
-import ReturnButton from '../common/Buttons/ReturnButton';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import Button from '../common/Buttons';
 import { useTranslation } from 'react-i18next';

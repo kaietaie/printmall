@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import GeneralInfo from './GeneralInfo';
 import CompleteDetails from './CompleteDetails';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
-import { RootState } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import { selectPayPalPaymentDetails } from '../../store/payment/paymentSelectors';
 import { PaymentDetails } from '../../types/Payment';
 import Button from '../common/Buttons';
@@ -11,15 +11,18 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import './CompleteContent.sass';
+import { clearPaymentDetails } from '../../store/payment/paymentSlice';
 
 const CompleteContent = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const orderDetails = useSelector<RootState, PaymentDetails | null>(
     selectPayPalPaymentDetails
   );
 
   const handleButtonClick = () => {
+    dispatch(clearPaymentDetails());
     navigate(`/seller/Go_A`);
   };
 
