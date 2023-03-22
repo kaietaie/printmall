@@ -67,6 +67,40 @@ ALTER SEQUENCE public.colors_color_id_seq OWNED BY public.colors.color_id;
 
 
 --
+-- Name: newslist_emails; Type: TABLE; Schema: public; Owner: printmall
+--
+
+CREATE TABLE public.newslist_emails (
+    newslist_email_id integer NOT NULL,
+    newslist_email character varying(30)
+);
+
+
+ALTER TABLE public.newslist_emails OWNER TO printmall;
+
+--
+-- Name: newslist_emails_newslist_email_id_seq; Type: SEQUENCE; Schema: public; Owner: printmall
+--
+
+CREATE SEQUENCE public.newslist_emails_newslist_email_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.newslist_emails_newslist_email_id_seq OWNER TO printmall;
+
+--
+-- Name: newslist_emails_newslist_email_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: printmall
+--
+
+ALTER SEQUENCE public.newslist_emails_newslist_email_id_seq OWNED BY public.newslist_emails.newslist_email_id;
+
+
+--
 -- Name: order_lines; Type: TABLE; Schema: public; Owner: printmall
 --
 
@@ -331,13 +365,13 @@ CREATE TABLE public.shipping_info (
     shipping_info_id integer NOT NULL,
     first_name character varying(50) NOT NULL,
     last_name character varying(50) NOT NULL,
-    phone character varying(20) NOT NULL,
+    phone character varying(20),
     email character varying(100) NOT NULL,
-    address_line_1 character varying(50) NOT NULL,
+    address_line_1 character varying(50),
     address_line_2 character varying(50),
-    city character varying(50) NOT NULL,
-    country character varying(50) NOT NULL,
-    region character varying(50) NOT NULL,
+    city character varying(50),
+    country character varying(50),
+    region character varying(50),
     zip character varying(10) NOT NULL
 );
 
@@ -442,6 +476,13 @@ ALTER TABLE ONLY public.colors ALTER COLUMN color_id SET DEFAULT nextval('public
 
 
 --
+-- Name: newslist_emails newslist_email_id; Type: DEFAULT; Schema: public; Owner: printmall
+--
+
+ALTER TABLE ONLY public.newslist_emails ALTER COLUMN newslist_email_id SET DEFAULT nextval('public.newslist_emails_newslist_email_id_seq'::regclass);
+
+
+--
 -- Name: orders order_id; Type: DEFAULT; Schema: public; Owner: printmall
 --
 
@@ -527,6 +568,25 @@ COPY public.colors (color_id, color) FROM stdin;
 
 
 --
+-- Data for Name: newslist_emails; Type: TABLE DATA; Schema: public; Owner: printmall
+--
+
+COPY public.newslist_emails (newslist_email_id, newslist_email) FROM stdin;
+1	kaieta@gmail.com
+3	trolo@ok.com
+4	gsr@gss.com
+5	jdoe@gss.com
+6	msojh_shdg@gss.com
+7	igh:ug:ug@gss.com
+8	dsa@gss.com
+9	kaieta@gmail.com
+10	kaieta@gmail.com
+11	dasa@gss.com
+12	dasha@gss.com
+\.
+
+
+--
 -- Data for Name: order_lines; Type: TABLE DATA; Schema: public; Owner: printmall
 --
 
@@ -564,6 +624,9 @@ COPY public.payments (payment_id, paymentgateway_order_id, payment_processer_res
 15	5LL22108VS398274C	{"id":"5LL22108VS398274C","status":"COMPLETED","payment_source":{"paypal":{"email_address":"sb-nznbz25252771@personal.example.com","account_id":"4XLXBJQFDMBKQ","name":{"given_name":"John","surname":"Doe"},"address":{"country_code":"SK"}}},"purchase_units":[{"reference_id":"default","shipping":{"name":{"full_name":"John Doe"},"address":{"address_line_1":"Ružinovská 1","admin_area_2":"Bratislava","admin_area_1":"Slovenská Republika","postal_code":"821 01","country_code":"SK"}},"payments":{"captures":[{"id":"5XS12308VY802261B","status":"COMPLETED","amount":{"currency_code":"EUR","value":"60.00"},"final_capture":true,"seller_protection":{"status":"ELIGIBLE","dispute_categories":["ITEM_NOT_RECEIVED","UNAUTHORIZED_TRANSACTION"]},"seller_receivable_breakdown":{"gross_amount":{"currency_code":"EUR","value":"60.00"},"paypal_fee":{"currency_code":"EUR","value":"2.39"},"net_amount":{"currency_code":"EUR","value":"57.61"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/payments/captures/5XS12308VY802261B","rel":"self","method":"GET"},{"href":"https://api.sandbox.paypal.com/v2/payments/captures/5XS12308VY802261B/refund","rel":"refund","method":"POST"},{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/5LL22108VS398274C","rel":"up","method":"GET"}],"create_time":"2023-03-18T23:31:38Z","update_time":"2023-03-18T23:31:38Z"}]}}],"payer":{"name":{"given_name":"John","surname":"Doe"},"email_address":"sb-nznbz25252771@personal.example.com","payer_id":"4XLXBJQFDMBKQ","address":{"country_code":"SK"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/5LL22108VS398274C","rel":"self","method":"GET"}]}
 16	5UP35488CK1890222	{"id":"5UP35488CK1890222","status":"COMPLETED","payment_source":{"paypal":{"email_address":"kaieta.ievgenii@gmail.com","account_id":"KRW7VPXJZ9AH8","name":{"given_name":"Ievgenii","surname":"Kas"},"address":{"country_code":"SK"}}},"purchase_units":[{"reference_id":"default","shipping":{"name":{"full_name":"Ievgenii Kas"},"address":{"address_line_1":"Stará Vajnorská, 39","admin_area_2":"Bratislava","postal_code":"821 01","country_code":"SK"}},"payments":{"captures":[{"id":"1G868122LW729025A","status":"COMPLETED","amount":{"currency_code":"EUR","value":"60.00"},"final_capture":true,"seller_protection":{"status":"NOT_ELIGIBLE"},"seller_receivable_breakdown":{"gross_amount":{"currency_code":"EUR","value":"60.00"},"paypal_fee":{"currency_code":"EUR","value":"2.39"},"net_amount":{"currency_code":"EUR","value":"57.61"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/payments/captures/1G868122LW729025A","rel":"self","method":"GET"},{"href":"https://api.sandbox.paypal.com/v2/payments/captures/1G868122LW729025A/refund","rel":"refund","method":"POST"},{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/5UP35488CK1890222","rel":"up","method":"GET"}],"create_time":"2023-03-18T23:36:38Z","update_time":"2023-03-18T23:36:38Z"}]}}],"payer":{"name":{"given_name":"Ievgenii","surname":"Kas"},"email_address":"kaieta.ievgenii@gmail.com","payer_id":"KRW7VPXJZ9AH8","address":{"country_code":"SK"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/5UP35488CK1890222","rel":"self","method":"GET"}]}
 17	5N924478MN629703K	{"id":"5N924478MN629703K","status":"COMPLETED","payment_source":{"paypal":{"email_address":"kaieta.ievgenii@gmail.com","account_id":"JA7F8ELCAASAJ","name":{"given_name":"Ien","surname":"Ijsa"},"address":{"country_code":"SK"}}},"purchase_units":[{"reference_id":"default","shipping":{"name":{"full_name":"Ien Ijsa"},"address":{"address_line_1":"Rumančeková 861/52","admin_area_2":"Bratislava","postal_code":"821 01","country_code":"SK"}},"payments":{"captures":[{"id":"54221528FY016645C","status":"COMPLETED","amount":{"currency_code":"EUR","value":"60.00"},"final_capture":true,"seller_protection":{"status":"NOT_ELIGIBLE"},"seller_receivable_breakdown":{"gross_amount":{"currency_code":"EUR","value":"60.00"},"paypal_fee":{"currency_code":"EUR","value":"2.39"},"net_amount":{"currency_code":"EUR","value":"57.61"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/payments/captures/54221528FY016645C","rel":"self","method":"GET"},{"href":"https://api.sandbox.paypal.com/v2/payments/captures/54221528FY016645C/refund","rel":"refund","method":"POST"},{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/5N924478MN629703K","rel":"up","method":"GET"}],"create_time":"2023-03-18T23:40:32Z","update_time":"2023-03-18T23:40:32Z"}]}}],"payer":{"name":{"given_name":"Ien","surname":"Ijsa"},"email_address":"kaieta.ievgenii@gmail.com","payer_id":"JA7F8ELCAASAJ","address":{"country_code":"SK"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/5N924478MN629703K","rel":"self","method":"GET"}]}
+18	4VA75649YX233931X	{"id":"4VA75649YX233931X","status":"COMPLETED","payment_source":{"paypal":{"email_address":"sb-nznbz25252771@personal.example.com","account_id":"4XLXBJQFDMBKQ","name":{"given_name":"John","surname":"Doe"},"address":{"country_code":"SK"}}},"purchase_units":[{"reference_id":"default","shipping":{"name":{"full_name":"John Doe"},"address":{"address_line_1":"Ružinovská 1","admin_area_2":"Bratislava","admin_area_1":"Slovenská Republika","postal_code":"821 01","country_code":"SK"}},"payments":{"captures":[{"id":"36Y734133W0920908","status":"COMPLETED","amount":{"currency_code":"EUR","value":"60.00"},"final_capture":true,"seller_protection":{"status":"ELIGIBLE","dispute_categories":["ITEM_NOT_RECEIVED","UNAUTHORIZED_TRANSACTION"]},"seller_receivable_breakdown":{"gross_amount":{"currency_code":"EUR","value":"60.00"},"paypal_fee":{"currency_code":"EUR","value":"2.39"},"net_amount":{"currency_code":"EUR","value":"57.61"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/payments/captures/36Y734133W0920908","rel":"self","method":"GET"},{"href":"https://api.sandbox.paypal.com/v2/payments/captures/36Y734133W0920908/refund","rel":"refund","method":"POST"},{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/4VA75649YX233931X","rel":"up","method":"GET"}],"create_time":"2023-03-19T11:14:20Z","update_time":"2023-03-19T11:14:20Z"}]}}],"payer":{"name":{"given_name":"John","surname":"Doe"},"email_address":"sb-nznbz25252771@personal.example.com","payer_id":"4XLXBJQFDMBKQ","address":{"country_code":"SK"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/4VA75649YX233931X","rel":"self","method":"GET"}]}
+19	5YN34935BC0218231	{"id":"5YN34935BC0218231","status":"COMPLETED","payment_source":{"paypal":{"email_address":"kaieta.ievgenii@gmail.com","account_id":"QURGVQEGJ8ENG","name":{"given_name":"Isdj","surname":"Knbdakjb"},"address":{"country_code":"SK"}}},"purchase_units":[{"reference_id":"default","shipping":{"name":{"full_name":"Isdj Knbdakjb"},"address":{"address_line_1":"Na Pasekách 12","admin_area_2":"Bratislava","postal_code":"821 01","country_code":"SK"}},"payments":{"captures":[{"id":"7WF965399P8739232","status":"COMPLETED","amount":{"currency_code":"EUR","value":"60.00"},"final_capture":true,"seller_protection":{"status":"NOT_ELIGIBLE"},"seller_receivable_breakdown":{"gross_amount":{"currency_code":"EUR","value":"60.00"},"paypal_fee":{"currency_code":"EUR","value":"2.39"},"net_amount":{"currency_code":"EUR","value":"57.61"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/payments/captures/7WF965399P8739232","rel":"self","method":"GET"},{"href":"https://api.sandbox.paypal.com/v2/payments/captures/7WF965399P8739232/refund","rel":"refund","method":"POST"},{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/5YN34935BC0218231","rel":"up","method":"GET"}],"create_time":"2023-03-19T11:16:24Z","update_time":"2023-03-19T11:16:24Z"}]}}],"payer":{"name":{"given_name":"Isdj","surname":"Knbdakjb"},"email_address":"kaieta.ievgenii@gmail.com","payer_id":"QURGVQEGJ8ENG","address":{"country_code":"SK"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/5YN34935BC0218231","rel":"self","method":"GET"}]}
+20	7EK421446T769081C	{"id":"7EK421446T769081C","status":"COMPLETED","payment_source":{"paypal":{"email_address":"kaieta.ievgenii@gmail.com","account_id":"5E9E5SZ3AZ8JJ","name":{"given_name":"Женя","surname":"Жук"},"address":{"country_code":"UA"}}},"purchase_units":[{"reference_id":"default","shipping":{"name":{"full_name":"Ievgenii Kai"},"address":{"address_line_1":"Stará Vajnorská, 39","admin_area_2":"Bratislava","postal_code":"83506","country_code":"SK"}},"payments":{"captures":[{"id":"8H9893309J168042L","status":"COMPLETED","amount":{"currency_code":"EUR","value":"60.00"},"final_capture":true,"seller_protection":{"status":"NOT_ELIGIBLE"},"seller_receivable_breakdown":{"gross_amount":{"currency_code":"EUR","value":"60.00"},"paypal_fee":{"currency_code":"EUR","value":"2.69"},"net_amount":{"currency_code":"EUR","value":"57.31"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/payments/captures/8H9893309J168042L","rel":"self","method":"GET"},{"href":"https://api.sandbox.paypal.com/v2/payments/captures/8H9893309J168042L/refund","rel":"refund","method":"POST"},{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/7EK421446T769081C","rel":"up","method":"GET"}],"create_time":"2023-03-19T16:51:52Z","update_time":"2023-03-19T16:51:52Z"}]}}],"payer":{"name":{"given_name":"Женя","surname":"Жук"},"email_address":"kaieta.ievgenii@gmail.com","payer_id":"5E9E5SZ3AZ8JJ","address":{"country_code":"UA"}},"links":[{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/7EK421446T769081C","rel":"self","method":"GET"}]}
 \.
 
 
@@ -685,6 +748,7 @@ COPY public.sellers (seller_id, seller_name, seller_email, seller_photo, seller_
 
 COPY public.shipping_info (shipping_info_id, first_name, last_name, phone, email, address_line_1, address_line_2, city, country, region, zip) FROM stdin;
 1	John	Doe	+380689901426	sb-nznbz25252771@personal.example.com	Ružinovská 1	\N	Bratislava	Slovenská Republika	SK	821 01
+4	John	Doe	+380689901426	sb-nznbz25252771@personal.example.com	Ružinovská 1	\N	Bratislava	Slovenská Republika	SK	821 01
 \.
 
 
@@ -718,6 +782,13 @@ SELECT pg_catalog.setval('public.colors_color_id_seq', 1, false);
 
 
 --
+-- Name: newslist_emails_newslist_email_id_seq; Type: SEQUENCE SET; Schema: public; Owner: printmall
+--
+
+SELECT pg_catalog.setval('public.newslist_emails_newslist_email_id_seq', 12, true);
+
+
+--
 -- Name: orders_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: printmall
 --
 
@@ -728,7 +799,7 @@ SELECT pg_catalog.setval('public.orders_order_id_seq', 1, false);
 -- Name: payments_payment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: printmall
 --
 
-SELECT pg_catalog.setval('public.payments_payment_id_seq', 17, true);
+SELECT pg_catalog.setval('public.payments_payment_id_seq', 20, true);
 
 
 --
@@ -763,7 +834,7 @@ SELECT pg_catalog.setval('public.sellers_seller_id_seq', 1, true);
 -- Name: shipping_info_shipping_info_id_seq; Type: SEQUENCE SET; Schema: public; Owner: printmall
 --
 
-SELECT pg_catalog.setval('public.shipping_info_shipping_info_id_seq', 3, true);
+SELECT pg_catalog.setval('public.shipping_info_shipping_info_id_seq', 6, true);
 
 
 --
@@ -786,6 +857,14 @@ SELECT pg_catalog.setval('public.user_cart_user_cart_id_seq', 1, false);
 
 ALTER TABLE ONLY public.colors
     ADD CONSTRAINT colors_pkey PRIMARY KEY (color_id);
+
+
+--
+-- Name: newslist_emails newslist_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: printmall
+--
+
+ALTER TABLE ONLY public.newslist_emails
+    ADD CONSTRAINT newslist_emails_pkey PRIMARY KEY (newslist_email_id);
 
 
 --
