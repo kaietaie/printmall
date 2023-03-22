@@ -1,7 +1,6 @@
 // Interface for cart state
 import { CartProduct, CartState } from '../../types/Cart';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createOrder } from './cartThunks';
 
 // Get the cart items from local storage, if any, and set it as initial cart items
 const storedCartItems = localStorage.getItem('cartItems');
@@ -89,6 +88,7 @@ const cartSlice = createSlice({
       state.cartTotalAmount = total;
     },
   },
+
   //todo Implementation for tracking not purchased carts
 
   // extraReducers: (builder) => {

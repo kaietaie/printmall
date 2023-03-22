@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SkuCartItem } from '../types/Cart';
+import { PaymentDetails } from '../types/Payment';
 
 export const createPayPalOrder = async (
   cartItems: SkuCartItem[]
@@ -19,7 +20,9 @@ export const createPayPalOrder = async (
   }
 };
 
-export const capturePayPalOrder = async (orderID: string): Promise<any> => {
+export const capturePayPalOrder = async (
+  orderID: string
+): Promise<PaymentDetails> => {
   try {
     const response = await axios.post(
       'http://localhost:5000/payment/capture-paypal-order',
@@ -28,7 +31,7 @@ export const capturePayPalOrder = async (orderID: string): Promise<any> => {
       }
     );
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error(error);
     throw new Error('Failed to capture PayPal order');
