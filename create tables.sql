@@ -492,3 +492,112 @@ marketplacedb=> select DISTINCT ss.size from products p join sizes ss on ss.size
  XL
  L
 (4 rows)
+
+
+
+
+
+SELECT p.product_id, 
+    p.product_name, 
+    p.product_description,
+    (SELECT json_agg(json_build_object('color', colors.color, 'product_image', pi.products_images))
+     FROM (SELECT DISTINCT v.product_color FROM products v WHERE v.base_id = p.product_id AND v.is_base_product = false) AS v
+     JOIN colors ON colors.color_id = v.product_color
+     JOIN products_images pi ON pi.product_id = p.product_id AND pi.color_id = v.product_color
+    ) AS colors,
+    (SELECT json_object_agg(colors, size) as size_colors
+    FROM (
+      SELECT c.color, array_agg(ss.size) as sizes
+      FROM products p
+      JOIN sizes ss ON ss.size_id = p.product_size
+      JOIN colors c ON c.color_id = p.product_color  
+      WHERE p.base_id = 106
+      GROUP BY c.color
+    ) as colors) as size_color,
+    ( select array_agg( DISTINCT ss.size )
+      from products p 
+      join sizes ss on ss.size_id = p.product_size 
+      where p.is_base_product = false and p.base_id = 106)   as sizes,
+    s.seller_name,
+    p.product_seller_id as seller_id,
+    p.product_price,
+    (SELECT json_object_agg(size, size_id) 
+    as sizes FROM sizes) as sku_size,
+    (SELECT json_object_agg(color, color_id) 
+    as colors FROM colors) as sku_color
+FROM products p 
+JOIN sellers s ON s.seller_id = p.product_seller_id
+WHERE p.product_id = 106 AND p.is_base_product = true
+GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price;
+
+
+SELECT p.product_id, 
+    p.product_name, 
+    p.product_description,
+    json_object_agg(colors.color, size_colors.sizes) AS colors,
+    json_object_agg(size, colors) as size_color,
+    array_agg(DISTINCT ss.size ORDER BY ss.size) as sizes,
+    s.seller_name,
+    p.product_seller_id as seller_id,
+    p.product_price,
+    (SELECT json_object_agg(size, size_id) 
+    as sizes FROM sizes) as sku_size,
+    (SELECT json_object_agg(color, color_id) 
+    as colors FROM colors) as sku_color
+FROM products p 
+JOIN sellers s ON s.seller_id = p.product_seller_id
+JOIN (
+  SELECT v.product_id, colors.color, json_object_agg(sizes.size, colors.color) as sizes
+  FROM (SELECT DISTINCT v.product_id, v.product_color FROM products v WHERE v.is_base_product = false) AS v
+  JOIN colors ON colors.color_id = v.product_color
+  JOIN (
+    SELECT DISTINCT p.product_id, sizes.size, c.color
+    FROM products p
+    JOIN sizes ON sizes.size_id = p.product_size
+    JOIN colors c ON c.color_id = p.product_color
+    WHERE p.is_base_product = false
+  ) AS colors ON colors.product_id = v.product_id AND colors.color = colors.color
+  JOIN sizes ON sizes.size = colors.size
+  GROUP BY v.product_id, colors.color
+) AS size_colors ON size_colors.product_id = p.product_id
+JOIN (
+  SELECT DISTINCT p.base_id, ss.size, c.color
+  FROM products p 
+  JOIN sizes ss ON ss.size_id = p.product_size 
+  JOIN colors c ON c.color_id = p.product_color  
+  WHERE p.is_base_product = false
+) as sizes ON sizes.base_id = p.base_id
+GROUP BY p.product_id, p.product_name, p.product_description, s.seller_name, p.product_price;
+
+SELECT p.product_id, 
+    p.product_name, 
+    p.product_description,
+    (SELECT json_agg(json_build_object('color', colors.color, 'product_image', pi.products_images))
+     FROM (SELECT DISTINCT v.product_color FROM products v WHERE v.base_id = p.product_id AND v.is_base_product = false) AS v
+     JOIN colors ON colors.color_id = v.product_color
+     JOIN products_images pi ON pi.product_id = p.product_id AND pi.color_id = v.product_color
+    ) AS colors,
+    (SELECT json_object_agg(size, colors) as size_colors
+    FROM (
+      SELECT ss.size, array_agg(c.color) as colors
+      FROM products p
+      JOIN sizes ss ON ss.size_id = p.product_size
+      JOIN colors c ON c.color_id = p.product_color  
+      WHERE p.base_id = $1 
+      GROUP BY ss.size
+    ) as sizes) as size_color,
+    ( select array_agg( DISTINCT ss.size )
+      from products p 
+      join sizes ss on ss.size_id = p.product_size 
+      where p.is_base_product = false and p.base_id = $1)   as sizes,
+    s.seller_name,
+    p.product_seller_id as seller_id,
+    p.product_price,
+    (SELECT json_object_agg(size, size_id) 
+    as sizes FROM sizes) as sku_size,
+    (SELECT json_object_agg(color, color_id) 
+    as colors FROM colors) as sku_color
+FROM products p 
+JOIN sellers s ON s.seller_id = p.product_seller_id
+WHERE p.product_id = $1 AND p.is_base_product = true
+GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price;
