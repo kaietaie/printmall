@@ -1,8 +1,9 @@
 import React, { memo } from 'react';
 import Modal from '@mui/material/Modal';
+import CloseButton from '../Buttons/CloseButton';
+import SupportForm from './SupportForm';
 
 import './SupportModal.sass';
-import CloseButton from '../Buttons/CloseButton';
 
 interface SupportModalProps {
   onClose: () => void;
@@ -23,6 +24,7 @@ const SupportModal: React.FC<SupportModalProps> = ({ onClose }) => {
         <span className="support-modal-message">
           We’d love to hear from you. Please fill out this form.
         </span>
+        <SupportForm />
       </div>
     </Modal>
   );
