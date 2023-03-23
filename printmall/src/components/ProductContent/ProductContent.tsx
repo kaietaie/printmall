@@ -8,7 +8,7 @@ import Button from '../common/Buttons';
 import { useTranslation } from 'react-i18next';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { CartProduct } from '../../types/Cart';
-import { addItem } from '../../store/cart/cartSlice';
+import { addItem, getTotals } from '../../store/cart/cartSlice';
 import { AppDispatch, RootState } from '../../store/store';
 import ImageComponent from '../common/ImageComponent';
 import defaultProductImage from '../images/defaultImages/product_default.png';
@@ -17,18 +17,19 @@ import { selectProduct } from '../../store/products/productsSelectors';
 import { Product } from '../../types/Product';
 import Loader from '../common/Loader';
 import makeSku from '../../utils/makeSku';
+import ProductSideBar from './ProductSideBar';
 
 import './ProductContent.sass';
 
 const ProductContent = () => {
   const { t } = useTranslation();
   const product = useSelector<RootState, Product | null>(selectProduct);
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
+  const [isOpenSideBar, setOpenIsSideBar] = useState(false);
 
   if (!product) {
     return <Loader />;
@@ -74,6 +75,10 @@ const ProductContent = () => {
     quantity,
   };
 
+  const toggleDrawer = () => {
+    setOpenIsSideBar(!isOpenSideBar);
+  };
+
   function handleColorPick(color: string | undefined) {
     if (color) {
       setSelectedColor(color);
@@ -96,8 +101,9 @@ const ProductContent = () => {
   };
 
   const handleAddToCart = () => {
+    toggleDrawer();
     dispatch(addItem(cartProduct));
-    navigate(`/cart`);
+    dispatch(getTotals());
   };
 
   return (
@@ -147,6 +153,9 @@ const ProductContent = () => {
           </div>
         </div>
       </div>
+      {isOpenSideBar && (
+        <ProductSideBar product={cartProduct} onClose={toggleDrawer} />
+      )}
     </div>
   );
 };

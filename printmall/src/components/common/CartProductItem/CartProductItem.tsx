@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import { ReactComponent as CloseIcon } from '../../images/close-icon.svg';
 import { CartProduct } from '../../../types/Cart';
 import QuantityChangeButton from '../Buttons/QuantityChangeButton';
 import {
@@ -11,9 +10,10 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
 import defaultProductImage from '../../images/defaultImages/product_default.png';
 import ImageComponent from '../ImageComponent';
+import { useTranslation } from 'react-i18next';
+import CloseButton from '../Buttons/CloseButton';
 
 import './CartProductItem.sass';
-import { useTranslation } from 'react-i18next';
 
 interface CartProductItemProps {
   product: CartProduct;
@@ -48,7 +48,7 @@ const CartProductItem: React.FC<CartProductItemProps> = ({
           alt="product"
         />
 
-        <div>
+        <div className="cart-product-info-details">
           <span className="cart-product-name">{product.product_name}</span>
           <div className="cart-product-options">
             <span className="cart-product-options-color">
@@ -58,6 +58,12 @@ const CartProductItem: React.FC<CartProductItemProps> = ({
             {isOrderDetails &&
               ` x ${product.quantity}${t('common.cartItemQuantity')}`}
           </div>
+
+          {isOrderDetails && (
+            <span className="cart-product-price">
+              ${product.product_price * product.quantity}
+            </span>
+          )}
         </div>
       </div>
 
@@ -70,13 +76,18 @@ const CartProductItem: React.FC<CartProductItemProps> = ({
           />
         )}
 
-        <span className="cart-product-price">
-          ${product.product_price * product.quantity}
-        </span>
+        {!isOrderDetails && (
+          <span className="cart-product-price">
+            ${product.product_price * product.quantity}
+          </span>
+        )}
 
-        <button className="cart-product-close-button" onClick={handleRemove}>
-          <CloseIcon />
-        </button>
+        {!isOrderDetails && (
+          <CloseButton
+            className="cart-product-close-button"
+            onClick={handleRemove}
+          />
+        )}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 .button
   display: flex
   align-items: center
+  justify-content: center
   height: 56px
   font-weight: 500
   cursor: pointer
@@ -122,3 +123,17 @@
     font-size: 14px
     line-height: 20px
     padding: 14px 0
+
+
+//CloseButton
+.close-button
+  border: none
+  background-color: transparent
+  cursor: pointer
+  transition: background-color $transition
+
+  svg
+    vertical-align: bottom
+
+  &:hover
+    background-color: $surface-primary

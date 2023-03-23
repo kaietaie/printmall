@@ -20,6 +20,9 @@
     margin-bottom: 16px
 
 .cart-product-actions
+  .quantity-change-buttons
+    margin-right: 16px
+
   @media screen and (max-width: 639px)
     justify-content: center
 
@@ -41,24 +44,14 @@
   color: $secondary
   font-size: 14px
   line-height: 20px
+  margin-bottom: 5px
 
 .cart-product-options-color
   text-transform: capitalize
 
 .cart-product-close-button
-  border: none
-  background-color: transparent
-  cursor: pointer
-  transition: background-color $transition
   margin-left: 12px
 
-  svg
-    vertical-align: bottom
-
-  &:hover
-    background-color: $surface-primary
-
 .cart-product-price
-  margin-left: 16px
   font-weight: 700
   line-height: 24px
