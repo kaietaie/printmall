@@ -139,7 +139,7 @@ const ProductContent = () => {
           />
           <div className="product-content-actions">
             <Button onClick={handleAddToCart} iconEnd={<BasketIcon />}>
-              {t('product.supportButton')}
+              {t('product.cartButton')}
             </Button>
             <div className="product-content-support">
               <SupportIcon />

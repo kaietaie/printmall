@@ -31,9 +31,14 @@
     "colorPicker": "Color",
     "sizePicker": "Size",
     "quantityPicker": "Quantity",
-    "supportButton": "Add to cart",
+    "cartButton": "Add to cart",
     "supportText": "Still have a question?",
     "supportLink": "Write to us!"
+  },
+  "productSideBar": {
+    "title": "Added to the cart!",
+    "cartButton": "Go to cart",
+    "continueButton": "Continue shopping"
   },
   "cart": {
     "title": "Shopping Cart",
