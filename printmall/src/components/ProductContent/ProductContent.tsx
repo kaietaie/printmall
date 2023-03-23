@@ -1,7 +1,6 @@
 import React, { memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import { selectProductById } from '../../store/products/productSlice';
 import ProductContentPickers from './ProductContentPickers';
 import { ReactComponent as BasketIcon } from '../images/shopping-basket.svg';
 import { ReactComponent as SupportIcon } from '../images/support-agent.svg';
@@ -9,28 +8,28 @@ import Button from '../common/Buttons';
 import { useTranslation } from 'react-i18next';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { CartProduct } from '../../types/Cart';
-import { addItem } from '../../store/cart/cartSlice';
+import { addItem, getTotals } from '../../store/cart/cartSlice';
 import { AppDispatch, RootState } from '../../store/store';
 import ImageComponent from '../common/ImageComponent';
 import defaultProductImage from '../images/defaultImages/product_default.png';
 import Carousel from './Carousel';
-import filterAvailableColorsBySize from '../../utils/filterAvailableColorsBySize';
 import { selectProduct } from '../../store/products/productsSelectors';
 import { Product } from '../../types/Product';
 import Loader from '../common/Loader';
 import makeSku from '../../utils/makeSku';
+import ProductSideBar from './ProductSideBar';
 
 import './ProductContent.sass';
 
 const ProductContent = () => {
   const { t } = useTranslation();
   const product = useSelector<RootState, Product | null>(selectProduct);
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
+  const [isOpenSideBar, setOpenIsSideBar] = useState(false);
 
   if (!product) {
     return <Loader />;
@@ -50,17 +49,12 @@ const ProductContent = () => {
   } = product;
 
   const productSize = selectedSize || sizes[0];
-  const availableColors = filterAvailableColorsBySize(
-    colors,
-    productSize,
-    size_color
-  );
 
-  const tShirtImage = availableColors.find(({ color }) => {
+  const tShirtImage = colors.find(({ color }) => {
     return color === selectedColor;
   })?.product_image;
 
-  const firstProductImage = availableColors[0].product_image;
+  const firstProductImage = colors[0].product_image;
   const productImage = tShirtImage || firstProductImage;
 
   const sku_cart_product_id = makeSku({
@@ -69,6 +63,7 @@ const ProductContent = () => {
     product_size: sku_size[selectedSize || sizes[0]],
     product_color: sku_color[selectedColor],
   });
+
   const cartProduct: CartProduct = {
     product_id,
     sku_cart_product_id,
@@ -78,6 +73,10 @@ const ProductContent = () => {
     product_color: selectedColor,
     product_size: productSize,
     quantity,
+  };
+
+  const toggleDrawer = () => {
+    setOpenIsSideBar(!isOpenSideBar);
   };
 
   function handleColorPick(color: string | undefined) {
@@ -102,17 +101,17 @@ const ProductContent = () => {
   };
 
   const handleAddToCart = () => {
+    toggleDrawer();
     dispatch(addItem(cartProduct));
-    navigate(`/cart`);
+    dispatch(getTotals());
   };
-
 
   return (
     <div className="product-content">
       <ReturnButton />
       <div className="product-content-section">
         <div className="product-content-image-picker">
-          <Carousel onColorPick={handleColorPick} colors={availableColors} />
+          <Carousel onColorPick={handleColorPick} colors={colors} />
           <ImageComponent
             className="product-content-image"
             imageUrl={productImage}
@@ -129,17 +128,18 @@ const ProductContent = () => {
           </p>
 
           <ProductContentPickers
+            sizeColor={size_color}
             onSizeChange={handleSizeChange}
             onIncrease={handleIncreaseQuantity}
             onDecrease={handleDecreaseQuantity}
-            colors={availableColors}
+            colors={colors}
             quantity={quantity}
             onColorPick={handleColorPick}
             selectedColor={selectedColor}
           />
           <div className="product-content-actions">
             <Button onClick={handleAddToCart} iconEnd={<BasketIcon />}>
-              {t('product.supportButton')}
+              {t('product.cartButton')}
             </Button>
             <div className="product-content-support">
               <SupportIcon />
@@ -153,6 +153,9 @@ const ProductContent = () => {
           </div>
         </div>
       </div>
+      {isOpenSideBar && (
+        <ProductSideBar product={cartProduct} onClose={toggleDrawer} />
+      )}
     </div>
   );
 };

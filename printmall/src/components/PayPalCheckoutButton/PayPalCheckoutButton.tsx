@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import { SkuCartItem } from '../../types/Cart';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,9 +7,12 @@ import { selectPayPalCartItems } from '../../store/cart/cartSelectors';
 import { clearCart } from '../../store/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import ErrorBanner from '../common/ErrorBanner';
-import { capturePayPalOrder, createPayPalOrder } from '../../api/paymentApi';
+import { createPayPalOrder } from '../../api/paymentApi';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { capturePayPalOrderThunk } from '../../store/payment/paymentThunks';
+import { selectPayPalPaymentStatus } from '../../store/payment/paymentSelectors';
+import { PaymentDetails } from '../../types/Payment';
 
 import './PayPalCheckoutButton.sass';
 
@@ -23,7 +26,18 @@ const PayPalCheckoutButton = () => {
     selectPayPalCartItems
   );
 
-  const handleCreateOrder = async (data: any): Promise<string> => {
+  const status = useSelector<RootState, PaymentDetails['status']>(
+    selectPayPalPaymentStatus
+  );
+
+  useEffect(() => {
+    if (status === 'COMPLETED') {
+      dispatch(clearCart());
+      setPaidFor(true);
+    }
+  }, [dispatch, status]);
+
+  const handleCreateOrder = async (): Promise<string> => {
     try {
       return await createPayPalOrder(skuCartItems);
     } catch (error) {
@@ -35,12 +49,7 @@ const PayPalCheckoutButton = () => {
 
   const handleApprove = async (data: any): Promise<void> => {
     try {
-      const response = await capturePayPalOrder(data.orderID);
-      console.log(response)
-      if (response.data.status === 'COMPLETED') {
-        dispatch(clearCart());
-        setPaidFor(true);
-      }
+      dispatch(capturePayPalOrderThunk(data.orderID));
     } catch (error) {
       console.error(error);
       setError('Error capturing PayPal order');

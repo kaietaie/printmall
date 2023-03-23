@@ -17,4 +17,4 @@ export const selectPayPalCartItems = (state: RootState) => {
 export const selectCartTotalAmount = (state: RootState) =>
   state.cart.cartTotalAmount;
 
-export const selectClientToken = (state: RootState) => state.cart.clientToken;
+// export const selectClientToken = (state: RootState) => state.cart.clientToken;

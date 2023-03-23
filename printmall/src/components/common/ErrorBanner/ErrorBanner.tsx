@@ -24,7 +24,7 @@ const ErrorBanner = () => {
         iconEnd={<ArrowForward />}
         type="quaternary"
       >
-        {t('errorBanner.button')}
+        {t('common.backToHomeButton')}
       </Button>
     </div>
   );

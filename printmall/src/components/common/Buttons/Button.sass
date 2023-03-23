@@ -3,6 +3,7 @@
 .button
   display: flex
   align-items: center
+  justify-content: center
   height: 56px
   font-weight: 500
   cursor: pointer
@@ -37,35 +38,28 @@
 
 
 .button-secondary
-  background-color: transparent
   border: 2px solid $primary
 
   &:hover
-    color: $white
     background-color: $primary
-
-  &:active
-    background-color: transparent
-    color: $typography
-
-  &:disabled
-    border-color: $secondary
-    cursor: auto
-    color: $secondary
-    background-color: transparent
 
 
 .button-quaternary
-  background-color: transparent
   border: 2px solid $accent
+
+  &:hover
+    background-color: $accent
+
+.button-secondary,
+.button-quaternary
+  background-color: transparent
 
   svg
     fill: $typography
-    transition: fill $transition,
+    transition: fill $transition
 
   &:hover
     color: $white
-    background-color: $accent
 
     svg
       fill: $white
@@ -77,6 +71,7 @@
     svg
       fill: $typography
 
+
   &:disabled
     border-color: $secondary
     cursor: auto
@@ -85,6 +80,7 @@
 
     svg
       fill: $secondary
+
 
 //ReturnButton
 .return-button
@@ -127,3 +123,18 @@
     font-size: 14px
     line-height: 20px
     padding: 14px 0
+
+
+//CloseButton
+.close-button
+  padding: 0
+  border: none
+  background-color: transparent
+  cursor: pointer
+  transition: background-color $transition
+
+  svg
+    vertical-align: bottom
+
+  &:hover
+    background-color: $surface-primary

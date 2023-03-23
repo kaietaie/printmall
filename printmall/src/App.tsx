@@ -9,8 +9,8 @@ import ProductPage from './Pages/ProductPage';
 import CartPage from './Pages/CartPage';
 import PaymentPage from './Pages/PaymentPage';
 import CompletePage from './Pages/CompletePage';
-
 import 'react-toastify/dist/ReactToastify.css';
+
 import './App.sass';
 
 function App() {
