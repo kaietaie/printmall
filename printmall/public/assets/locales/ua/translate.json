@@ -1,6 +1,8 @@
 {
   "common": {
-    "returnButton": "Назад"
+    "returnButton": "Назад",
+    "cartItemQuantity": "шт",
+    "backToHomeButton": "До сторінки продавця"
   },
   "header": {
     "liveChat": "Живий Чат!"
@@ -29,9 +31,14 @@
     "colorPicker": "Колір",
     "sizePicker": "Розмір",
     "quantityPicker": "Кількість",
-    "supportButton": "Додати в корзину",
+    "cartButton": "Додати в кошик",
     "supportText": "Маєш питання?",
     "supportLink": "Напиши нам!"
+  },
+  "productSideBar": {
+    "title": "Додано в кошик!",
+    "cartButton": "Перейти в кошик",
+    "continueButton": "Продовжити покупки"
   },
   "cart": {
     "title": "Кошик покупця",
@@ -42,7 +49,29 @@
   },
   "errorBanner": {
     "title": "От халепа!",
-    "message": "Шось пішло не так!",
-    "button": "До сторінки продавця"
+    "message": "Шось пішло не так!"
+  },
+  "payment": {
+    "cancelMessage": "Ви скасували платіж",
+    "optionsTitle": "Оберіть спосіб оплати",
+    "orderDetailsTitle": "Деталі замовлення",
+    "orderDetailsMessage": "Вартість доставки залежить від вашого місцезнаходження"
+  },
+  "purchaseStatus": {
+    "cart": "Кошик",
+    "payment": "Оплата",
+    "complete": "Завершити"
+  },
+  "complete": {
+    "gratitudeBanner": "Дякуюємо. Ваше замовлення отримано.",
+    "orderNumber": "Номер замовлення:",
+    "date": "Дата:",
+    "total": "Загальна сума:",
+    "paymentMethod": "Спосіб оплати:",
+    "detailsTitle": "Деталі замовлення",
+    "product": "Товар",
+    "details": "Деталі",
+    "taxes": "Податки:",
+    "shipping": "Доставка:"
   }
 }

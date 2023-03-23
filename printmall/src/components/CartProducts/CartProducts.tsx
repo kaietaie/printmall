@@ -2,8 +2,7 @@ import React, { memo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { clearCart, getTotals } from '../../store/cart/cartSlice';
-import CartProductItem from './CartProductItem';
-import ReturnButton from '../common/Buttons/ReturnButton';
+import CartProductItem from '../common/CartProductItem/CartProductItem';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import Button from '../common/Buttons';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +12,7 @@ import {
   selectCartItems,
   selectCartTotalAmount,
 } from '../../store/cart/cartSelectors';
+import { createOrder } from '../../store/cart/cartThunks';
 
 import './CartProducts.sass';
 
@@ -36,19 +36,24 @@ const CartProducts: React.FC = () => {
   };
 
   const handleGoToCheckout = useCallback(() => {
-    navigate(`/checkout`);
-  }, [navigate]);
+    const cartItemIds = items.map((item) => {
+      return { sku: item.sku_cart_product_id, quantity: item.quantity };
+    });
+    dispatch(createOrder(cartItemIds));
+    navigate(`/payment`);
+  }, [dispatch, items, navigate]);
 
   return (
-    <div className="cart-products">
-      <ReturnButton />
-      <h1 className="cart-products-title">{t('cart.title')}</h1>
+    <>
       {items.length > 0 ? (
         <>
           <div className="cart-products-container">
             <div className="cart-products-items">
               {items.map((item) => (
-                <CartProductItem key={item.cart_product_id} product={item} />
+                <CartProductItem
+                  key={item.sku_cart_product_id}
+                  product={item}
+                />
               ))}
             </div>
             <button
@@ -76,7 +81,7 @@ const CartProducts: React.FC = () => {
       ) : (
         <div>{t('cart.emptyMessage')}</div>
       )}
-    </div>
+    </>
   );
 };
 

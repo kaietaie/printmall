@@ -1,0 +1,57 @@
+@import '../../../styles/variables'
+
+.cart-product
+  &:not(:last-child)
+    margin-bottom: 16px
+
+  @media screen and (min-width: 640px)
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+
+.cart-product-info,
+.cart-product-actions
+  display: flex
+  align-items: center
+
+.cart-product-info
+  @media screen and (max-width: 639px)
+    margin-bottom: 16px
+
+.cart-product-actions
+  .quantity-change-buttons
+    margin-right: 16px
+
+  @media screen and (max-width: 639px)
+    justify-content: center
+
+
+.cart-product-image
+  height: 118px
+  width: 96px
+  margin-right: 16px
+  border-radius: 20px
+  background-color: $secondary-light
+
+.cart-product-name
+  margin-bottom: 5px
+  display: block
+  font-weight: 700
+  line-height: 24px
+
+.cart-product-options
+  color: $secondary
+  font-size: 14px
+  line-height: 20px
+  margin-bottom: 5px
+
+.cart-product-options-color
+  text-transform: capitalize
+
+.cart-product-close-button
+  margin-left: 12px
+
+.cart-product-price
+  font-weight: 700
+  line-height: 24px

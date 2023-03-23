@@ -1,6 +1,8 @@
 {
   "common": {
-    "returnButton": "Back"
+    "returnButton": "Back",
+    "cartItemQuantity": "pc",
+    "backToHomeButton": "Back to seller page"
   },
   "header": {
     "liveChat": "Live Chat!"
@@ -29,9 +31,14 @@
     "colorPicker": "Color",
     "sizePicker": "Size",
     "quantityPicker": "Quantity",
-    "supportButton": "Add to cart",
+    "cartButton": "Add to cart",
     "supportText": "Still have a question?",
     "supportLink": "Write to us!"
+  },
+  "productSideBar": {
+    "title": "Added to the cart!",
+    "cartButton": "Go to cart",
+    "continueButton": "Continue shopping"
   },
   "cart": {
     "title": "Shopping Cart",
@@ -42,7 +49,29 @@
   },
   "errorBanner": {
     "title": "Oops!",
-    "message": "Something went wrong!",
-    "button": "Back to seller page"
+    "message": "Something went wrong!"
+  },
+  "payment": {
+    "cancelMessage": "You canceled purchasing",
+    "optionsTitle": "Choose a payment method",
+    "orderDetailsTitle": "Order details",
+    "orderDetailsMessage": "Shipping costs depend on your location"
+  },
+  "purchaseStatus": {
+    "cart": "Cart total",
+    "payment": "Payment",
+    "complete": "Complete"
+  },
+  "complete": {
+    "gratitudeBanner": "Thank you. Your order has been received.",
+    "orderNumber": "Order number:",
+    "date": "Date:",
+    "total": "Total:",
+    "paymentMethod": "Payment method:",
+    "detailsTitle": "Order details",
+    "product": "Product",
+    "details": "Details",
+    "taxes": "Taxes:",
+    "shipping": "Shipping:"
   }
 }

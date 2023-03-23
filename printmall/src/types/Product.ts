@@ -5,6 +5,7 @@ export interface Color {
 
 export interface Product {
   product_id: number;
+  seller_id: number;
   product_name: string;
   colors: Color[];
   seller_name: string;
@@ -14,6 +15,12 @@ export interface Product {
   seller_rating: number;
   size_color: {
     [key: string]: string[];
+  };
+  sku_color: {
+    [key: string]: number;
+  };
+  sku_size: {
+    [key: string]: number;
   };
   sizes: string[];
 }

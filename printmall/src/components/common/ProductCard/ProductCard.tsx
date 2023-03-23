@@ -22,7 +22,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     seller_sales,
     seller_rating,
   } = product;
-
   const [selectedColor, setSelectedColor] = useState<string>(colors[0].color);
 
   const handleColorPick = (e: React.MouseEvent<HTMLDivElement>) => {
