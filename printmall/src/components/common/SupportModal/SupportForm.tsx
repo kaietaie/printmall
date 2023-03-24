@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
@@ -6,6 +6,7 @@ import { SupportFormValues } from '../../../types/Support';
 import * as yup from 'yup';
 import Button from '../Buttons';
 import { sendUserMessage } from '../../../api/supportApi';
+import Checkbox from '../Checkbox';
 
 const validationSchema = yup.object().shape({
   first_name: yup.string().required('First name is required'),
@@ -22,6 +23,12 @@ const validationSchema = yup.object().shape({
 });
 
 const SupportForm = () => {
+  const [isPolicyChecked, setIPolicyChecked] = useState(false);
+
+  const handleTogglePolicy = () => {
+    setIPolicyChecked(!isPolicyChecked);
+  };
+
   const formik = useFormik<SupportFormValues>({
     initialValues: {
       first_name: '',
@@ -99,7 +106,17 @@ const SupportForm = () => {
         fullWidth
       />
 
+      <div className="support-form-policy">
+        <Checkbox
+          onChange={handleTogglePolicy}
+          label="You agree to our friendly"
+          checked={isPolicyChecked}
+        />
+        <button className="support-form-policy-button">privacy policy</button>
+      </div>
+
       <Button
+        isDisabled={!isPolicyChecked}
         className="support-form-submit-button"
         iconEnd={<ArrowForward />}
         buttonType="submit"
