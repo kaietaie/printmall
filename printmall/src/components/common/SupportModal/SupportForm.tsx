@@ -1,17 +1,11 @@
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
+import { SupportFormValues } from '../../../types/Support';
 import * as yup from 'yup';
 import Button from '../Buttons';
 import React from 'react';
-
-interface SupportFormValues {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
+import { sendUserMessage } from '../../../api/supportApi';
 
 const validationSchema = yup.object().shape({
   first_name: yup.string().required('First name is required'),
@@ -39,7 +33,8 @@ const SupportForm = () => {
     validationSchema,
     onSubmit: (values) => {
       // handle form submission here
-      console.log(values);
+      const res = sendUserMessage(values);
+      console.log(res);
     },
   });
 
