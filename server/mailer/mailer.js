@@ -7,10 +7,12 @@ export default async function mailSend(data) {
   //   text: '',
   //   html: ``
   //   }
-  const emails = data.emails.toString();
-  const transporter = nodemailer.createTransport({
-    host: process.env.MAILER_SERVER,
-    port: process.env.MAILER_PORT_SSL1,
+ try {
+  
+   const emails = data.emails.toString();
+   const transporter = nodemailer.createTransport({
+     host: process.env.MAILER_SERVER,
+     port: process.env.MAILER_PORT_SSL1,
     secure: true, // true for 465, false for other ports
     auth: {
       user: process.env.MAILER_LOGIN,
@@ -25,7 +27,7 @@ export default async function mailSend(data) {
       console.log("Server is ready to take our messages");
     }
   });
-
+  
   const info = await transporter.sendMail({
     from: `"KRAM Market" ${process.env.MAILER_LOGIN}`, // sender address
     to: emails, // list of receivers
@@ -34,4 +36,7 @@ export default async function mailSend(data) {
     html: data.html, // html body
   }); 
   console.dir(info);
+} catch (error) {
+ console.log(error)
+}
 }

@@ -3,7 +3,7 @@ import mailSend from "./mailer.js";
 
 export default async function sendConfirmationMail(captureData, dataOrder) {
   const data = {
-    email: [captureData.payment_source.paypal.email_address],
+    emails: [captureData.payer.email_address],
     subject: `Order Confirmation`,
     text: `Order confirmation`,
     html: `<p>Dear ${captureData.payer.name.given_name} ${captureData.payer.name.surname},</p>
@@ -20,6 +20,5 @@ export default async function sendConfirmationMail(captureData, dataOrder) {
         <p>Sincerely,</p>
         <p>The KRAM Market Team</p>`,
   };
-
   mailSend(data);
 }
