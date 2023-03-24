@@ -8,7 +8,6 @@ import useScreen from '../hooks/useScreen';
 import HeaderContacts from './HeaderContacts';
 
 const HeaderContent = () => {
-  const { t } = useTranslation();
   const { isMobile } = useScreen();
 
   return (
