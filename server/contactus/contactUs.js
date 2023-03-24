@@ -2,12 +2,13 @@ import { pool } from "../dbConnection.js";
 import mailSend from "../mailer/mailer.js";
 
 export default async function contactUs(req, res) {
-  const { fname, lname, email, phone, message } = req.body;
+  const { user_message } = req.body;
+  const { first_name, last_name, email, phone, message } = user_message;
 
   const data = {
     emails: [email],
     subject: "Thanks for contact us!",
-    text: `Thank you, ${fname}, for contacting us! We have received your message and will get back to you as soon as possible.`,
+    text: `Thank you, ${first_name}, for contacting us! We have received your message and will get back to you as soon as possible.`,
     html: `<b>Have you already buy our t-shirts?</b> <br>
     <img src="https://media.makeameme.org/created/consumers-buy-more.jpg" alt="mem">`,
   };
@@ -19,7 +20,7 @@ export default async function contactUs(req, res) {
 
   const contact = await pool.query(
     sql,
-    [fname, lname, email, phone, message],
+    [first_name, last_name, email, phone, message],
     (err, result) => {
       if (err)
         return res.status(400).json({
