@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import Button from '../Buttons';
 import { sendUserMessage } from '../../../api/supportApi';
 import Checkbox from '../Checkbox';
+import { useTranslation } from 'react-i18next';
 
 const validationSchema = yup.object().shape({
   first_name: yup.string().required('First name is required'),
@@ -23,6 +24,8 @@ const validationSchema = yup.object().shape({
 });
 
 const SupportForm = () => {
+  const { t } = useTranslation();
+
   const [isPolicyChecked, setIPolicyChecked] = useState(false);
 
   const handleTogglePolicy = () => {
@@ -50,7 +53,7 @@ const SupportForm = () => {
       <div className="support-form-names">
         <TextInput
           className="support-form-first-name"
-          label="First Name"
+          label={t('form.firstName')}
           type="text"
           name="first_name"
           error={formik.touched.first_name && formik.errors.first_name}
@@ -61,7 +64,7 @@ const SupportForm = () => {
         />
 
         <TextInput
-          label="Last Name"
+          label={t('form.lastName')}
           type="text"
           name="last_name"
           error={formik.touched.last_name && formik.errors.last_name}
@@ -73,7 +76,7 @@ const SupportForm = () => {
       </div>
 
       <TextInput
-        label="Email"
+        label={t('form.email')}
         type="email"
         name="email"
         placeholder="you@company.com"
@@ -85,7 +88,7 @@ const SupportForm = () => {
       />
 
       <TextInput
-        label="Phone"
+        label={t('form.phone')}
         type="tel"
         name="phone"
         error={formik.touched.phone && formik.errors.phone}
@@ -96,7 +99,7 @@ const SupportForm = () => {
       />
 
       <TextInput
-        label="Message"
+        label={t('form.message')}
         type="textarea"
         name="message"
         error={formik.touched.message && formik.errors.message}
@@ -109,10 +112,12 @@ const SupportForm = () => {
       <div className="support-form-policy">
         <Checkbox
           onChange={handleTogglePolicy}
-          label="You agree to our friendly"
+          label={t('form.privacyCheckbox')}
           checked={isPolicyChecked}
         />
-        <button className="support-form-policy-button">privacy policy</button>
+        <button type="button" className="support-form-policy-button">
+          {t('form.privacyButton')}
+        </button>
       </div>
 
       <Button
@@ -121,7 +126,7 @@ const SupportForm = () => {
         iconEnd={<ArrowForward />}
         buttonType="submit"
       >
-        Send message
+        {t('form.sendMessageButton')}
       </Button>
     </form>
   );

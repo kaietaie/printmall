@@ -73,5 +73,21 @@
     "details": "Details",
     "taxes": "Taxes:",
     "shipping": "Shipping:"
+  },
+  "supportModal": {
+    "subTitle": "Contact us",
+    "title": "Get in touch",
+    "message": "We’d love to hear from you. Please fill out this form.",
+    "firstName": ""
+  },
+  "form": {
+   "firstName" :"First Name",
+   "lastName" :"Last Name",
+   "email" :"Email",
+   "phone" :"Phone",
+   "message" :"Message",
+   "privacyCheckbox" :"You agree to our friendly",
+   "privacyButton" :"privacy policy",
+   "sendMessageButton" :"Send message"
   }
 }
