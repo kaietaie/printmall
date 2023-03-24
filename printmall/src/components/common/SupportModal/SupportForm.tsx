@@ -1,10 +1,10 @@
+import React, { memo } from 'react';
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
 import { SupportFormValues } from '../../../types/Support';
 import * as yup from 'yup';
 import Button from '../Buttons';
-import React from 'react';
 import { sendUserMessage } from '../../../api/supportApi';
 
 const validationSchema = yup.object().shape({
@@ -50,6 +50,7 @@ const SupportForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.first_name}
+          fullWidth
         />
 
         <TextInput
@@ -60,6 +61,7 @@ const SupportForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.last_name}
+          fullWidth
         />
       </div>
 
@@ -108,4 +110,4 @@ const SupportForm = () => {
   );
 };
 
-export default SupportForm;
+export default memo(SupportForm);
