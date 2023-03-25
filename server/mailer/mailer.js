@@ -35,7 +35,7 @@ export default async function mailSend(data) {
     text: data.text, // plain text body
     html: data.html, // html body
   }); 
-  console.dir(info);
+  // console.dir(info);
 } catch (error) {
  console.log(error)
 }
