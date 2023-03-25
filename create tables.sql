@@ -183,6 +183,18 @@ CREATE TABLE newslist_emails (
     newslist_email_id   serial PRIMARY KEY,
     newslist_email      varchar(30)
 );
+
+CREATE TABLE contact_us (
+    id                  SERIAL PRIMARY KEY,
+    first_name          VARCHAR(50),
+    last_name           VARCHAR(50),
+    email               VARCHAR(100),
+    phone               VARCHAR(20),
+    message             TEXT
+); 
+
+
+
 -- ----------------------------------------------------
 
 insert into seller_contact (

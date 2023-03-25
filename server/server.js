@@ -10,6 +10,7 @@ import { sellerRouter } from "./routes/seller.route.js";
 import fileUpload from "express-fileupload";
 import { paymentRouter } from "./routes/payment.route.js";
 import { newslistRouter } from "./routes/newslist.route.js";
+import { contactRouter } from "./routes/contact.route.js";
 
 const host = process.env.HOST || "localhost";
 const port = process.env.SERVER_PORT || 5000;
@@ -35,6 +36,7 @@ app.use('/blog', blogRouter);
 app.use('/products', productRouter);
 app.use('/seller', sellerRouter);
 app.use('/payment', paymentRouter);
+app.use('/contactus', contactRouter)
 // app.use('/auth', );
 // app.use('/refresh', );
 // app.use('/logout',  );

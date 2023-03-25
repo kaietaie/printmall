@@ -8,6 +8,7 @@ interface ButtonProps {
   isDisabled?: boolean;
   type?: 'primary' | 'secondary' | 'quaternary';
   children: string;
+  buttonType?: 'button' | 'reset' | 'submit';
   iconEnd?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
 }
 
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   isDisabled = false,
   className,
   onClick,
+  buttonType,
 }) => {
   return (
     <button
@@ -28,6 +30,7 @@ const Button: React.FC<ButtonProps> = ({
         button-${type}
         ${className ? className : ''}
       `}
+      type={buttonType}
     >
       {children}
       {iconEnd && iconEnd}

@@ -21,7 +21,7 @@ Tshirt marketplace
     * `\q` for exit
 
 3. Restore dump from normal terminal
-     `psql -U printmall -d marketplacedb < db_v1.1.sql`
+     `psql -U printmall -d marketplacedb < db_v1.2.sql`
     
     Before Restore dump you need have an empty db with the same name,
     its mean if you already have old version of db you should open `psql` and then: 

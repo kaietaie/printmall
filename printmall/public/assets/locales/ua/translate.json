@@ -5,7 +5,7 @@
     "backToHomeButton": "До сторінки продавця"
   },
   "header": {
-    "liveChat": "Живий Чат!"
+    "contactUs": "Напишіть нам"
   },
   "navBar": {
     "marketplace": "Магазин",
@@ -73,5 +73,29 @@
     "details": "Деталі",
     "taxes": "Податки:",
     "shipping": "Доставка:"
-  }
+  },
+  "supportModal": {
+    "subTitle": "Зв'яжіться з нами",
+    "title": "Будемо на зв'язку",
+    "message": "Ми будемо раді почути вас. Будь ласка, заповніть цю форму."
+  },
+  "form": {
+    "firstName": "Ім'я",
+    "firstNameError" :"Вкажіть ім'я",
+    "lastName": "Прізвище",
+    "lastNameError" :"Вкажіть прізвище",
+    "email": "Ел. пошта",
+    "emailErrorInvalid" :"Невірна адреса електронної пошти",
+    "emailErrorRequired" :"Вкажіть електронну пошту",
+    "phone": "Телефон",
+    "phoneErrorInvalid" :"Невірний номер телефону",
+    "phoneErrorRequired" :"Вкажіть номер телефону",
+    "message": "Повідомлення",
+    "messageError": "Введіть повідомлення",
+    "privacyCheckbox": "Згода з нашою дружньою",
+    "privacyButton": "політикою конфіденційності",
+    "sendMessageButton": "Надіслати повідомлення",
+    "submitCompleteMessage": "Дякуємо, що звернулися до нас! Ми отримали ваше повідомлення і відповімо якнайшвидше",
+    "submitFailMessage": "Не вдалося відправити повідомлення"
+}
 }

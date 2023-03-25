@@ -1,3 +1,5 @@
+@import './styles/variables'
+
 .container
   margin: 0 auto
   padding: 0 20px
@@ -5,3 +7,19 @@
   @media screen and (min-width: 1280px)
     padding: 0 32px
     max-width: 1216px
+
+
+//Toastify classes override
+.Toastify__progress-bar--info
+  background: $primary !important
+
+.Toastify__progress-bar--error
+  background: $accent !important
+
+.Toastify__toast--error
+  svg
+    fill: $accent
+
+.Toastify__toast--info
+  svg
+    fill: $primary
