@@ -81,13 +81,22 @@
     "firstName": ""
   },
   "form": {
-   "firstName" :"First Name",
-   "lastName" :"Last Name",
-   "email" :"Email",
-   "phone" :"Phone",
-   "message" :"Message",
-   "privacyCheckbox" :"You agree to our friendly",
-   "privacyButton" :"privacy policy",
-   "sendMessageButton" :"Send message"
+    "firstName": "First Name",
+    "firstNameError": "First name is required",
+    "lastName": "Last Name",
+    "lastNameError": "Last name is required",
+    "email": "Email",
+    "emailErrorInvalid": "Invalid email address",
+    "emailErrorRequired": "Email is required",
+    "phone": "Phone",
+    "phoneErrorInvalid": "Invalid phone number",
+    "phoneErrorRequired": "Phone number is required",
+    "message": "Message",
+    "messageError": "Message is required",
+    "privacyCheckbox": "You agree to our friendly",
+    "privacyButton": "privacy policy",
+    "sendMessageButton": "Send message",
+    "submitCompleteMessage": "Thank you for contacting us! We have received your message and will reply as soon as possible.",
+    "submitFailMessage": "Failed to send user message"
   }
 }

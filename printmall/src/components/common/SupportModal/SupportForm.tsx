@@ -3,26 +3,12 @@ import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
 import { SupportFormValues } from '../../../types/Support';
-import * as yup from 'yup';
 import Button from '../Buttons';
 import { sendUserMessage } from '../../../api/supportApi';
 import Checkbox from '../Checkbox';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-
-const validationSchema = yup.object().shape({
-  first_name: yup.string().required('First name is required'),
-  last_name: yup.string().required('Last name is required'),
-  email: yup
-    .string()
-    .email('Invalid email address')
-    .required('Email is required'),
-  phone: yup
-    .string()
-    .matches(/^[+]{0,1}([0-9]{12})$/, 'Invalid phone number')
-    .required('Phone number is required'),
-  message: yup.string().required('Message is required'),
-});
+import { getValidationSchema } from './validationSchema';
 
 interface SupportFormProps {
   onClose: () => void;
@@ -30,6 +16,7 @@ interface SupportFormProps {
 
 const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
   const { t } = useTranslation();
+  const validationSchema = getValidationSchema(t);
 
   const [isPolicyChecked, setIPolicyChecked] = useState(false);
 
@@ -49,13 +36,11 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
     onSubmit: async (values) => {
       try {
         await sendUserMessage(values);
-        toast.info(
-          "Thank you for contacting us! We have received you message and will get back to you as soon as possible.'"
-        );
+        toast.info(t('form.submitCompleteMessage'));
         onClose();
       } catch (error) {
         console.error(error);
-        toast.error('Failed to send user message');
+        toast.error(t('form.submitFailMessage'));
       }
     },
   });
