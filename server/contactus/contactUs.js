@@ -5,7 +5,6 @@ export default async function contactUs(req, res) {
   // const { user_message } = req.body;
   const { first_name, last_name, email, phone, message } =
     req.body.user_message;
-  console.log(first_name);
   const data = {
     emails: [email],
     subject: "Thanks for contact us!",
