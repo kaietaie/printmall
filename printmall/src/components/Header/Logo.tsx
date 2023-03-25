@@ -1,14 +1,13 @@
+import React, { memo } from 'react';
 import { ReactComponent as AppLogo } from '../images/logo.svg';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Logo = () => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/seller/Go_A`);
-  };
-
-  return <AppLogo className="logo" onClick={handleClick} />;
+const Logo: React.FC = () => {
+  return (
+    <Link to="/seller/Go_A">
+      <AppLogo className="logo" />
+    </Link>
+  );
 };
 
-export default Logo;
+export default memo(Logo);
