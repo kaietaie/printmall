@@ -24,14 +24,9 @@ export default async function contactUs(req, res) {
     [first_name, last_name, email, phone, message],
     (err, result) => {
       if (err)
-        return res.status(400).json({
-          Message: "Something goes wrong. Try again",
-        });
+        return res.sendStatus(400);
 
-      return res.status(200).json({
-        Message:
-          "Thank you for contacting us! We have received your message and will get back to you as soon as possible.",
-      });
+      return res.sendStatus(200);
     }
   );
 }
