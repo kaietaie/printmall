@@ -5,29 +5,24 @@ import { ReactComponent as BasketIcon } from '../images/shopping-basket.svg';
 import Badge from '../Badge';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { selectCartTotalQuantity } from '../../store/cart/cartSelectors';
 import { CartState } from '../../types/Cart';
 
 const HeaderButtons = () => {
-  const navigate = useNavigate();
   const cartTotalQuantity = useSelector<
     RootState,
     CartState['cartTotalQuantity']
   >(selectCartTotalQuantity);
-
-  const handleRedirectToCart = () => {
-    navigate(`/cart`);
-  };
 
   return (
     <div className="header-buttons">
       {/*<HeartIcon />*/}
       {/*<SearchIcon />*/}
       <Badge content={cartTotalQuantity}>
-        <button onClick={handleRedirectToCart} className="header-basket-button">
+        <Link to="/cart" className="header-basket-link">
           <BasketIcon />
-        </button>
+        </Link>
       </Badge>
     </div>
   );
