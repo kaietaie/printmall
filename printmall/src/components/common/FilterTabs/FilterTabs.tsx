@@ -1,3 +1,4 @@
+import React from 'react';
 import './FilterTabs.sass';
 
 const filterItems = [
@@ -8,14 +9,19 @@ const filterItems = [
   { label: 'Lego' },
   { label: 'Star Wars' },
 ];
-const FilterTabs = () => {
+
+interface FilterTabsProps {
+  filterTitles: string[];
+}
+
+const FilterTabs: React.FC<FilterTabsProps> = ({ filterTitles }) => {
   return (
     <div className="filter-tabs">
       <ul className="filter-tabs-list">
-        {filterItems.map((item) => {
+        {filterTitles.map((title) => {
           return (
-            <li key={item.label}>
-              <button className="filter-tabs-button">{item.label}</button>
+            <li key={title}>
+              <button className="filter-tabs-button">{title}</button>
             </li>
           );
         })}
