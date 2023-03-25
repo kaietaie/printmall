@@ -8,6 +8,7 @@ import Button from '../Buttons';
 import { sendUserMessage } from '../../../api/supportApi';
 import Checkbox from '../Checkbox';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const validationSchema = yup.object().shape({
   first_name: yup.string().required('First name is required'),
@@ -23,7 +24,11 @@ const validationSchema = yup.object().shape({
   message: yup.string().required('Message is required'),
 });
 
-const SupportForm = () => {
+interface SupportFormProps {
+  onClose: () => void;
+}
+
+const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
   const { t } = useTranslation();
 
   const [isPolicyChecked, setIPolicyChecked] = useState(false);
@@ -42,9 +47,16 @@ const SupportForm = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      // handle form submission here
-      const res = await sendUserMessage(values);
-      console.log(res);
+      try {
+        await sendUserMessage(values);
+        toast.info(
+          "Thank you for contacting us! We have received you message and will get back to you as soon as possible.'"
+        );
+        onClose();
+      } catch (error) {
+        console.error(error);
+        toast.error('Failed to send user message');
+      }
     },
   });
 

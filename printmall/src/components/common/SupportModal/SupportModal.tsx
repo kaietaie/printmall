@@ -29,7 +29,7 @@ const SupportModal: React.FC<SupportModalProps> = ({ onClose }) => {
         <span className="support-modal-message">
           {t('supportModal.message')}
         </span>
-        <SupportForm />
+        <SupportForm onClose={onClose} />
       </div>
     </Modal>
   );
