@@ -41,9 +41,9 @@ const SupportForm = () => {
       message: '',
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // handle form submission here
-      const res = sendUserMessage(values);
+      const res = await sendUserMessage(values);
       console.log(res);
     },
   });
