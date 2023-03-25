@@ -2,18 +2,20 @@ import { pool } from "../dbConnection.js";
 import mailSend from "../mailer/mailer.js";
 
 export default async function contactUs(req, res) {
-  const { user_message } = req.body;
-  const { first_name, last_name, email, phone, message } = user_message;
-
+  // const { user_message } = req.body;
+  const { first_name, last_name, email, phone, message } =
+    req.body.user_message;
+  console.log(first_name);
   const data = {
     emails: [email],
     subject: "Thanks for contact us!",
-    text: `Thank you, ${first_name}, for contacting us! We have received your message and will get back to you as soon as possible.`,
+    text: ``,
     html: `<b>Have you already buy our t-shirts?</b> <br>
-    <img src="https://media.makeameme.org/created/consumers-buy-more.jpg" alt="mem">`,
+    Thank you, ${first_name}, for contacting us! We have received your message and will get back to you as soon as possible.
+    `,
   };
 
-  const sendMail = mailSend(data);
+  mailSend(data);
 
   const sql = `INSERT INTO contact_us (first_name, last_name, email, phone, message) 
     VALUES ($1, $2, $3, $4, $5);`;
