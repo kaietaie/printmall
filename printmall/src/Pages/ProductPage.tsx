@@ -8,6 +8,7 @@ import Loader from '../components/common/Loader';
 import ErrorBanner from '../components/common/ErrorBanner';
 import { selectProductStatus } from '../store/products/productsSelectors';
 import { ProductState } from '../types/Product';
+import ProductDescription from '../components/ProductDescription/ProductDescription';
 
 const ProductPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -32,7 +33,12 @@ const ProductPage = () => {
     return <ErrorBanner />;
   }
 
-  return <ProductContent />;
+  return (
+    <>
+      <ProductContent />
+      <ProductDescription />
+    </>
+  );
 };
 
 // export default memo(withNavBar({ wrappedComponent: ProductPage }));
