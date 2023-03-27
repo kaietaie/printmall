@@ -1,4 +1,5 @@
 import { pool } from "../dbConnection.js";
+import logger from "../logger/logger.js";
 import mailSend from "../mailer/mailer.js";
 
 export default async function contactUs(req, res) {
@@ -22,9 +23,12 @@ export default async function contactUs(req, res) {
   const contact = await pool.query(
     sql,
     [first_name, last_name, email, phone, message],
-    (err, result) => {
-      if (err)
+    (error, result) => {
+      if (error) {
+        const errorMsg = `Get product is failed: ${error.message}`;
+        logger.error(errorMsg);
         return res.sendStatus(400);
+      }
 
       return res.sendStatus(200);
     }

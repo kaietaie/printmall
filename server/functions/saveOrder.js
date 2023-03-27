@@ -1,4 +1,5 @@
 import { pool } from "../dbConnection.js";
+import logger from "../logger/logger.js";
 import { order } from "../product/checkout/createOrder.js";
 import saveOrderId from "./saveOrder/saveOrderId.js";
 import savePayment from "./saveOrder/savePayment.js";
@@ -46,7 +47,7 @@ export default async function saveOrder(captureData) {
         order.total,
       ]);
     }
-console.log({products})
+// console.log({products})
     // const data = {
     //   products: [
     //     { title: 'Custom Printed T-Shirt', value: '230', quantity: 1 },
@@ -72,7 +73,8 @@ console.log({products})
 
     return data;
   } catch (error) {
-    console.log(error);
+    const errorMsg = `Save order is failed: ${error.message}`;
+    logger.error(errorMsg);
     return false;
   }
 }

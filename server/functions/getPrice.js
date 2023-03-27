@@ -1,4 +1,5 @@
 import { pool } from "../dbConnection.js";
+import logger from "../logger/logger.js";
 //
 export default async function getPriceOrName(sku, value) {
   try {
@@ -13,7 +14,8 @@ export default async function getPriceOrName(sku, value) {
     find.rows[0].id = id.rows[0].product_id;
     return find.rows[0];
   } catch (error) {
-    console.log(error);
+    const errorMsg = `getPriceOrName is failed: ${error.message}`;
+    logger.error(errorMsg);
     return false;
   }
 }

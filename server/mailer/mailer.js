@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import logger from "../logger/logger.js";
 
 export default async function mailSend(data) {
   //   take data: {
@@ -22,7 +23,8 @@ export default async function mailSend(data) {
   // verify connection configuration
   transporter.verify(function (error, success) {
     if (error) {
-      console.log(error);
+      const errorMsg = `Get product is failed: ${error.message}`;
+      logger.error(errorMsg);
     } else {
       console.log("Server is ready to take our messages");
     }
@@ -37,6 +39,7 @@ export default async function mailSend(data) {
   }); 
   // console.dir(info);
 } catch (error) {
- console.log(error)
+  const errorMsg = `Get product is failed: ${error.message}`;
+  logger.error(errorMsg);
 }
 }

@@ -1,5 +1,6 @@
 import { pool } from "../../dbConnection.js";
 import checkDataDB from "../../functions/checkDataDB.js";
+import logger from "../../logger/logger.js";
 
 export default async function getProduct(req, res) {
   if (req.params.id) {
@@ -60,6 +61,8 @@ GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price, p.product
 
       return res.json(product.rows[0]);
     } catch (error) {
+      const errorMsg = `Get product is failed: ${error.message}`;
+      logger.error(errorMsg);
       return res.json({ Error: error.message });
     }
   }
@@ -101,6 +104,8 @@ GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price
 
     res.json(products.rows);
   } else {
+    const errorMsg = `get product is failed: ${error.message}`;
+    logger.error(errorMsg);
     return res.status(400).json({ Error: "Bad request" });
   }
 }

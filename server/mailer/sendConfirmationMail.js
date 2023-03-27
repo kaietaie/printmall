@@ -2,12 +2,14 @@ import { order } from "../product/checkout/createOrder.js";
 import mailSend from "./mailer.js";
 
 export default async function sendConfirmationMail(captureData, dataOrder) {
-  const data = {
-    emails: [captureData.payer.email_address],
-    subject: `Order Confirmation`,
-    text: `Order confirmation`,
-    html: `<p>Dear ${captureData.payer.name.given_name} ${captureData.payer.name.surname},</p>
-        <p>We wanted to take a moment to thank you for choosing to shop with us and for placing an order on our website. This email serves as a confirmation of your order details:</p>
+ try {
+  
+   const data = {
+     emails: [captureData.payer.email_address],
+     subject: `Order Confirmation`,
+     text: `Order confirmation`,
+     html: `<p>Dear ${captureData.payer.name.given_name} ${captureData.payer.name.surname},</p>
+     <p>We wanted to take a moment to thank you for choosing to shop with us and for placing an order on our website. This email serves as a confirmation of your order details:</p>
         <ul>
           <li>Order Number: ${dataOrder.id}</li>
           <li>Order Date: ${captureData.purchase_units[0].payments.captures[0].create_time}</li>
@@ -19,6 +21,10 @@ export default async function sendConfirmationMail(captureData, dataOrder) {
         <p>Thank you for your business!</p>
         <p>Sincerely,</p>
         <p>The KRAM Market Team</p>`,
-  };
-  mailSend(data);
+      };
+      mailSend(data);
+    } catch (error) {
+      const errorMsg = `Get product is failed: ${error.message}`;
+      logger.error(errorMsg); 
+     }
 }

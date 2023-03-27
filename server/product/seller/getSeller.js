@@ -1,5 +1,6 @@
 import { pool } from "../../dbConnection.js";
 import checkDataDB from "../../functions/checkDataDB.js";
+import logger from "../../logger/logger.js";
 
 export default async function getSeller(req, res) {
   if (req.params) {
@@ -26,6 +27,8 @@ export default async function getSeller(req, res) {
 
 
     } catch (error) {
+      const errorMsg = `Get product is failed: ${error.message}`;
+      logger.error(errorMsg);
       return res.json({ Error: error.message });
     }
   }

@@ -1,6 +1,8 @@
 import * as paypal from "./paypal-api.js";
 import getPriceOrName from "../../functions/getPrice.js";
+import logger from "../../logger/logger.js";
 export var order = {};
+
 export default async function createPayPalOrder(req, res) {
   const { cart } = req.body; // [{quantity, sku },{quantity, sku }...]
   let total = 0;
@@ -21,8 +23,9 @@ export default async function createPayPalOrder(req, res) {
   try {
     const createData = await paypal.createOrder(order);
     res.json(createData);
-  } catch (err) {
-    console.log(err)
-    res.status(500).send(err.message);
+  } catch (error) {
+    const errorMsg = `createPayPalOrder is failed: ${error.message}`;
+    logger.error(errorMsg);
+    res.status(500).send(error.message);
   }
 }

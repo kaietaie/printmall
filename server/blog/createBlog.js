@@ -1,4 +1,5 @@
 import { pool } from "../dbConnection.js";
+import logger from "../logger/logger.js";
 
 export default async function createBlog(req, res) {
     try {
@@ -45,6 +46,8 @@ export default async function createBlog(req, res) {
           });
         // return res.sendStatus(201);
     } catch (error) {
+        const errorMsg = `getPriceOrName is failed: ${error.message}`;
+        logger.error(errorMsg);
         res.status(400).json({ message: "Registration error", ERROR: error.message });
     }
 

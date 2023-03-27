@@ -1,18 +1,21 @@
 import { pool } from "../../dbConnection.js";
+import logger from "../../logger/logger.js";
 
 export default async function createProduct(req, res) {
-    try {
-        const { product_name,
-            product_description,
-            product_size,   //array
-            product_color,  //array
-            product_type,   //Clothes / Cups / Keyholders
-            product_price,
-            product_seller_id, } = req.body;
+  try {
+    const {
+      product_name,
+      product_description,
+      product_size, //array
+      product_color, //array
+      product_type, //Clothes / Cups / Keyholders
+      product_price,
+      product_seller_id,
+    } = req.body;
 
-        const user_id = 1;
-        const datetime = Date.now();
-        const query0 = `insert into products ( 
+    const user_id = 1;
+    const datetime = Date.now();
+    const query0 = `insert into products ( 
             product_name,
             product_description,
             is_base_product,
@@ -23,28 +26,35 @@ export default async function createProduct(req, res) {
             create_datetime, 
             update_datetime)
             values($1, $2, $3, $4, $5, $6, $7, to_timestamp($8 / 1000.0), to_timestamp($9 / 1000.0))
-            RETURNING product_id;`
-        pool.query(query0, [ product_name,
-            product_description, 
-            true, 
-            product_seller_id, 
-            user_id,
-            user_id,
-            datetime,
-            datetime ],
-            (err, result) => {
-                if (err) {
-                    console.log(err.message);
-                    return res
-                        .status(400)
-                        .json({ Error: "Cannot create an product", message: err.message });
-                } else {
-                    const product_id = result.rows[0].product_id
-                    product_size.forEach(size => {
-                        product_color.forEach(color => {
-                            const sku = product_seller_id + "-" + product_id + "-" + size + "-" + color;
+            RETURNING product_id;`;
+    pool.query(
+      query0,
+      [
+        product_name,
+        product_description,
+        true,
+        product_seller_id,
+        user_id,
+        user_id,
+        datetime,
+        datetime,
+      ],
+      (error, result) => {
+        if (error) {
+          const errorMsg = `Cannot create an product: ${error.message}`;
+          logger.error(errorMsg);
 
-                            const query = `insert into products (
+          return res
+            .status(400)
+            .json({ Error: "Cannot create an product", message: error.message });
+        } else {
+          const product_id = result.rows[0].product_id;
+          product_size.forEach((size) => {
+            product_color.forEach((color) => {
+              const sku =
+                product_seller_id + "-" + product_id + "-" + size + "-" + color;
+
+              const query = `insert into products (
                             product_name,
                             product_size,
                             product_color,
@@ -62,29 +72,29 @@ export default async function createProduct(req, res) {
                                 $10, $11, $12)
                             RETURNING product_id;`;
 
-                            const params = [
-                                product_name,
-                                size,
-                                color,
-                                product_type,
-                                product_price,
-                                product_seller_id,
-                                user_id,
-                                user_id,
-                                datetime,
-                                datetime,
-                                product_id,
-                                false,
-                                sku
-                            ];
-                            pool.query(query, params)
-                        })
-                    })    
-                };
-            })
-            return res.sendStatus(201)    
-    }
-
+              const params = [
+                product_name,
+                size,
+                color,
+                product_type,
+                product_price,
+                product_seller_id,
+                user_id,
+                user_id,
+                datetime,
+                datetime,
+                product_id,
+                false,
+                sku,
+              ];
+              pool.query(query, params);
+            });
+          });
+        }
+      }
+    );
+    return res.sendStatus(201);
+  } catch (error) {
     //     const query = `insert into products (
     //             product_name,
     //             product_description,
@@ -93,13 +103,13 @@ export default async function createProduct(req, res) {
     //             product_type,
     //             product_price,
     //             product_seller_id,
-    //             create_user_id, 
-    //             update_user_id, 
-    //             create_datetime, 
+    //             create_user_id,
+    //             update_user_id,
+    //             create_datetime,
     //             update_datetime,
     //             base_id,
-    //             is_base_product ) 
-    //             values ($1, $2, $3, $4, $5, $6, $7, $8, $9, 
+    //             is_base_product )
+    //             values ($1, $2, $3, $4, $5, $6, $7, $8, $9,
     //                 to_timestamp($10 / 1000.0), to_timestamp($11 / 1000.0)
     //                 $12, false)
     //             RETURNING product_id;`;
@@ -139,13 +149,13 @@ export default async function createProduct(req, res) {
     // }
     //             });
 
-
     // return res.sendStatus(201);
-    catch (error) {
-        res.status(400).json({ message: "Publication error", ERROR: error.message });
-    }
-
-
+    const errorMsg = `Publication error: ${error.message}`;
+    logger.error(errorMsg);
+    res
+      .status(400)
+      .json({ message: "Publication error", ERROR: error.message });
+  }
 }
 // Also need to finish registration new product add info to this 2 tables
 
@@ -156,5 +166,5 @@ export default async function createProduct(req, res) {
 // ( 10, '/public/product_images/10/grey.png', 5);
 
 // insert into products_colors (product_id, color_id)
-// values 
+// values
 // (10, 2),(10, 1),(10, 4),(10, 5);
