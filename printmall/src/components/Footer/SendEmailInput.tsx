@@ -2,23 +2,25 @@ import React, { memo, useState } from 'react';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import { useTranslation } from 'react-i18next';
 import { sendUserEmail } from '../../api/supportApi';
-import { toast } from 'react-toastify';
 import squish from '../../Helpers/ClassNameHelper';
 
 const SendEmailInput = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [addedMessage, setAddedMessage] = useState('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
       await sendUserEmail(email);
-      toast.info('Email is added');
       setEmail('');
       setError('');
+      const emailAddedMessage = t('getExclusiveOffers.addedEmailMessage');
+      setAddedMessage(emailAddedMessage);
     } catch (e: any) {
+      setAddedMessage('');
       const isAlreadyAdded = e.message === '409';
       const isInvalidEmail = e.message === '400';
 
@@ -39,7 +41,8 @@ const SendEmailInput = () => {
         return setError(invalidEmailErrorMessage);
       }
 
-      return toast.error(t('getExclusiveOffers.failedSendEmail'));
+      const serverErrorMessage = t('getExclusiveOffers.failedSendEmail');
+      setError(serverErrorMessage);
     }
   };
 
@@ -52,7 +55,8 @@ const SendEmailInput = () => {
       <input
         className={squish`
           send-email-input
-          ${error ? 'error' : ''}
+          ${error && 'error'}
+          ${addedMessage && 'complete'}
         `}
         type="email"
         name="email"
@@ -62,7 +66,17 @@ const SendEmailInput = () => {
         value={email}
         onChange={handeInputChange}
       />
-      {error && <p className="send-email-error-message">{error}</p>}
+      {(error || addedMessage) && (
+        <p
+          className={squish`
+          send-email-error-message
+          ${error && 'error'}
+          ${addedMessage && 'complete'}
+        `}
+        >
+          {error || addedMessage}
+        </p>
+      )}
       <button type="submit" className="send-email-button">
         <ArrowForward />
       </button>
