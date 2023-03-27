@@ -7,7 +7,6 @@ import credentials from './middleware/credentials.js';
 import { blogRouter } from "./routes/blog.route.js";
 import { productRouter } from "./routes/product.route.js";
 import { sellerRouter } from "./routes/seller.route.js";
-import fileUpload from "express-fileupload";
 import { paymentRouter } from "./routes/payment.route.js";
 import { newslistRouter } from "./routes/newslist.route.js";
 import { contactRouter } from "./routes/contact.route.js";
@@ -26,10 +25,7 @@ app.use(cors(corsConfig));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.json());
-// enable files upload
-app.use(fileUpload({
-  createParentPath: true 
-}));
+
 app.use('/public',express.static('public'));
 app.use('/newslist', newslistRouter);
 app.use('/blog', blogRouter);
