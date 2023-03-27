@@ -88,6 +88,7 @@
     "email": "Email",
     "emailErrorInvalid": "Invalid email address",
     "emailErrorRequired": "Email is required",
+    "emailErrorEnter": "Enter email address",
     "phone": "Phone",
     "phoneErrorInvalid": "Invalid phone number",
     "phoneErrorRequired": "Phone number is required",
@@ -111,6 +112,8 @@
   "getExclusiveOffers":{
     "title": "Get Exclusive Offers!",
     "inputPlaceholder": "Email address",
-    "message": "Subscribe to our newsletter to receive exclusive content, special discounts, and be the first to know about new releases from our marketplace."
+    "message": "Subscribe to our newsletter to receive exclusive content, special discounts, and be the first to know about new releases from our marketplace.",
+    "alreadyAddedEmailError": "This email is already added",
+    "failedSendEmail": "Failed to send your email"
   }
 }

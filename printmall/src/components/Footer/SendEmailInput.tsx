@@ -23,18 +23,23 @@ const SendEmailInput = () => {
       const isInvalidEmail = e.message === '400';
 
       if (email === '') {
-        return setError('Enter email');
+        const enterEmailErrorMessage = t('form.emailErrorEnter');
+        return setError(enterEmailErrorMessage);
       }
 
       if (isAlreadyAdded) {
-        return setError('This email is already added');
+        const alreadyAddedErrorMessage = t(
+          'getExclusiveOffers.alreadyAddedEmailError'
+        );
+        return setError(alreadyAddedErrorMessage);
       }
 
       if (isInvalidEmail) {
-        return setError('Invalid email address');
+        const invalidEmailErrorMessage = t('form.emailErrorInvalid');
+        return setError(invalidEmailErrorMessage);
       }
 
-      return toast.error('Failed to send user message');
+      return toast.error(t('getExclusiveOffers.failedSendEmail'));
     }
   };
 
