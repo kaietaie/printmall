@@ -1,0 +1,49 @@
+@import '../../../styles/variables'
+
+.text-input
+  display: flex
+  flex-direction: column
+  font-size: 14px
+  line-height: 20px
+  margin-bottom: 24px
+
+  &.full-width
+    width: 100%
+
+  &.error
+    label
+      color: $accent
+
+    input,
+    textarea
+      border-color: $accent
+
+      &:focus
+        outline: none
+        border-color: $accent
+
+
+  label
+    color: $light-gray
+    margin: 0 0 4px 16px
+
+  input,
+  textarea
+    box-sizing: border-box
+    border: 1px solid $secondary
+    padding: 14px 16px
+    border-radius: 6px
+    line-height: 18px
+    max-width: 100%
+
+    &:focus
+      outline: none
+      border-color: $primary
+
+  textarea
+    min-width: 100%
+    min-height: 128px
+
+.text-input-error-message
+  color: $accent
+  margin: 4px 0 0 16px

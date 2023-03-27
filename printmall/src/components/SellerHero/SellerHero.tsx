@@ -2,12 +2,11 @@ import { memo } from 'react';
 import Banner from './Banner';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import defaultAvatar from '../images/defaultImages/avatar_big.png';
 import { selectSeller } from '../../store/seller/sellerSelectors';
 import { Seller } from '../../types/Sellers';
+import AvatarUpload from './AvatarUpload';
 
 import './SellerHero.sass';
-import AvatarUpload from './AvatarUpload';
 
 const SellerHero = () => {
   const seller = useSelector<RootState, Seller | null>(selectSeller);

@@ -1,10 +1,6 @@
 import React, { memo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductContentPickers from './ProductContentPickers';
-import { ReactComponent as BasketIcon } from '../images/shopping-basket.svg';
-import { ReactComponent as SupportIcon } from '../images/support-agent.svg';
-import Button from '../common/Buttons';
 import { useTranslation } from 'react-i18next';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { CartProduct } from '../../types/Cart';
@@ -18,6 +14,7 @@ import { Product } from '../../types/Product';
 import Loader from '../common/Loader';
 import makeSku from '../../utils/makeSku';
 import ProductSideBar from './ProductSideBar';
+import ProductContentActions from './ProductContentActions';
 
 import './ProductContent.sass';
 
@@ -137,20 +134,7 @@ const ProductContent = () => {
             onColorPick={handleColorPick}
             selectedColor={selectedColor}
           />
-          <div className="product-content-actions">
-            <Button onClick={handleAddToCart} iconEnd={<BasketIcon />}>
-              {t('product.cartButton')}
-            </Button>
-            <div className="product-content-support">
-              <SupportIcon />
-              <span className="product-content-support-text">
-                {t('product.supportText')}
-              </span>
-              <a className="product-content-support-text">
-                {t('product.supportLink')}
-              </a>
-            </div>
-          </div>
+          <ProductContentActions onClick={handleAddToCart} />
         </div>
       </div>
       {isOpenSideBar && (

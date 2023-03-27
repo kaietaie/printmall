@@ -68,6 +68,7 @@ const AvatarUpload = () => {
           </Button>
         </Box>
       </Modal>
+
       <div className="avatar-upload-container">
         <img
           className="avatar-upload-image"
