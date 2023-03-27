@@ -13,11 +13,11 @@ export default async function addToNewsList(req, res) {
           
           return res
           .status(200)
-          .json({ Message: "Your email was added successfuly!" });
+          .json({ Message: "Your email was added successfully!" });
         } else {
-            return res.status(400).json({ Error: "Email already was added" });
+            return res.status(409).json({ Error: "Email already was added" });
         }
   } catch (error) {
-    return res.status(400).json({ Error: "Email is failed" });
+    return res.status(400).json({ Error: "Invalid email address" });
   }
 }

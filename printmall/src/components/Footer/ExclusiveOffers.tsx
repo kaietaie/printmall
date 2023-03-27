@@ -1,17 +1,21 @@
+import { memo } from 'react';
 import SendEmailInput from './SendEmailInput';
+import { useTranslation } from 'react-i18next';
 
 const ExclusiveOffers = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="exclusive-offers">
-      <h3 className="exclusive-offers-title">Get Exclusive Offers!</h3>
+      <h3 className="exclusive-offers-title">
+        {t('getExclusiveOffers.title')}
+      </h3>
       <SendEmailInput />
       <p className="exclusive-offers-message">
-        Subscribe to our newsletter to receive exclusive content, special
-        discounts, and be the first to know about new releases from our
-        marketplace.
+        {t('getExclusiveOffers.message')}
       </p>
     </div>
   );
 };
 
-export default ExclusiveOffers;
+export default memo(ExclusiveOffers);

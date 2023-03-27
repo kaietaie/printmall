@@ -16,6 +16,7 @@
     display: flex
     justify-content: space-between
     flex-direction: row
+    align-items: flex-start
 
 .footer-info
   color: $white
@@ -52,6 +53,9 @@
   cursor: pointer
   background-color: transparent
   padding: 0
+
+  &:hover
+    text-decoration: underline
 
   &:not(:last-child)
     display: inline-block
@@ -95,7 +99,7 @@
   margin: 16px 0 0
 
 
-.send-email-container
+.send-email-form
   width: 286px
   position: relative
 
@@ -106,6 +110,9 @@
   line-height: 20px
   padding: 16px
   border-radius: 30px
+
+  &.error
+    border-color: $accent
 
 .send-email-button
   position: absolute
@@ -127,3 +134,9 @@
 
   svg
     fill: $white
+
+.send-email-error-message
+  font-size: 14px
+  line-height: 20px
+  color: $accent
+  margin: 4px 0 0 16px

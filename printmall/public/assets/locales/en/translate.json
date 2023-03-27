@@ -98,5 +98,19 @@
     "sendMessageButton": "Send message",
     "submitCompleteMessage": "Thank you for contacting us! We have received your message and will reply as soon as possible.",
     "submitFailMessage": "Failed to send user message"
+  },
+  "footer": {
+    "infoMessage": "Shop the latest trends and styles from our marketplace, and stand out with unique and personalized printed clothes.",
+    "linksTitle": "Pages",
+    "contactUs": "Contact Us",
+    "deliveryDetails": "Delivery Details",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "copyright": "All Rights Reserved by"
+  },
+  "getExclusiveOffers":{
+    "title": "Get Exclusive Offers!",
+    "inputPlaceholder": "Email address",
+    "message": "Subscribe to our newsletter to receive exclusive content, special discounts, and be the first to know about new releases from our marketplace."
   }
 }
