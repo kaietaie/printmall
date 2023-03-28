@@ -1,10 +1,11 @@
 import { memo, useEffect } from 'react';
-import ProductContent from '../components/ProductContent';
 import { fetchProductByIdThunk } from '../store/products/productThunks';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import Loader from '../components/common/Loader';
+import ProductContent from '../components/ProductContent';
+import ProductDescription from '../components/ProductDescription/ProductDescription';
 import ErrorBanner from '../components/common/ErrorBanner';
 import { selectProductStatus } from '../store/products/productsSelectors';
 import { ProductState } from '../types/Product';
@@ -32,7 +33,12 @@ const ProductPage = () => {
     return <ErrorBanner />;
   }
 
-  return <ProductContent />;
+  return (
+    <>
+      <ProductContent />
+      <ProductDescription />
+    </>
+  );
 };
 
 // export default memo(withNavBar({ wrappedComponent: ProductPage }));

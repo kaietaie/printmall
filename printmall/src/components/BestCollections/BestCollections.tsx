@@ -24,13 +24,22 @@ const BestCollections = () => {
     dispatch(fetchProductsThunk({ limit: 4, page: 1 }));
   }, [dispatch]);
 
+  const filterTitles = [
+    'Bestsellers',
+    'Stand with Ukraine',
+    'Durnev',
+    'Starlink',
+    'Lego',
+    'Star Wars',
+  ];
+
   return (
     <>
       <div className="best-collections-head">
         <SectionTitle topSubTitle={t('bestCollections.subTitle')}>
           {t('bestCollections.title')}
         </SectionTitle>
-        <FilterTabs />
+        <FilterTabs filterTitles={filterTitles} />
       </div>
       <div className="best-collections-cards">
         {products.map((product) => {

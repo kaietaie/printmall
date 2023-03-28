@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import Header from './components/Header';
 import HomePage from './Pages/HomePage';
 import SellerPage from './Pages/SellerPage';
 import ProductPage from './Pages/ProductPage';
@@ -10,6 +9,7 @@ import CartPage from './Pages/CartPage';
 import PaymentPage from './Pages/PaymentPage';
 import CompletePage from './Pages/CompletePage';
 import 'react-toastify/dist/ReactToastify.css';
+import MainLayout from './components/MainLayout';
 
 import './App.sass';
 
@@ -23,8 +23,7 @@ function App() {
     >
       <BrowserRouter>
         <ToastContainer />
-        <Header />
-        <div className="container">
+        <MainLayout>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/seller/:sellerName" element={<SellerPage />} />
@@ -33,7 +32,7 @@ function App() {
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/complete" element={<CompletePage />} />
           </Routes>
-        </div>
+        </MainLayout>
       </BrowserRouter>
     </PayPalScriptProvider>
   );

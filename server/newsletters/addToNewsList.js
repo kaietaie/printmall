@@ -23,6 +23,6 @@ export default async function addToNewsList(req, res) {
   } catch (error) {
     const errorMsg = `Email is failed: ${error.message}`;
     logger.error(errorMsg);
-    return res.status(400).json({ Error: "Email is failed" });
+    return res.status(400).json({ Error: "Invalid email address" });
   }
 }

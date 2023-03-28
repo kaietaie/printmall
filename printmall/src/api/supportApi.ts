@@ -13,3 +13,25 @@ export const sendUserMessage = async (userMessage: SupportFormValues) => {
     throw new Error('Failed to send user message');
   }
 };
+
+export const sendUserEmail = async (email: string) => {
+  try {
+    const response = await axios.post(
+      'http://localhost:5000/newslist/addemail',
+      {
+        email,
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    console.error(error);
+    const isError = error.response.status === 409 || 400;
+
+    if (isError) {
+      throw new Error(error.response.status);
+    }
+
+    throw new Error('Failed to send user message');
+  }
+};
