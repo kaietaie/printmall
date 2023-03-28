@@ -9,9 +9,9 @@ import { PaymentDetails } from '../../types/Payment';
 import Button from '../common/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { clearPaymentDetails } from '../../store/payment/paymentSlice';
 
 import './CompleteContent.sass';
-import { clearPaymentDetails } from '../../store/payment/paymentSlice';
 
 const CompleteContent = () => {
   const { t } = useTranslation();
