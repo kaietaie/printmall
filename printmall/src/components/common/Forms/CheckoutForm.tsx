@@ -10,10 +10,12 @@ import { getCheckoutValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 import countryList from 'react-select-country-list';
 import Select from '../Select';
+import { useNavigate } from 'react-router-dom';
 
 import './Form.sass';
 
 const CheckoutForm: React.FC = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const options = useMemo(() => countryList().getData(), []);
   const validationSchema = getCheckoutValidationSchema(t);
@@ -36,6 +38,7 @@ const CheckoutForm: React.FC = () => {
       try {
         console.log(values);
         // toast.info(t('form.submitCompleteMessage'));
+        navigate(`/payment`);
       } catch (error) {
         console.error(error);
         // toast.error(t('form.submitFailMessage'));
