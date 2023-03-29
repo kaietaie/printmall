@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SupportFormValues } from '../types/Support';
+import { SupportFormValues } from '../types/Forms';
 
 export const sendUserMessage = async (userMessage: SupportFormValues) => {
   try {

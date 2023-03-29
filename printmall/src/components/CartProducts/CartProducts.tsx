@@ -36,11 +36,12 @@ const CartProducts: React.FC = () => {
   };
 
   const handleGoToCheckout = useCallback(() => {
-    const cartItemIds = items.map((item) => {
-      return { sku: item.sku_cart_product_id, quantity: item.quantity };
-    });
-    dispatch(createOrder(cartItemIds));
-    navigate(`/payment`);
+    // const cartItemIds = items.map((item) => {
+    //   return { sku: item.sku_cart_product_id, quantity: item.quantity };
+    // });
+    // dispatch(createOrder(cartItemIds));
+    // navigate(`/payment`);
+    navigate(`/checkout`);
   }, [dispatch, items, navigate]);
 
   return (

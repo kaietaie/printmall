@@ -17,10 +17,10 @@ const CartPage = () => {
   }, []);
 
   return (
-    <div className="cart-products">
+    <div className="cart-page">
       <ReturnButton />
       <PurchaseStatus currentStep="cart" />
-      <h1 className="cart-products-title">{t('cart.title')}</h1>
+      <h1 className="cart-page-title">{t('cart.title')}</h1>
       <CartProducts />
     </div>
   );

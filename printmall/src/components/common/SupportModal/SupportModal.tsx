@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Modal from '@mui/material/Modal';
 import CloseButton from '../Buttons/CloseButton';
-import Form from '../Form';
+import SupportForm from '../Forms/SupportForm';
 import { useTranslation } from 'react-i18next';
 
 import './SupportModal.sass';
@@ -29,7 +29,7 @@ const SupportModal: React.FC<SupportModalProps> = ({ onClose }) => {
         <span className="support-modal-message">
           {t('supportModal.message')}
         </span>
-        <Form onClose={onClose} />
+        <SupportForm onClose={onClose} />
       </div>
     </Modal>
   );
