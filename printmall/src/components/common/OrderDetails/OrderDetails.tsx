@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
-import { CartState } from '../../types/Cart';
-import { selectCartItems } from '../../store/cart/cartSelectors';
-import CartProductItem from '../common/CartProductItem/CartProductItem';
+import { AppDispatch, RootState } from '../../../store/store';
+import { CartState } from '../../../types/Cart';
+import { selectCartItems } from '../../../store/cart/cartSelectors';
+import CartProductItem from '../CartProductItem/CartProductItem';
 import { useTranslation } from 'react-i18next';
 import SubTotal from './SubTotal';
 import { useEffect } from 'react';
-import { getTotals } from '../../store/cart/cartSlice';
+import { getTotals } from '../../../store/cart/cartSlice';
 
 import './OrderDetails.sass';
 

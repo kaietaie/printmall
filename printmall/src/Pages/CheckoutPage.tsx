@@ -1,6 +1,7 @@
 import ReturnButton from '../components/common/Buttons/ReturnButton';
 import CheckoutForm from '../components/common/Forms/CheckoutForm';
 import PurchaseStatus from '../components/common/PurchaseStatus';
+import OrderDetails from '../components/common/OrderDetails';
 
 import './Pages.sass';
 
@@ -11,6 +12,7 @@ const CheckoutPage = () => {
       <PurchaseStatus currentStep="payment" />
       <div className="checkout-page-content">
         <CheckoutForm />
+        <OrderDetails />
       </div>
     </div>
   );

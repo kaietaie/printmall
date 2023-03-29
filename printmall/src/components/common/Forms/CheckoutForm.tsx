@@ -161,7 +161,7 @@ const CheckoutForm: React.FC = () => {
           iconEnd={<ArrowForward />}
           buttonType="submit"
         >
-          {t('form.sendMessageButton')}
+          Proceed to payment
         </Button>
       </form>
     </div>
