@@ -45,8 +45,10 @@ const CheckoutForm: React.FC = () => {
 
   return (
     <div>
-      <h2 className="checkout-form-title">Checkout</h2>
-      <span className="checkout-form-sub-title">Shipping Information </span>
+      <h2 className="checkout-form-title">{t('form.checkoutTitle')}</h2>
+      <span className="checkout-form-sub-title">
+        {t('form.checkoutSubTitle')}
+      </span>
       <form className="form checkout-form" onSubmit={formik.handleSubmit}>
         <div className="form-names">
           <TextInput
@@ -96,7 +98,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
-          label="Address line 1"
+          label={t('form.address1')}
           type="text"
           name="address_line_1"
           error={formik.touched.address_line_1 && formik.errors.address_line_1}
@@ -107,7 +109,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
-          label="Address line 2"
+          label={t('form.address2')}
           type="text"
           name="address_line_2"
           error={formik.touched.address_line_2 && formik.errors.address_line_2}
@@ -118,7 +120,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <Select
-          label="Country"
+          label={t('form.country')}
           name="country"
           options={options}
           value={formik.values.country}
@@ -127,7 +129,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
-          label="City"
+          label={t('form.city')}
           type="text"
           name="city"
           error={formik.touched.city && formik.errors.city}
@@ -137,7 +139,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
-          label="State / region"
+          label={t('form.region')}
           type="text"
           name="region"
           error={formik.touched.region && formik.errors.region}
@@ -147,7 +149,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
-          label="Zip code"
+          label={t('form.zipCode')}
           type="text"
           name="zip_code"
           error={formik.touched.zip_code && formik.errors.zip_code}
