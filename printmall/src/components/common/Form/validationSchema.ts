@@ -10,7 +10,7 @@ export const getValidationSchema = (t: any) => {
       .required(t('form.emailErrorRequired')),
     phone: yup
       .string()
-      .matches(/^[+]{0,1}([0-9]{12})$/, t('form.phoneErrorInvalid'))
+      .matches(/^[\d\s()-]{11,16}$/, t('form.phoneErrorInvalid'))
       .required(t('form.phoneErrorRequired')),
     message: yup.string().required(t('form.messageError')),
   });

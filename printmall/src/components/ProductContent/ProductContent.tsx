@@ -19,7 +19,6 @@ import ProductContentActions from './ProductContentActions';
 import './ProductContent.sass';
 
 const ProductContent = () => {
-  const { t } = useTranslation();
   const product = useSelector<RootState, Product | null>(selectProduct);
   const dispatch = useDispatch<AppDispatch>();
 

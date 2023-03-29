@@ -9,12 +9,15 @@ import Checkbox from '../Checkbox';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { getValidationSchema } from './validationSchema';
+import TelephoneInput from '../TelephoneInput/TelephoneInput';
+
+import './Form.sass';
 
 interface SupportFormProps {
   onClose: () => void;
 }
 
-const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
+const Form: React.FC<SupportFormProps> = ({ onClose }) => {
   const { t } = useTranslation();
   const validationSchema = getValidationSchema(t);
 
@@ -46,10 +49,10 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
   });
 
   return (
-    <form className="support-form" onSubmit={formik.handleSubmit}>
-      <div className="support-form-names">
+    <form className="form" onSubmit={formik.handleSubmit}>
+      <div className="form-names">
         <TextInput
-          className="support-form-first-name"
+          className="form-first-name"
           label={t('form.firstName')}
           type="text"
           name="first_name"
@@ -84,13 +87,12 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
         fullWidth
       />
 
-      <TextInput
-        label={t('form.phone')}
-        type="tel"
+      <TelephoneInput
         name="phone"
+        label={t('form.phone')}
         error={formik.touched.phone && formik.errors.phone}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+        onChange={(value) => formik.setFieldValue('phone', value)}
+        onBlur={formik.handleBlur('phone')}
         value={formik.values.phone}
         fullWidth
       />
@@ -106,20 +108,20 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
         fullWidth
       />
 
-      <div className="support-form-policy">
+      <div className="form-policy">
         <Checkbox
           onChange={handleTogglePolicy}
           label={t('form.privacyCheckbox')}
           checked={isPolicyChecked}
         />
-        <button type="button" className="support-form-policy-button">
+        <button type="button" className="form-policy-button">
           {t('form.privacyButton')}
         </button>
       </div>
 
       <Button
         isDisabled={!isPolicyChecked}
-        className="support-form-submit-button"
+        className="form-submit-button"
         iconEnd={<ArrowForward />}
         buttonType="submit"
       >
@@ -129,4 +131,4 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
   );
 };
 
-export default memo(SupportForm);
+export default memo(Form);

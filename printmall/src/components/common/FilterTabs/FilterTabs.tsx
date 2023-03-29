@@ -1,14 +1,14 @@
 import React from 'react';
 import './FilterTabs.sass';
 
-const filterItems = [
-  { label: 'Bestsellers' },
-  { label: 'Stand with Ukraine' },
-  { label: 'Durnev' },
-  { label: 'Starlink' },
-  { label: 'Lego' },
-  { label: 'Star Wars' },
-];
+// const filterItems = [
+//   { label: 'Bestsellers' },
+//   { label: 'Stand with Ukraine' },
+//   { label: 'Durnev' },
+//   { label: 'Starlink' },
+//   { label: 'Lego' },
+//   { label: 'Star Wars' },
+// ];
 
 interface FilterTabsProps {
   filterTitles: string[];

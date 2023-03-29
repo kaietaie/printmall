@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import './TextInput.tsx.sass';
 import squish from '../../../Helpers/ClassNameHelper';
+
+import './TextInput.tsx.sass';
 
 interface TextInputProps {
   label: string;

@@ -1,0 +1,65 @@
+@import '../../../styles/variables'
+
+.telephone-input-container
+  line-height: 20px
+  margin-bottom: 24px
+
+  &.full-width
+    width: 100%
+
+  &.error
+    .telephone-input-label
+      color: $accent
+
+    .telephone-input
+      border-color: $accent
+
+      &:focus
+        outline: none
+        border-color: $accent
+
+
+  .telephone-input-label
+    font-size: 14px
+    display: inline-block
+    color: $light-gray
+    margin: 0 0 4px 16px
+
+  .telephone-input
+    width: 100%
+    box-sizing: border-box
+    border: 1px solid $secondary
+    padding-left: 54px
+    font-size: 14px
+    height: 48px
+    border-radius: 6px
+    line-height: 18px
+    max-width: 100%
+
+    &:focus
+      outline: none
+      border-color: $primary
+
+
+  .flag-dropdown
+    background-color: transparent
+    border-bottom-left-radius: 6px
+    border-top-left-radius: 6px
+    border: transparent
+    padding: 8px
+
+    &.open
+      background: unset
+      border-color: $secondary
+
+
+  .selected-flag
+    .arrow
+      border-top-color: $primary
+
+
+.telephone-input-error-message
+  display: inline-block
+  font-size: 14px
+  color: $accent
+  margin: 4px 0 0 16px
