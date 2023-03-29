@@ -44,7 +44,7 @@ const CheckoutForm: React.FC = () => {
   });
 
   return (
-    <div>
+    <div className="checkout-form-container">
       <h2 className="checkout-form-title">{t('form.checkoutTitle')}</h2>
       <span className="checkout-form-sub-title">
         {t('form.checkoutSubTitle')}
