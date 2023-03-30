@@ -4,7 +4,18 @@ import { capturePayPalOrderThunk } from './paymentThunks';
 import { CheckoutFormValues } from '../../types/Forms';
 
 const initialState: PaymentState = {
-  shippingInfo: null,
+  shippingInfo: {
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    address_line_1: '',
+    address_line_2: '',
+    country: '',
+    city: '',
+    region: '',
+    zip_code: '',
+  },
   paymentDetails: null,
   status: 'idle',
   error: null,

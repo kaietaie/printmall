@@ -1,4 +1,5 @@
 import { CheckoutFormValues } from './Forms';
+import { SkuCartItem } from './Cart';
 
 export interface PaymentDetailsProduct {
   title: string;
@@ -18,8 +19,13 @@ export interface PaymentDetails {
 }
 
 export interface PaymentState {
-  shippingInfo: CheckoutFormValues | null;
+  shippingInfo: CheckoutFormValues;
   paymentDetails: PaymentDetails | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+}
+
+export interface MonobankData {
+  cart: SkuCartItem[];
+  shippingInfo: CheckoutFormValues;
 }

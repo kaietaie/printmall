@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SkuCartItem } from '../types/Cart';
-import { PaymentDetails } from '../types/Payment';
+import { MonobankData, PaymentDetails } from '../types/Payment';
+import { CheckoutFormValues } from '../types/Forms';
 
 export const createPayPalOrder = async (
   cartItems: SkuCartItem[]
@@ -65,7 +66,10 @@ const mockMonobankData = {
   },
 };
 
-export const makeMonobankPayment = async (): Promise<string> => {
+export const makeMonobankPayment = async (
+  shippingData: MonobankData
+): Promise<string> => {
+  console.log(shippingData);
   try {
     const response = await axios.post(
       'http://localhost:5000/paymentmono/create-mono-order',
@@ -77,7 +81,7 @@ export const makeMonobankPayment = async (): Promise<string> => {
         },
       }
     );
-    console.log(response);
+
     return response.data;
   } catch (error) {
     console.error(error);
