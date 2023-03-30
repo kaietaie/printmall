@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { sendSkus } from '../../api/cartApi';
 import { SkuCartItem } from '../../types/Cart';
+
 interface SendSkusResponseType {
   client_token: string;
 }

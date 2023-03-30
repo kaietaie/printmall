@@ -123,6 +123,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <Select
+          className="checkout-form-short-input"
           label={t('form.country')}
           name="country"
           options={options}
@@ -132,6 +133,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
+          className="checkout-form-short-input"
           label={t('form.city')}
           type="text"
           name="city"
@@ -142,6 +144,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
+          className="checkout-form-short-input"
           label={t('form.region')}
           type="text"
           name="region"
@@ -152,6 +155,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
+          className="checkout-form-short-input"
           label={t('form.zipCode')}
           type="text"
           name="zip_code"
