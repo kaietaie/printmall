@@ -18,7 +18,7 @@ const CheckoutPage = () => {
   return (
     <div className="checkout-page">
       <ReturnButton />
-      <PurchaseStatus currentStep="payment" />
+      <PurchaseStatus currentStep="checkout" />
       <div className="checkout-page-content">
         <CheckoutForm />
         <OrderDetails />

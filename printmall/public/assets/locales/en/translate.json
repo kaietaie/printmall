@@ -59,6 +59,7 @@
   },
   "purchaseStatus": {
     "cart": "Cart total",
+    "checkout": "Checkout",
     "payment": "Payment",
     "complete": "Complete"
   },

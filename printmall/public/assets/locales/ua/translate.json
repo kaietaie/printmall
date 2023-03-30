@@ -59,6 +59,7 @@
   },
   "purchaseStatus": {
     "cart": "Кошик",
+    "checkout": "Оформлення",
     "payment": "Оплата",
     "complete": "Завершити"
   },
@@ -80,7 +81,7 @@
     "message": "Ми будемо раді почути вас. Будь ласка, заповніть цю форму."
   },
   "form": {
-    "checkoutTitle": "Чекаут",
+    "checkoutTitle": "Оформлення",
     "checkoutSubTitle": "Інформація про доставку",
     "address1": "Рядок адреси 1",
     "address2": "Рядок адреси 2",
