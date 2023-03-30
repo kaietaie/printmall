@@ -82,7 +82,7 @@
   },
   "form": {
     "checkoutTitle": "Оформлення",
-    "checkoutSubTitle": "Інформація про доставку",
+    "checkoutSubTitle": "Інформація для доставки",
     "address1": "Рядок адреси 1",
     "address2": "Рядок адреси 2",
     "country": "Країна",

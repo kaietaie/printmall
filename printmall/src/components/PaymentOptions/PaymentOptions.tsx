@@ -1,7 +1,8 @@
-import PayPalCheckoutButton from '../PayPalCheckoutButton';
+import PayPalCheckoutButton from './PayPalCheckoutButton';
+import { useTranslation } from 'react-i18next';
+import MonobankButton from './MonobankButton';
 
 import './PaymentOptions.sass';
-import { useTranslation } from 'react-i18next';
 
 const PaymentOptions = () => {
   const { t } = useTranslation();
@@ -9,6 +10,7 @@ const PaymentOptions = () => {
     <div className="payment-options">
       <h2 className="payment-options-title">{t('payment.optionsTitle')}</h2>
       <PayPalCheckoutButton />
+      <MonobankButton />
     </div>
   );
 };

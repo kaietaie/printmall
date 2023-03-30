@@ -3,7 +3,7 @@ import { PayPalButtons } from '@paypal/react-paypal-js';
 import { SkuCartItem } from '../../types/Cart';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { selectPayPalCartItems } from '../../store/cart/cartSelectors';
+import { selectScuCartItems } from '../../store/cart/cartSelectors';
 import { clearCart } from '../../store/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import ErrorBanner from '../common/ErrorBanner';
@@ -14,8 +14,6 @@ import { capturePayPalOrderThunk } from '../../store/payment/paymentThunks';
 import { selectPayPalPaymentStatus } from '../../store/payment/paymentSelectors';
 import { PaymentDetails } from '../../types/Payment';
 
-import './PayPalCheckoutButton.sass';
-
 const PayPalCheckoutButton = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
@@ -23,7 +21,7 @@ const PayPalCheckoutButton = () => {
   const [paidFor, setPaidFor] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const skuCartItems = useSelector<RootState, SkuCartItem[]>(
-    selectPayPalCartItems
+    selectScuCartItems
   );
 
   const status = useSelector<RootState, PaymentDetails['status']>(

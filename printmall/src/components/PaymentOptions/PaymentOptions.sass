@@ -1,3 +1,5 @@
+@import '../../styles/variables'
+
 .payment-options
   margin-top: 24px
 
@@ -9,3 +11,25 @@
   text-align: center
   line-height: 32px
   margin: 0 0 24px
+
+
+//PayPalCheckoutButton.tsx
+.pay-pal-buttons
+  margin: 0 auto 30px
+  max-width: 320px
+
+
+//MonobankButton.tsx
+.monobank-button
+  padding: 0
+  border: 0
+  cursor: pointer
+
+  img
+    width: 100px
+    display: block
+    margin: 0
+    transition: transform $transition
+
+    &:hover
+      transform: scale(1.03)

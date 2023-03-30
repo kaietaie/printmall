@@ -37,3 +37,50 @@ export const capturePayPalOrder = async (
     throw new Error('Failed to capture PayPal order');
   }
 };
+
+const mockMonobankData = {
+  cart: [
+    {
+      sku: '1-106-2-2',
+      quantity: 2,
+    },
+    {
+      sku: '1-80-2-3',
+      quantity: 1,
+    },
+  ],
+  shippingInfo: {
+    address: {
+      address_line_1: 'Ružinovská 1',
+      admin_area_2: 'Bratislava',
+      admin_area_1: 'Slovenská Republika',
+      postal_code: '821 01',
+      country_code: 'SK',
+    },
+    payer: {
+      name: { given_name: 'John', surname: 'Doe' },
+      email_address: 'kaieta.ievgenii@gmail.com',
+    },
+    phone: '+380689901426',
+  },
+};
+
+export const makeMonobankPayment = async (): Promise<string> => {
+  try {
+    const response = await axios.post(
+      'http://localhost:5000/paymentmono/create-mono-order',
+      mockMonobankData,
+      {
+        headers: {
+          'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to make monobank payment');
+  }
+};
