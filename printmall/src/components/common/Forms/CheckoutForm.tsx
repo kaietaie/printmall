@@ -5,18 +5,21 @@ import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
 import { CheckoutFormValues } from '../../../types/Forms';
 import Button from '../Buttons';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
+import { addShippingInfo } from '../../../store/payment/paymentSlice';
 import { getCheckoutValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 import countryList from 'react-select-country-list';
 import Select from '../Select';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../store/store';
 
 import './Form.sass';
 
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
   const options = useMemo(() => countryList().getData(), []);
   const validationSchema = getCheckoutValidationSchema(t);
 
@@ -35,14 +38,8 @@ const CheckoutForm: React.FC = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      try {
-        console.log(values);
-        // toast.info(t('form.submitCompleteMessage'));
-        navigate(`/payment`);
-      } catch (error) {
-        console.error(error);
-        // toast.error(t('form.submitFailMessage'));
-      }
+      dispatch(addShippingInfo(values));
+      navigate(`/payment`);
     },
   });
 

@@ -1,8 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PaymentState } from '../../types/Payment';
 import { capturePayPalOrderThunk } from './paymentThunks';
+import { CheckoutFormValues } from '../../types/Forms';
 
 const initialState: PaymentState = {
+  shippingInfo: null,
   paymentDetails: null,
   status: 'idle',
   error: null,
@@ -12,6 +14,9 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState,
   reducers: {
+    addShippingInfo: (state, action: PayloadAction<CheckoutFormValues>) => {
+      state.shippingInfo = action.payload;
+    },
     clearPaymentDetails: (state) => {
       state.paymentDetails = null;
     },
@@ -33,6 +38,6 @@ const paymentSlice = createSlice({
   },
 });
 
-export const { clearPaymentDetails } = paymentSlice.actions;
+export const { clearPaymentDetails, addShippingInfo } = paymentSlice.actions;
 
 export default paymentSlice.reducer;

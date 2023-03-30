@@ -1,3 +1,5 @@
+import { CheckoutFormValues } from './Forms';
+
 export interface PaymentDetailsProduct {
   title: string;
   value: number;
@@ -16,6 +18,7 @@ export interface PaymentDetails {
 }
 
 export interface PaymentState {
+  shippingInfo: CheckoutFormValues | null;
   paymentDetails: PaymentDetails | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
