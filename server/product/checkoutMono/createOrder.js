@@ -64,7 +64,7 @@ export default async function createMonoOrder(req, res) {
       data: paymentreq,
     });
     console.log(send)
-    res.json("ok");
+    res.json(send.data.pageUrl);
   } catch (error) {
     console.error(error);
     const errorMsg = `createMonoOrder is failed: ${error.message}`;
