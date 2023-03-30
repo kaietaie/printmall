@@ -6,12 +6,7 @@ const logger = winston.createLogger({
   transports: [
     // new winston.transports.Console({ level: 'error' }),
     new winston.transports.File({
-      // level: 'error',
       filename: "logs/errors.log",
-      // datePattern: "YYYY-MM-DD",
-      // zippedArchive: false,
-      // maxSize: "20m",
-      // maxFiles: "14d",
     }),
   ],
 });

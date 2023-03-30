@@ -1,11 +1,11 @@
 import { pool } from "../dbConnection.js";
 import logger from "../logger/logger.js";
 //
-export default async function getPriceOrName(sku, value) {
+export default async function getIdAndEct(sku, columns) {
   try {
     const product_id = sku.split("-")[1];
 
-    const sql = `SELECT ${value} from products WHERE product_id=$1;`;
+    const sql = `SELECT ${columns} from products WHERE product_id=$1;`;
     const find = await pool.query(sql, [product_id]);
 
     const sql1 = `SELECT product_id from products WHERE sku=$1;`;

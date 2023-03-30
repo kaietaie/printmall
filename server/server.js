@@ -8,6 +8,7 @@ import { blogRouter } from "./routes/blog.route.js";
 import { productRouter } from "./routes/product.route.js";
 import { sellerRouter } from "./routes/seller.route.js";
 import { paymentRouter } from "./routes/payment.route.js";
+import { paymentmonoRouter } from "./routes/paymentmono.route.js";
 import { newslistRouter } from "./routes/newslist.route.js";
 import { contactRouter } from "./routes/contact.route.js";
 
@@ -34,6 +35,7 @@ app.use('/blog', blogRouter);
 app.use('/products', productRouter);
 app.use('/seller', sellerRouter);
 app.use('/payment', paymentRouter);
+app.use('/paymentmono', paymentmonoRouter);
 app.use('/contactus', contactRouter)
 // app.use('/auth', );
 // app.use('/refresh', );
