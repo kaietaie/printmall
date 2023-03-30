@@ -45,9 +45,6 @@ export default async function createMonoOrder(req, res) {
       //   sum: price * 100,
       //   code: cart[i].sku,
       // });
-      // paymentreq.basketOrder[i].qty = cart[i].quantity;
-      // paymentreq.basketOrder[i].sum = price * 100;
-      // paymentreq.basketOrder[i].code = cart[i].sku;
     }
     order = { total, cart };
     paymentreq.amount = total * 100;

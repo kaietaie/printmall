@@ -1,4 +1,3 @@
-import * as paypal from "./paypal-api.js";
 import saveOrder from "../../functions/saveOrder.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
 import logger from "../../logger/logger.js";
@@ -7,14 +6,13 @@ import logger from "../../logger/logger.js";
 export default async function capturePayPalOrder(req, res) {
   const { orderID } = req.body;
   try {
-    const captureData = await paypal.capturePayment(orderID);
 
     const capturedOrder = {
       paymentInfo: { id: captureData.id, data: captureData },
       shippingInfo: {address: captureData.purchase_units[0].shipping.address, payer: captureData.payer},
       status: captureData.status,
-      payment_method: 'PayPal',
-      date: captureData.purchase_units[0].payments.captures[0].create_time
+      payment_method: 'Monobank',
+      date: ''
     };
     console.log(capturedOrder)
     const data = await saveOrder(capturedOrder);
