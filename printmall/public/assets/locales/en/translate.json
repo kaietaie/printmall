@@ -58,7 +58,7 @@
     "orderDetailsMessage": "Shipping costs depend on your location"
   },
   "purchaseStatus": {
-    "cart": "Cart total",
+    "cart": "Cart",
     "checkout": "Checkout",
     "payment": "Payment",
     "complete": "Complete"

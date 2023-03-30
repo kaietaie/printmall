@@ -43,6 +43,7 @@ const Select: React.FC<SelectProps> = ({
         name="country"
         id="country"
       >
+        <option value="UA">Ukraine</option>
         {options.map((option) => {
           return (
             <option key={option.value} value={option.value}>
