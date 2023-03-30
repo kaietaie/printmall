@@ -9,7 +9,7 @@ interface TextInputProps {
   name: string;
   value: string;
   error?: string | boolean | undefined;
-  type: 'text' | 'email' | 'textarea' | 'tel';
+  type: 'text' | 'email' | 'textarea' | 'tel' | 'number';
   placeholder?: string;
   onChange: (e: React.ChangeEvent<any>) => void;
   onBlur: (e: any) => void;

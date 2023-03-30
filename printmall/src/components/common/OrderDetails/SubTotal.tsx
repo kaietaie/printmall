@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { CartState } from '../../types/Cart';
-import { selectCartTotalAmount } from '../../store/cart/cartSelectors';
+import { RootState } from '../../../store/store';
+import { CartState } from '../../../types/Cart';
+import { selectCartTotalAmount } from '../../../store/cart/cartSelectors';
 import { useTranslation } from 'react-i18next';
 
 const SubTotal = () => {

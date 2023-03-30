@@ -14,6 +14,7 @@ interface TelephoneInputProps {
   onBlur: (e: any) => void;
   fullWidth?: boolean;
 }
+
 const TelephoneInput: React.FC<TelephoneInputProps> = ({
   label,
   value,

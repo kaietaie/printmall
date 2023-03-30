@@ -58,7 +58,8 @@
     "orderDetailsMessage": "Shipping costs depend on your location"
   },
   "purchaseStatus": {
-    "cart": "Cart total",
+    "cart": "Cart",
+    "checkout": "Checkout",
     "payment": "Payment",
     "complete": "Complete"
   },
@@ -81,6 +82,19 @@
     "firstName": ""
   },
   "form": {
+    "checkoutTitle": "Checkout",
+    "checkoutSubTitle": "Shipping Information",
+    "address1": "Address line 1",
+    "address2": "Address line 2",
+    "country": "Country",
+    "city": "City",
+    "region": "State / Region",
+    "zipCode": "Zip code",
+    "addressError": "Address is required",
+    "cityError": "City is required",
+    "regionError": "Region is required",
+    "zipErrorRequired": "Zip code is required",
+    "zipErrorInvalid": "Zip code must be a number",
     "firstName": "First Name",
     "firstNameError": "First name is required",
     "lastName": "Last Name",

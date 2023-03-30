@@ -2,13 +2,13 @@ import React, { memo, useState } from 'react';
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
-import { SupportFormValues } from '../../../types/Support';
+import { SupportFormValues } from '../../../types/Forms';
 import Button from '../Buttons';
 import { sendUserMessage } from '../../../api/supportApi';
 import Checkbox from '../Checkbox';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { getValidationSchema } from './validationSchema';
+import { getSupportValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 
 import './Form.sass';
@@ -17,9 +17,9 @@ interface SupportFormProps {
   onClose: () => void;
 }
 
-const Form: React.FC<SupportFormProps> = ({ onClose }) => {
+const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
   const { t } = useTranslation();
-  const validationSchema = getValidationSchema(t);
+  const validationSchema = getSupportValidationSchema(t);
 
   const [isPolicyChecked, setIPolicyChecked] = useState(false);
 
@@ -49,7 +49,7 @@ const Form: React.FC<SupportFormProps> = ({ onClose }) => {
   });
 
   return (
-    <form className="form" onSubmit={formik.handleSubmit}>
+    <form className="form support-form" onSubmit={formik.handleSubmit}>
       <div className="form-names">
         <TextInput
           className="form-first-name"
@@ -131,4 +131,4 @@ const Form: React.FC<SupportFormProps> = ({ onClose }) => {
   );
 };
 
-export default memo(Form);
+export default memo(SupportForm);

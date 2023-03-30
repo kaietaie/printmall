@@ -1,12 +1,26 @@
 @import '../../../styles/variables'
 
-.text-input
+.select
   display: flex
   flex-direction: column
   font-size: 14px
   line-height: 20px
   margin-bottom: 24px
   width: 284px
+  position: relative
+
+  &:after
+    width: 0
+    height: 0
+    border-left: 8px solid transparent
+    border-right: 8px solid transparent
+    border-top: 8px solid $primary
+    position: absolute
+    top: 62%
+    right: 16px
+    content: ""
+    z-index: 98
+
 
   &.full-width
     width: 100%
@@ -15,36 +29,29 @@
     label
       color: $accent
 
-    input,
-    textarea
+    select
       border-color: $accent
 
       &:focus
         outline: none
         border-color: $accent
 
-
   label
     color: $light-gray
     margin: 0 0 4px 16px
 
-  input,
-  textarea
+  select
     box-sizing: border-box
     border: 1px solid $secondary
     padding: 14px 16px
     border-radius: 6px
     line-height: 18px
     max-width: 100%
+    background-color: transparent
+    appearance: none /* remove the default arrow */
+    -webkit-appearance: none
+    cursor: pointer
 
     &:focus
       outline: none
       border-color: $primary
-
-  textarea
-    min-width: 100%
-    min-height: 128px
-
-.text-input-error-message
-  color: $accent
-  margin: 4px 0 0 16px

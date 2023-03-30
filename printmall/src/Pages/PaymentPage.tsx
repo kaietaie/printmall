@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ReturnButton from '../components/common/Buttons/ReturnButton';
-import OrderDetails from '../components/OrderDetails';
+import OrderDetails from '../components/common/OrderDetails';
 import PaymentOptions from '../components/PaymentOptions/PaymentOptions';
 import PurchaseStatus from '../components/common/PurchaseStatus';
 

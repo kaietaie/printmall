@@ -4,7 +4,7 @@ import squish from '../../../Helpers/ClassNameHelper';
 import { useTranslation } from 'react-i18next';
 
 interface StepClassNameProps {
-  currentStep: 'cart' | 'payment' | 'complete';
+  currentStep: 'cart' | 'checkout' | 'payment' | 'complete';
 }
 
 const PurchaseStatus: React.FC<StepClassNameProps> = ({ currentStep }) => {
@@ -18,28 +18,7 @@ const PurchaseStatus: React.FC<StepClassNameProps> = ({ currentStep }) => {
 
   return (
     <div className="purchase-status">
-      <div className="purchase-status-indicators">
-        <div
-          className={squish`
-            purchase-status-indicator
-            ${getStepClassName('cart')}
-          `}
-        ></div>
-        <div className="purchase-status-line"></div>
-        <div
-          className={squish`
-            purchase-status-indicator
-            ${getStepClassName('payment')}
-         `}
-        ></div>
-        <div className="purchase-status-line"></div>
-        <div
-          className={squish`
-            purchase-status-indicator
-            ${getStepClassName('complete')}
-         `}
-        ></div>
-      </div>
+      <div className="purchase-status-line"></div>
       <div className="purchase-status-page-names">
         <span
           className={squish`
@@ -48,6 +27,14 @@ const PurchaseStatus: React.FC<StepClassNameProps> = ({ currentStep }) => {
           `}
         >
           {t('purchaseStatus.cart')}
+        </span>
+        <span
+          className={squish`
+            purchase-status-page-name
+            ${getStepClassName('checkout')}
+          `}
+        >
+          {t('purchaseStatus.checkout')}
         </span>
         <span
           className={squish`

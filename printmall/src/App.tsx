@@ -8,6 +8,7 @@ import ProductPage from './Pages/ProductPage';
 import CartPage from './Pages/CartPage';
 import PaymentPage from './Pages/PaymentPage';
 import CompletePage from './Pages/CompletePage';
+import CheckoutPage from './Pages/CheckoutPage';
 import 'react-toastify/dist/ReactToastify.css';
 import MainLayout from './components/MainLayout';
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/seller/:sellerName" element={<SellerPage />} />
             <Route path="/products/:productId" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/complete" element={<CompletePage />} />
           </Routes>

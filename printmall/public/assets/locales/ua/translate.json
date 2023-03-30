@@ -59,6 +59,7 @@
   },
   "purchaseStatus": {
     "cart": "Кошик",
+    "checkout": "Оформлення",
     "payment": "Оплата",
     "complete": "Завершити"
   },
@@ -80,6 +81,19 @@
     "message": "Ми будемо раді почути вас. Будь ласка, заповніть цю форму."
   },
   "form": {
+    "checkoutTitle": "Оформлення",
+    "checkoutSubTitle": "Інформація про доставку",
+    "address1": "Рядок адреси 1",
+    "address2": "Рядок адреси 2",
+    "country": "Країна",
+    "city": "Місто",
+    "region": "Область / Регіон",
+    "zipCode": "Поштовий індекс",
+    "addressError": "Вкажіть адресу",
+    "cityError": "Вкажіть місто",
+    "regionError": "Вкажіть область",
+    "zipErrorRequired": "Вкажіть поштовий індекс",
+    "zipErrorInvalid": "Поштовий індекс має містити цифри",
     "firstName": "Ім'я",
     "firstNameError" :"Вкажіть ім'я",
     "lastName": "Прізвище",
