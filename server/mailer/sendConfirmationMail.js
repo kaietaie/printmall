@@ -1,4 +1,4 @@
-import { order } from "../product/checkout/createOrder.js";
+import { order } from "../product/checkoutPayPal/createOrder.js";
 import mailSend from "./mailer.js";
 
 export default async function sendConfirmationMail(captureData, dataOrder) {

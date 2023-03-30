@@ -1,16 +1,33 @@
 import { pool } from "../dbConnection.js";
 import logger from "../logger/logger.js";
-import { order } from "../product/checkout/createOrder.js";
+import { order } from "../product/checkoutPayPal/createOrder.js";
 import saveOrderId from "./saveOrder/saveOrderId.js";
 import savePayment from "./saveOrder/savePayment.js";
 import saveShippingInfo from "./saveOrder/saveShippingInfo.js";
-export default async function saveOrder(captureData) {
+export default async function saveOrder(capturedOrder) {
+  // const capturedOrder = {
+  //   paymentInfo: { id: , data:  },
+  //   shippingInfo: {
+  //      address:  {
+  //          address_line_1: '',
+  //          address_line_2: '',
+  //          admin_area_2: 'Bratislava',
+  //          admin_area_1: 'Slovenská Republika',
+  //          postal_code: '821 01',
+  //          country_code: 'SK'
+  //           }
+  //        },
+  //      payer: {name: { given_name: 'John', surname: 'Doe' }, email_address : ''},
+  //      phone: ''
+  //      },
+  //   status: captureData.status,
+  // };
   try {
-    const paymentId = await savePayment(captureData);
+    const paymentId = await savePayment(capturedOrder.paymentInfo);
 
-    const shippingId = await saveShippingInfo(captureData);
+    const shippingId = await saveShippingInfo(capturedOrder.shippingInfo);
 
-    const orderId = await saveOrderId(shippingId, paymentId, captureData);
+    const orderId = await saveOrderId(shippingId, paymentId, capturedOrder.status);
     // order =  {
     //   total: 144,
     //   cart: [
@@ -47,7 +64,7 @@ export default async function saveOrder(captureData) {
         order.total,
       ]);
     }
-// console.log({products})
+    // console.log({products})
     // const data = {
     //   products: [
     //     { title: 'Custom Printed T-Shirt', value: '230', quantity: 1 },
@@ -64,15 +81,16 @@ export default async function saveOrder(captureData) {
       products: products,
       taxes: tax,
       shipping: shipping,
-      payment_method:  'PayPal',
-      total: order.total, 
-      date: captureData.purchase_units[0].payments.captures[0].create_time,
+      payment_method: capturedOrder.payment_method,
+      total: order.total,
+      date: capturedOrder.date,
       order_number: orderId,
-      status: captureData.status,
+      status: capturedOrder.status,
     };
 
     return data;
   } catch (error) {
+    console.error(error);
     const errorMsg = `Save order is failed: ${error.message}`;
     logger.error(errorMsg);
     return false;
