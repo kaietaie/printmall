@@ -3,19 +3,28 @@ import { PaymentState } from '../../types/Payment';
 import { capturePayPalOrderThunk } from './paymentThunks';
 import { CheckoutFormValues } from '../../types/Forms';
 
+const initialShippingInfoValues = {
+  first_name: '',
+  last_name: '',
+  email: '',
+  phone: '',
+  address_line_1: '',
+  address_line_2: '',
+  country: '',
+  city: '',
+  region: '',
+  zip_code: '',
+};
+
+const storedSippingInfo = localStorage.getItem('shippingInfo');
+
+const initialShippingInfo =
+  storedSippingInfo != null
+    ? JSON.parse(storedSippingInfo)
+    : initialShippingInfoValues;
+
 const initialState: PaymentState = {
-  shippingInfo: {
-    first_name: '',
-    last_name: '',
-    email: '',
-    phone: '',
-    address_line_1: '',
-    address_line_2: '',
-    country: '',
-    city: '',
-    region: '',
-    zip_code: '',
-  },
+  shippingInfo: initialShippingInfo,
   paymentDetails: null,
   status: 'idle',
   error: null,
@@ -27,6 +36,11 @@ const paymentSlice = createSlice({
   reducers: {
     addShippingInfo: (state, action: PayloadAction<CheckoutFormValues>) => {
       state.shippingInfo = action.payload;
+      localStorage.setItem('shippingInfo', JSON.stringify(state.shippingInfo));
+    },
+    clearShippingInfo: (state) => {
+      state.shippingInfo = initialShippingInfoValues;
+      localStorage.setItem('shippingInfo', JSON.stringify(state.shippingInfo));
     },
     clearPaymentDetails: (state) => {
       state.paymentDetails = null;
@@ -49,6 +63,7 @@ const paymentSlice = createSlice({
   },
 });
 
-export const { clearPaymentDetails, addShippingInfo } = paymentSlice.actions;
+export const { clearPaymentDetails, addShippingInfo, clearShippingInfo } =
+  paymentSlice.actions;
 
 export default paymentSlice.reducer;

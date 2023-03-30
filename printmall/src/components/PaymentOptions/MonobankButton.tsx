@@ -9,10 +9,11 @@ const MonobankButton = () => {
   const monobankData = useSelector<RootState, MonobankData>(
     selectMonobankPaymentData
   );
+
   const handleClick = async () => {
     try {
-      const res = await makeMonobankPayment(monobankData);
-      // window.location.href = await makeMonobankPayment(monobankData);
+      window.location.href = await makeMonobankPayment(monobankData);
+      // dispatch(clearShippingInfo);
     } catch (error) {
       console.error(error);
     }
