@@ -11,12 +11,15 @@ export default async function capturePayPalOrder(req, res) {
 
     const capturedOrder = {
       paymentInfo: { id: captureData.id, data: captureData },
-      shippingInfo: {address: captureData.purchase_units[0].shipping.address, payer: captureData.payer},
+      shippingInfo: {
+        address: captureData.purchase_units[0].shipping.address,
+        payer: captureData.payer,
+      },
       status: captureData.status,
-      payment_method: 'PayPal',
-      date: captureData.purchase_units[0].payments.captures[0].create_time
+      payment_method: "PayPal",
+      date: captureData.purchase_units[0].payments.captures[0].create_time,
     };
-    console.log(capturedOrder)
+    console.log(capturedOrder);
     const data = await saveOrder(capturedOrder);
     sendConfirmationMail(captureData, data);
     res.json({ data });
