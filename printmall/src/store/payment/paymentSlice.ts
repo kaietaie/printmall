@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PaymentState } from '../../types/Payment';
+import { MakeMonobankPaymentResponse, PaymentState } from '../../types/Payment';
 import { capturePayPalOrderThunk } from './paymentThunks';
 import { CheckoutFormValues } from '../../types/Forms';
 
@@ -16,6 +16,7 @@ const initialShippingInfoValues = {
   zip_code: '',
 };
 
+const storedOrderId = localStorage.getItem('orderId');
 const storedSippingInfo = localStorage.getItem('shippingInfo');
 
 const initialShippingInfo =
@@ -23,7 +24,10 @@ const initialShippingInfo =
     ? JSON.parse(storedSippingInfo)
     : initialShippingInfoValues;
 
+const initialOrderId = storedOrderId != null ? JSON.parse(storedOrderId) : null;
+
 const initialState: PaymentState = {
+  orderId: initialOrderId,
   shippingInfo: initialShippingInfo,
   paymentDetails: null,
   status: 'idle',
@@ -34,6 +38,10 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState,
   reducers: {
+    setOrderId: (state, action: PayloadAction<string>) => {
+      state.orderId = action.payload;
+      localStorage.setItem('orderId', JSON.stringify(state.orderId));
+    },
     addShippingInfo: (state, action: PayloadAction<CheckoutFormValues>) => {
       state.shippingInfo = action.payload;
       localStorage.setItem('shippingInfo', JSON.stringify(state.shippingInfo));
@@ -63,7 +71,11 @@ const paymentSlice = createSlice({
   },
 });
 
-export const { clearPaymentDetails, addShippingInfo, clearShippingInfo } =
-  paymentSlice.actions;
+export const {
+  clearPaymentDetails,
+  addShippingInfo,
+  setOrderId,
+  clearShippingInfo,
+} = paymentSlice.actions;
 
 export default paymentSlice.reducer;

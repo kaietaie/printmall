@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { SkuCartItem } from '../types/Cart';
-import { MonobankData, PaymentDetails } from '../types/Payment';
+import {
+  MakeMonobankPaymentResponse,
+  MonobankData,
+  PaymentDetails,
+} from '../types/Payment';
 
 export const createPayPalOrder = async (
   cartItems: SkuCartItem[]
@@ -67,7 +71,7 @@ export const capturePayPalOrder = async (
 
 export const makeMonobankPayment = async (
   MonobankData: MonobankData
-): Promise<string> => {
+): Promise<MakeMonobankPaymentResponse> => {
   try {
     const response = await axios.post(
       'http://localhost:5000/paymentmono/create-mono-order',
@@ -84,5 +88,27 @@ export const makeMonobankPayment = async (
   } catch (error) {
     console.error(error);
     throw new Error('Failed to make monobank payment');
+  }
+};
+
+export const getMonobankOrderDetails = async (
+  orderID: string
+): Promise<PaymentDetails> => {
+  try {
+    const response = await axios.post(
+      'http://localhost:5000/check-mono-payment',
+      orderID,
+      {
+        headers: {
+          'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to get monobank order details');
   }
 };

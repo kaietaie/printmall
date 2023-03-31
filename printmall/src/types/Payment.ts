@@ -19,6 +19,7 @@ export interface PaymentDetails {
 }
 
 export interface PaymentState {
+  orderId: string | null;
   shippingInfo: CheckoutFormValues;
   paymentDetails: PaymentDetails | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -28,4 +29,9 @@ export interface PaymentState {
 export interface MonobankData {
   cart: SkuCartItem[];
   shippingInfo: CheckoutFormValues;
+}
+
+export interface MakeMonobankPaymentResponse {
+  url: string;
+  orderId: string;
 }

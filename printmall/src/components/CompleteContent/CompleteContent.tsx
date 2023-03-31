@@ -1,15 +1,19 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import GeneralInfo from './GeneralInfo';
 import CompleteDetails from './CompleteDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import { AppDispatch, RootState } from '../../store/store';
-import { selectPayPalPaymentDetails } from '../../store/payment/paymentSelectors';
+import {
+  selectOrderId,
+  selectPayPalPaymentDetails,
+} from '../../store/payment/paymentSelectors';
 import { PaymentDetails } from '../../types/Payment';
 import Button from '../common/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { clearPaymentDetails } from '../../store/payment/paymentSlice';
+import { getMonobankOrderDetails } from '../../api/paymentApi';
 
 import './CompleteContent.sass';
 
@@ -20,6 +24,17 @@ const CompleteContent = () => {
   const orderDetails = useSelector<RootState, PaymentDetails | null>(
     selectPayPalPaymentDetails
   );
+  const orderId = useSelector(selectOrderId);
+
+  useEffect(() => {
+    const fetchMonobankOrderDetails = async () => {
+      if (orderId) {
+        return await getMonobankOrderDetails(orderId);
+      }
+    };
+    const res = fetchMonobankOrderDetails();
+    console.log(res);
+  }, [orderId]);
 
   const handleButtonClick = () => {
     dispatch(clearPaymentDetails());

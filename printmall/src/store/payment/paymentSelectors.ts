@@ -25,3 +25,5 @@ export const selectMonobankPaymentData = createSelector(
     };
   }
 );
+
+export const selectOrderId = (state: RootState) => state.payment.orderId;
