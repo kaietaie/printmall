@@ -1,5 +1,5 @@
 import * as paypal from "./paypal-api.js";
-import getPriceOrName from "../../functions/getIdAndEct.js";
+import getPriceOrName from "../../functions/getIdAndEtc.js";
 import logger from "../../logger/logger.js";
 export var order = {};
 

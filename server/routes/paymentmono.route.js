@@ -1,5 +1,5 @@
 import Router from "express";
-import createMonoOrder from "../product/checkoutMono/createOrder.js";
+import createMonoOrder from "../product/checkoutMono/createMonoOrder.js";
 export const paymentmonoRouter = Router();
 
 // paymentmonoRouter.post('/checkout', checkout )

@@ -1,5 +1,5 @@
 import axios from "axios";
-import getIdAndEct from "../../functions/getIdAndEct.js";
+import getIdAndEtc from "../../functions/getIdAndEtc.js";
 import saveOrderId from "../../functions/saveOrder/saveOrderId.js";
 import savePayment from "../../functions/saveOrder/savePayment.js";
 import saveShippingInfo from "../../functions/saveOrder/saveShippingInfo.js";
@@ -24,11 +24,10 @@ export default async function createMonoOrder(req, res) {
       },
       redirectUrl: "",
       webHookUrl: "",
-      validity: 3600,
-      paymentType: "debit",
     };
+
     for (let i = 0; i < cart.length; i++) {
-      const prod = await getIdAndEct(
+      const prod = await getIdAndEtc(
         cart[i].sku,
         "product_price, product_name, product_type"
       );
@@ -45,15 +44,11 @@ export default async function createMonoOrder(req, res) {
       //   sum: price * 100,
       //   code: cart[i].sku,
       // });
-      // paymentreq.basketOrder[i].qty = cart[i].quantity;
-      // paymentreq.basketOrder[i].sum = price * 100;
-      // paymentreq.basketOrder[i].code = cart[i].sku;
     }
     order = { total, cart };
     paymentreq.amount = total * 100;
 
     const token = req.headers["x-token"];
-
 
     const send = await axios({
       method: "post",
@@ -63,7 +58,11 @@ export default async function createMonoOrder(req, res) {
       },
       data: paymentreq,
     });
-    console.log(send)
+
+    const paymentMonoId = send.data.invoiceId
+
+    console.log(paymentMonoId)
+
     res.json(send.data.pageUrl);
   } catch (error) {
     console.error(error);

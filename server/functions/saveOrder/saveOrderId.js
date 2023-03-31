@@ -1,6 +1,6 @@
 import { pool } from "../../dbConnection.js";
 
-export default async function saveOrderId(shippingId, paymentId, status) {
+export default async function saveOrderId(shippingId, status) {
     let finalized = false;
     if (status === "COMPLETED") finalized = true;
  

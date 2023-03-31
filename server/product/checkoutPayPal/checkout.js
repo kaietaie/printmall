@@ -1,4 +1,4 @@
-import getPrice from "../../functions/getIdAndEct.js";
+import getPrice from "../../functions/getIdAndEtc.js";
 
 export default async function checkout (req, res) {
  // cart (sku, qty), need to find prices and calculate sub_total amount

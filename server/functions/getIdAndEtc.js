@@ -1,7 +1,7 @@
 import { pool } from "../dbConnection.js";
 import logger from "../logger/logger.js";
 //
-export default async function getIdAndEct(sku, columns) {
+export default async function getIdAndEtc(sku, columns) {
   try {
     const product_id = sku.split("-")[1];
 
