@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { SkuCartItem } from '../types/Cart';
 import { MonobankData, PaymentDetails } from '../types/Payment';
-import { CheckoutFormValues } from '../types/Forms';
 
 export const createPayPalOrder = async (
   cartItems: SkuCartItem[]
@@ -39,41 +38,40 @@ export const capturePayPalOrder = async (
   }
 };
 
-const mockMonobankData = {
-  cart: [
-    {
-      sku: '1-106-2-2',
-      quantity: 2,
-    },
-    {
-      sku: '1-80-2-3',
-      quantity: 1,
-    },
-  ],
-  shippingInfo: {
-    address: {
-      address_line_1: 'Ružinovská 1',
-      admin_area_2: 'Bratislava',
-      admin_area_1: 'Slovenská Republika',
-      postal_code: '821 01',
-      country_code: 'SK',
-    },
-    payer: {
-      name: { given_name: 'John', surname: 'Doe' },
-      email_address: 'kaieta.ievgenii@gmail.com',
-    },
-    phone: '+380689901426',
-  },
-};
+// const mockMonobankData = {
+//   cart: [
+//     {
+//       sku: '1-106-2-2',
+//       quantity: 2,
+//     },
+//     {
+//       sku: '1-80-2-3',
+//       quantity: 1,
+//     },
+//   ],
+//   shippingInfo: {
+//     address: {
+//       address_line_1: 'Ružinovská 1',
+//       admin_area_2: 'Bratislava',
+//       admin_area_1: 'Slovenská Republika',
+//       postal_code: '821 01',
+//       country_code: 'SK',
+//     },
+//     payer: {
+//       name: { given_name: 'John', surname: 'Doe' },
+//       email_address: 'kaieta.ievgenii@gmail.com',
+//     },
+//     phone: '+380689901426',
+//   },
+// };
 
 export const makeMonobankPayment = async (
-  shippingData: MonobankData
+  MonobankData: MonobankData
 ): Promise<string> => {
-  console.log(shippingData);
   try {
     const response = await axios.post(
       'http://localhost:5000/paymentmono/create-mono-order',
-      mockMonobankData,
+      MonobankData,
       {
         headers: {
           'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',

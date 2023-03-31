@@ -17,7 +17,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <>
       <Header />
-      <div className="container">{children}</div>
+      <div className="container container-main">{children}</div>
       {showFooter && <Footer />}
     </>
   );
