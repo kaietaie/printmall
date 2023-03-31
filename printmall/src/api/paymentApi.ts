@@ -78,7 +78,7 @@ export const makeMonobankPayment = async (
       MonobankData,
       {
         headers: {
-          'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',
+          'X-Token': 'uEBaUmpxJgFWoiK6JqoiHGTIT7gfmde-9tdYYxg8fh64',
           'Content-Type': 'application/json',
         },
       }
@@ -97,16 +97,16 @@ export const getMonobankOrderDetails = async (
   try {
     const response = await axios.post(
       'http://localhost:5000/paymentmono/check-mono-payment',
-      {orderId},
+      { orderId },
       {
         headers: {
           'Content-Type': 'application/json',
-          'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',
+          'X-Token': 'uEBaUmpxJgFWoiK6JqoiHGTIT7gfmde-9tdYYxg8fh64',
         },
       }
     );
-      console.log(response)
-    return response.data.data;
+
+    return response.data;
   } catch (error) {
     console.error(error);
     throw new Error('Failed to get monobank order details');

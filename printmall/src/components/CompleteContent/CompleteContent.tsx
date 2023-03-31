@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import GeneralInfo from './GeneralInfo';
 import CompleteDetails from './CompleteDetails';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,15 +26,40 @@ const CompleteContent = () => {
   );
   const orderId = useSelector(selectOrderId);
 
+  const [paymentDetails, setPaymentDetails] = useState(orderDetails);
+
   useEffect(() => {
-    const fetchMonobankOrderDetails = async () => {
+    async function fetchPaymentDetails() {
       if (orderId) {
-        return await getMonobankOrderDetails(orderId);
+        try {
+          const details = await getMonobankOrderDetails(orderId);
+          setPaymentDetails(details);
+        } catch (error) {
+          console.error(error);
+        }
       }
-    };
-    const res = fetchMonobankOrderDetails();
-    console.log(res);
+    }
+
+    fetchPaymentDetails();
   }, [orderId]);
+
+  console.log(paymentDetails);
+
+  // useEffect(() => {
+  //   const fetchMonobankOrderDetails = async () => {
+  //     if (orderId) {
+  //       return await getMonobankOrderDetails(orderId);
+  //     }
+  //   };
+  //
+  //   fetchMonobankOrderDetails()
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [orderId]);
 
   const handleButtonClick = () => {
     dispatch(clearPaymentDetails());
@@ -48,20 +73,20 @@ const CompleteContent = () => {
           {t('complete.gratitudeBanner')}
         </span>
       </div>
-      {orderDetails && (
+      {paymentDetails && (
         <>
           <GeneralInfo
-            date={orderDetails.date}
-            order_number={orderDetails.order_number}
-            total={orderDetails.total}
-            payment_method={orderDetails.payment_method}
+            date={paymentDetails.date}
+            order_number={paymentDetails.order_number}
+            total={paymentDetails.total}
+            payment_method={paymentDetails.payment_method}
           />
           <CompleteDetails
-            payment_method={orderDetails.payment_method}
-            total={orderDetails.total}
-            products={orderDetails.products}
-            taxes={orderDetails.taxes}
-            shipping={orderDetails.shipping}
+            payment_method={paymentDetails.payment_method}
+            total={paymentDetails.total}
+            products={paymentDetails.products}
+            taxes={paymentDetails.taxes}
+            shipping={paymentDetails.shipping}
           />
         </>
       )}
