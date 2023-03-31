@@ -58,7 +58,7 @@ const paymentSlice = createSlice({
       })
       .addCase(capturePayPalOrderThunk.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message ?? 'Error fetching product';
+        state.error = action.error.message ?? 'Failed to create order';
       });
   },
 });
