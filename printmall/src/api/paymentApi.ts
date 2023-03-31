@@ -92,20 +92,20 @@ export const makeMonobankPayment = async (
 };
 
 export const getMonobankOrderDetails = async (
-  orderID: string
+  orderId: string
 ): Promise<PaymentDetails> => {
   try {
     const response = await axios.post(
-      'http://localhost:5000/check-mono-payment',
-      orderID,
+      'http://localhost:5000/paymentmono/check-mono-payment',
+      {orderId},
       {
         headers: {
-          'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',
           'Content-Type': 'application/json',
+          'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',
         },
       }
     );
-
+      console.log(response)
     return response.data.data;
   } catch (error) {
     console.error(error);

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default async function checkStatus(orderId, token, retries) {
-    
+    console.log("check status")
     const response = await axios({
         method: "get",
         url: `https://api.monobank.ua/api/merchant/invoice/status?invoiceId=${orderId}`,

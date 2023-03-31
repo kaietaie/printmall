@@ -8,7 +8,6 @@ export default async function checkMonoPaymentDetails(orderId, token) {
             "X-Token": token,
         },
     });
- 
       return response.data;
   }
   

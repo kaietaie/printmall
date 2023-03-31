@@ -1,3 +1,4 @@
+import logger from "../logger/logger.js";
 import { order } from "../product/checkoutPayPal/createOrder.js";
 import mailSend from "./mailer.js";
 
@@ -24,7 +25,7 @@ export default async function sendConfirmationMail(captureData, dataOrder) {
       };
       mailSend(data);
     } catch (error) {
-      const errorMsg = `Get product is failed: ${error.message}`;
+      const errorMsg = `Send confirmation email is failed: ${error.message}`;
       logger.error(errorMsg); 
      }
 }

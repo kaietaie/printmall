@@ -41,12 +41,12 @@ export default async function createMonoOrder(req, res) {
       cart[i].price = price;
       cart[i].id = prod.id;
       cart[i].type = prod.product_type;
-      // paymentreq.merchantPaymInfo.basketOrder.push({
-      //   name: prod.product_name,
-      //   qty: cart[i].quantity,
-      //   sum: price * 100,
-      //   code: cart[i].sku,
-      // });
+      paymentreq.merchantPaymInfo.basketOrder.push({
+        name: prod.product_name,
+        qty: cart[i].quantity,
+        sum: price * 100,
+        code: cart[i].sku,
+      });
     }
     order = { total, cart };
     paymentreq.amount = total * 100;
@@ -65,13 +65,11 @@ export default async function createMonoOrder(req, res) {
     if (send.data?.errCode) {
       res.status(send.status).json(send.statusText);
     }
-    console.log({ send });
 
-    const paymentMonoId = send.data.invoiceId;
 
     const response = {
       url: send.data.pageUrl,
-      orderId: paymentMonoId,
+      orderId: send.data.invoiceId,
     };
     res.json(response);
   } catch (error) {
