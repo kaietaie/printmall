@@ -5,24 +5,8 @@ import saveOrderId from "./saveOrder/saveOrderId.js";
 import savePayment from "./saveOrder/savePayment.js";
 import saveShippingInfo from "./saveOrder/saveShippingInfo.js";
 export default async function saveOrder(capturedOrder) {
-  // const capturedOrder = {
-  //   paymentInfo: { id: , data:  },
-  //   shippingInfo: {
-  //      address:  {
-  //          address_line_1: '',
-  //          address_line_2: '',
-  //          admin_area_2: 'Bratislava',
-  //          admin_area_1: 'Slovenská Republika',
-  //          postal_code: '821 01',
-  //          country_code: 'SK'
-  //           }
-  //        },
-  //      payer: {name: { given_name: 'John', surname: 'Doe' }, email_address : ''},
-  //      phone: ''
-  //      },
-  //   status: captureData.status,
-  // };
   try {
+    console.log(capturedOrder)
     const paymentId = await savePayment(capturedOrder.paymentInfo);
 
     const shippingId = await saveShippingInfo(capturedOrder.shippingInfo);

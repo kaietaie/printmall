@@ -3,53 +3,35 @@ import fetch from "node-fetch";
 import { pool } from "../../dbConnection.js";
 import checkMonoPaymentDetails from "../../functions/checkMonoPaymentDetails.js";
 import checkStatus from "../../functions/checkMonoPaymentStatus.js";
+import savePayment from "../../functions/saveOrder/savePayment.js";
 import logger from "../../logger/logger.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
-import { order, shipping } from "./createMonoOrder.js";
+import { order, shippingMono } from "./createMonoOrder.js";
 
 export default async function checkMonoPayment(req, res) {
   try {
 
     const orderId = req.body.orderId;
-    const token =
-      "uEBaUmpxJgFWoiK6JqoiHGTIT7gfmde-9tdYYxg8fh64" || req.headers["x-token"];
+    const token = req.headers["x-token"];
     console.log(token)
     const statusPay = await checkStatus(orderId, token, 10);
     console.log(statusPay);
 
-    // if (
-    //   statusPay.status === "failure" ||
-    //   statusPay.status === "reversed" ||
-    //   statusPay.status === "expired"
-    // ) {
-    //   return res.status(402).json("Payment is not recived");
-    // }
+    if (
+      statusPay.status === "failure" ||
+      statusPay.status === "reversed" ||
+      statusPay.status === "expired"
+    ) {
+      return res.status(402).json("Payment is not recived");
+    }
     console.log("before details");
     const paymentDetails = await checkMonoPaymentDetails(
       orderId,
       token
     );
-    console.log(paymentDetails);
     const captureData = {
       paymentInfo: { id: statusPay.invoiceId, data: paymentDetails },
-      shippingInfo: {
-        address: {
-          address_line_1: shipping.address_line_1,
-          address_line_2: shipping.address_line_2,
-          admin_area_2: shipping.city,
-          admin_area_1: shipping.country,
-          postal_code: shipping.zip_code,
-          country_code: shipping.country,
-        },
-        payer: {
-          name: {
-            given_name: shipping.first_name,
-            surname: shipping.last_name,
-          },
-          email_address: shipping.email,
-        },
-        phone: shipping.phone,
-      },
+      shippingInfo: shippingMono,
       status: statusPay.status,
       payment_method: paymentDetails.paymentMethod,
       date: statusPay.createdDate,
@@ -78,7 +60,7 @@ export default async function checkMonoPayment(req, res) {
         order.total,
       ]);
     }
-
+    savePayment(captureData.paymentInfo)
     const data = {
       products: products,
       taxes: tax,
@@ -96,13 +78,7 @@ export default async function checkMonoPayment(req, res) {
     console.error(error);
     const errorMsg = `createMonoOrder is failed: ${error.message}`;
     logger.error(errorMsg);
-    res.status(error.response.status).send({ Error: error.message });
+    res.status(500).send({ Error: error.message });
   }
 }
 
-
-
-/*
-2303316ybxPWKwNSoURk
-2303317WMYxWBHaaQKMD
-*/
