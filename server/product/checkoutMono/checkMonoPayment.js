@@ -12,7 +12,7 @@ export default async function checkMonoPayment(req, res) {
   try {
 
     const orderId = req.body.orderId;
-    const token = req.headers["x-token"];
+    const token = process.env.MONO_TOKEN;
     console.log(token)
     const statusPay = await checkStatus(orderId, token, 10);
     console.log(statusPay);
