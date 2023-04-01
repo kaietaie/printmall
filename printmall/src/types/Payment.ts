@@ -26,7 +26,7 @@ export interface PaymentState {
   error: string | null;
 }
 
-export interface MonobankData {
+export interface PaymentData {
   cart: SkuCartItem[];
   shippingInfo: CheckoutFormValues;
 }

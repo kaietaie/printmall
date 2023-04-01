@@ -1,16 +1,14 @@
 import minoIcon from '../images/monobank-icon.jpeg';
 import { makeMonobankPayment } from '../../api/paymentApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMonobankPaymentData } from '../../store/payment/paymentSelectors';
+import { selectPaymentData } from '../../store/payment/paymentSelectors';
 import { AppDispatch, RootState } from '../../store/store';
-import { MonobankData } from '../../types/Payment';
+import { PaymentData } from '../../types/Payment';
 import { setOrderId } from '../../store/payment/paymentSlice';
 
 const MonobankButton = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const monobankData = useSelector<RootState, MonobankData>(
-    selectMonobankPaymentData
-  );
+  const monobankData = useSelector<RootState, PaymentData>(selectPaymentData);
 
   const handleClick = async () => {
     try {

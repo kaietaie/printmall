@@ -1,20 +1,18 @@
 import axios from 'axios';
-import { SkuCartItem } from '../types/Cart';
+
 import {
   MakeMonobankPaymentResponse,
-  MonobankData,
+  PaymentData,
   PaymentDetails,
 } from '../types/Payment';
 
 export const createPayPalOrder = async (
-  cartItems: SkuCartItem[]
+  PaymentData: PaymentData
 ): Promise<string> => {
   try {
     const response = await axios.post<{ id: string }>(
       'http://localhost:5000/payment/create-paypal-order',
-      {
-        cart: cartItems,
-      }
+      PaymentData
     );
 
     return response.data.id;
@@ -34,7 +32,7 @@ export const capturePayPalOrder = async (
         orderID,
       }
     );
-
+    console.log(response);
     return response.data.data;
   } catch (error) {
     console.error(error);
@@ -70,18 +68,12 @@ export const capturePayPalOrder = async (
 // };
 
 export const makeMonobankPayment = async (
-  MonobankData: MonobankData
+  PaymentData: PaymentData
 ): Promise<MakeMonobankPaymentResponse> => {
   try {
     const response = await axios.post(
       'http://localhost:5000/paymentmono/create-mono-order',
-      MonobankData,
-      {
-        headers: {
-          'X-Token': 'uEBaUmpxJgFWoiK6JqoiHGTIT7gfmde-9tdYYxg8fh64',
-          'Content-Type': 'application/json',
-        },
-      }
+      PaymentData
     );
 
     return response.data;
@@ -97,13 +89,7 @@ export const getMonobankOrderDetails = async (
   try {
     const response = await axios.post(
       'http://localhost:5000/paymentmono/check-mono-payment',
-      { orderId },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Token': 'uEBaUmpxJgFWoiK6JqoiHGTIT7gfmde-9tdYYxg8fh64',
-        },
-      }
+      { orderId }
     );
 
     return response.data;

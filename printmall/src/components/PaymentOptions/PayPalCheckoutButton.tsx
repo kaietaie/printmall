@@ -11,8 +11,11 @@ import { createPayPalOrder } from '../../api/paymentApi';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { capturePayPalOrderThunk } from '../../store/payment/paymentThunks';
-import { selectPayPalPaymentStatus } from '../../store/payment/paymentSelectors';
-import { PaymentDetails } from '../../types/Payment';
+import {
+  selectPaymentData,
+  selectPayPalPaymentStatus,
+} from '../../store/payment/paymentSelectors';
+import { PaymentData, PaymentDetails } from '../../types/Payment';
 
 const PayPalCheckoutButton = () => {
   const { t } = useTranslation();
@@ -20,8 +23,8 @@ const PayPalCheckoutButton = () => {
   const navigate = useNavigate();
   const [paidFor, setPaidFor] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  const skuCartItems = useSelector<RootState, SkuCartItem[]>(
-    selectScuCartItems
+  const payPalPaymentData = useSelector<RootState, PaymentData>(
+    selectPaymentData
   );
 
   const status = useSelector<RootState, PaymentDetails['status']>(
@@ -37,7 +40,7 @@ const PayPalCheckoutButton = () => {
 
   const handleCreateOrder = async (): Promise<string> => {
     try {
-      return await createPayPalOrder(skuCartItems);
+      return await createPayPalOrder(payPalPaymentData);
     } catch (error) {
       console.error(error);
       setError('Failed to create PayPal order');
