@@ -1,10 +1,12 @@
 import * as paypal from "./paypal-api.js";
 import getPriceOrName from "../../functions/getIdAndEtc.js";
 import logger from "../../logger/logger.js";
-export var order = {};
+export var order = {},
+  shippingPal = {};
 
 export default async function createPayPalOrder(req, res) {
-  const { cart } = req.body; // [{quantity, sku },{quantity, sku }...]
+  const { cart, shippingInfo } = req.body;// [{quantity, sku },{quantity, sku }...]
+  shippingPal = shippingInfo; 
   let total = 0;
   for (let i = 0; i < cart.length; i++) {
     const prod = await getPriceOrName(

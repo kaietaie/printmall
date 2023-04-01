@@ -6,11 +6,11 @@ import savePayment from "../../functions/saveOrder/savePayment.js";
 import saveShippingInfo from "../../functions/saveOrder/saveShippingInfo.js";
 import logger from "../../logger/logger.js";
 export var order = {},
-  shipping = {};
+  shippingMono = {};
 
 export default async function createMonoOrder(req, res) {
   const { cart, shippingInfo } = req.body; // [{quantity, sku },{quantity, sku }...]
-  shipping = shippingInfo;
+  shippingMono = shippingInfo;
   try {
     const status = "";
     const shippingId = await saveShippingInfo(shippingInfo);
@@ -51,7 +51,7 @@ export default async function createMonoOrder(req, res) {
     order = { total, cart };
     paymentreq.amount = total * 100;
 
-    const token = req.headers["x-token"];
+    const token = process.env.MONO_TOKEN;
 
     const send = await axios({
       method: "post",

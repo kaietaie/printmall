@@ -78,7 +78,7 @@ export const makeMonobankPayment = async (
       MonobankData,
       {
         headers: {
-          'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',
+          'X-Token': 'uEBaUmpxJgFWoiK6JqoiHGTIT7gfmde-9tdYYxg8fh64',
           'Content-Type': 'application/json',
         },
       }
@@ -101,7 +101,7 @@ export const getMonobankOrderDetails = async (
       {
         headers: {
           'Content-Type': 'application/json',
-          'X-Token': 'uelIDAoh6Q88qA_XkTLCqwGikh47ZorzpIirf4ARegcw',
+          'X-Token': 'uEBaUmpxJgFWoiK6JqoiHGTIT7gfmde-9tdYYxg8fh64',
         },
       }
     );
