@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { clearPaymentDetails } from '../../store/payment/paymentSlice';
 import { getMonobankOrderDetails } from '../../api/paymentApi';
+import Loader from '../common/Loader';
 
 import './CompleteContent.sass';
 
@@ -29,37 +30,16 @@ const CompleteContent = () => {
   const [paymentDetails, setPaymentDetails] = useState(orderDetails);
 
   useEffect(() => {
-    async function fetchPaymentDetails() {
-      if (orderId) {
-        try {
-          const details = await getMonobankOrderDetails(orderId);
-          setPaymentDetails(details);
-        } catch (error) {
-          console.error(error);
-        }
-      }
+    if (orderId) {
+      getMonobankOrderDetails(orderId)
+        .then((details) => setPaymentDetails(details))
+        .catch((error) => console.error(error));
     }
-
-    fetchPaymentDetails();
   }, [orderId]);
 
-  console.log(paymentDetails);
-
-  // useEffect(() => {
-  //   const fetchMonobankOrderDetails = async () => {
-  //     if (orderId) {
-  //       return await getMonobankOrderDetails(orderId);
-  //     }
-  //   };
-  //
-  //   fetchMonobankOrderDetails()
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [orderId]);
+  if (!paymentDetails) {
+    return <Loader />;
+  }
 
   const handleButtonClick = () => {
     dispatch(clearPaymentDetails());
@@ -73,23 +53,21 @@ const CompleteContent = () => {
           {t('complete.gratitudeBanner')}
         </span>
       </div>
-      {paymentDetails && (
-        <>
-          <GeneralInfo
-            date={paymentDetails.date}
-            order_number={paymentDetails.order_number}
-            total={paymentDetails.total}
-            payment_method={paymentDetails.payment_method}
-          />
-          <CompleteDetails
-            payment_method={paymentDetails.payment_method}
-            total={paymentDetails.total}
-            products={paymentDetails.products}
-            taxes={paymentDetails.taxes}
-            shipping={paymentDetails.shipping}
-          />
-        </>
-      )}
+      <>
+        <GeneralInfo
+          date={paymentDetails.date}
+          order_number={paymentDetails.order_number}
+          total={paymentDetails.total}
+          payment_method={paymentDetails.payment_method}
+        />
+        <CompleteDetails
+          payment_method={paymentDetails.payment_method}
+          total={paymentDetails.total}
+          products={paymentDetails.products}
+          taxes={paymentDetails.taxes}
+          shipping={paymentDetails.shipping}
+        />
+      </>
       <Button
         className="complete-details-button"
         onClick={handleButtonClick}

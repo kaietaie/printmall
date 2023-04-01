@@ -37,6 +37,7 @@ const Select: React.FC<SelectProps> = ({
     >
       <label htmlFor="country">{label}</label>
       <select
+        defaultChecked={true}
         onBlur={onBlur}
         onChange={onChange}
         value={value}

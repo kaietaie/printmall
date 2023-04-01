@@ -31,7 +31,7 @@ const CheckoutForm: React.FC = () => {
       phone: '',
       address_line_1: '',
       address_line_2: '',
-      country: '',
+      country: 'UA',
       city: '',
       region: '',
       zip_code: '',
