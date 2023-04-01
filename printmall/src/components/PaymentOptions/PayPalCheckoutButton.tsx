@@ -33,7 +33,6 @@ const PayPalCheckoutButton = () => {
 
   useEffect(() => {
     if (status === 'COMPLETED') {
-      dispatch(clearCart());
       setPaidFor(true);
     }
   }, [dispatch, status]);

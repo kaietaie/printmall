@@ -12,11 +12,12 @@ import { PaymentDetails } from '../../types/Payment';
 import Button from '../common/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { clearPaymentDetails } from '../../store/payment/paymentSlice';
+import { clearPaymentInfo } from '../../store/payment/paymentSlice';
 import { getMonobankOrderDetails } from '../../api/paymentApi';
 import Loader from '../common/Loader';
 
 import './CompleteContent.sass';
+import { clearCart } from '../../store/cart/cartSlice';
 
 const CompleteContent = () => {
   const { t } = useTranslation();
@@ -30,19 +31,20 @@ const CompleteContent = () => {
   const [paymentDetails, setPaymentDetails] = useState(orderDetails);
 
   useEffect(() => {
+    dispatch(clearCart());
     if (orderId) {
       getMonobankOrderDetails(orderId)
         .then((details) => setPaymentDetails(details))
         .catch((error) => console.error(error));
     }
-  }, [orderId]);
+  }, [dispatch, orderId]);
 
   if (!paymentDetails) {
     return <Loader />;
   }
 
   const handleButtonClick = () => {
-    dispatch(clearPaymentDetails());
+    dispatch(clearPaymentInfo());
     navigate(`/seller/Go_A`);
   };
 
