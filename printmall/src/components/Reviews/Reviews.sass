@@ -1,4 +1,41 @@
+@import '../../styles/variables'
+
 .reviews-top-section
   display: flex
   justify-content: space-between
   align-items: end
+  margin-bottom: 36px
+
+.reviews-grid
+  display: grid
+  grid-gap: 20px
+  grid-template-columns: repeat(2, 1fr)
+
+.review-card
+  padding: 16px
+  border: 1px solid $primary-extra
+  border-radius: 20px
+  height: fit-content
+
+.review-card-message
+  margin: 20px 0
+
+.review-card-author
+  display: flex
+
+.review-card-author-info
+  display: flex
+  flex-direction: column
+  margin-left: 15px
+
+.review-card-author-name
+  font-weight: 700
+  font-size: 16px
+  line-height: 24px
+  margin-bottom: 7px
+
+.review-card-author-address
+  font-size: 12px
+  line-height: 16px
+  color: $light-gray
+
