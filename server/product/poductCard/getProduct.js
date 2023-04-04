@@ -1,5 +1,6 @@
 import { pool } from "../../dbConnection.js";
 import checkDataDB from "../../functions/checkDataDB.js";
+import sortBySize from "../../functions/compareSizes.js";
 import logger from "../../logger/logger.js";
 
 export default async function getProduct(req, res) {
@@ -58,8 +59,9 @@ GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price, p.product
 `;
 
       const product = await pool.query(sql, [product_id]);
+      const sortSizes = sortBySize(product.rows[0])
 
-      return res.json(product.rows[0]);
+      return res.json(sortSizes);
     } catch (error) {
       const errorMsg = `Get product is failed: ${error.message}`;
       logger.error(errorMsg);
@@ -101,7 +103,7 @@ GROUP BY p.product_id, p.product_name, s.seller_name, p.product_price
                   limit $1 offset $2;`;
     var result = [];
     const products = await pool.query(sql, [limit, offset]);
-
+    console.log("your IP is: " + req.ip);
     res.json(products.rows);
   } else {
     const errorMsg = `get product is failed: ${error.message}`;
