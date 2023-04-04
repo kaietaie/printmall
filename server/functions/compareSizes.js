@@ -7,6 +7,5 @@ export default function sortBySize (prodObj) {
         (a, b) => sizes.indexOf(a) - sizes.indexOf(b)
       );
     }
-    console.log(sortedObj)
     return sortedObj;
   };
