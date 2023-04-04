@@ -34,7 +34,7 @@ function App() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/complete" element={<CompletePage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/policy" element={<PrivacyPage />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

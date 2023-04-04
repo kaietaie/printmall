@@ -9,7 +9,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     pathname === '/' ||
     pathname.includes('/seller/') ||
     pathname.includes('/products/') ||
-    pathname.includes('/privacy');
+    pathname.includes('/policy');
 
   // useEffect(() => {
   //   // Add any code that needs to be executed when the location changes
