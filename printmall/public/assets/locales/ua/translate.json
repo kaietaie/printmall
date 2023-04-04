@@ -54,8 +54,7 @@
   "payment": {
     "cancelMessage": "Ви скасували платіж",
     "optionsTitle": "Оберіть спосіб оплати",
-    "orderDetailsTitle": "Деталі замовлення",
-    "orderDetailsMessage": "Вартість доставки залежить від вашого місцезнаходження"
+    "orderDetailsTitle": "Деталі замовлення"
   },
   "purchaseStatus": {
     "cart": "Кошик",

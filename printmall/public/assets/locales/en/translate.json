@@ -54,8 +54,7 @@
   "payment": {
     "cancelMessage": "You canceled purchasing",
     "optionsTitle": "Choose a payment method",
-    "orderDetailsTitle": "Order details",
-    "orderDetailsMessage": "Shipping costs depend on your location"
+    "orderDetailsTitle": "Order details"
   },
   "purchaseStatus": {
     "cart": "Cart",
