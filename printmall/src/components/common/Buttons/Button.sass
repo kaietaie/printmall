@@ -14,8 +14,11 @@
   transition: background-color $transition, box-shadow $transition, color $transition
 
   svg
-    margin-left: 8px
+    margin-left: 18px
     fill: $white
+
+  &.icon-end
+    padding-right: 24px
 
 
 .button-primary
@@ -42,6 +45,18 @@
 
   &:hover
     background-color: $primary
+
+  svg
+    fill: $typography
+    transition: fill $transition
+
+  &:hover
+    svg
+      fill: $white
+
+  &:active
+    svg
+      fill: $typography
 
 
 .button-quaternary

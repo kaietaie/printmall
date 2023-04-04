@@ -11,6 +11,7 @@ import ErrorBanner from '../components/common/ErrorBanner';
 import { selectProductsStatus } from '../store/products/productsSelectors';
 import { SellerState } from '../types/Sellers';
 import { selectSellerStatus } from '../store/seller/sellerSelectors';
+import Reviews from '../components/Reviews';
 
 const SellerPage = () => {
   const { sellerName } = useParams<{ sellerName: string }>();
@@ -41,10 +42,11 @@ const SellerPage = () => {
   }
 
   return (
-    <>
+    <div className="seller-page">
       <SellerHero />
       <SellerProducts />
-    </>
+      <Reviews />
+    </div>
   );
 };
 
