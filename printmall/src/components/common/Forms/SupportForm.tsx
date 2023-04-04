@@ -115,7 +115,7 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
           label={t('form.privacyCheckbox')}
           checked={isPolicyChecked}
         />
-        <Link target="_blank" to="privacy" className="form-policy-button">
+        <Link target="_blank" to="policy" className="form-policy-link">
           {t('form.privacyButton')}
         </Link>
       </div>
