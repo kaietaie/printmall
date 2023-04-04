@@ -9,6 +9,7 @@ import CartPage from './Pages/CartPage';
 import PaymentPage from './Pages/PaymentPage';
 import CompletePage from './Pages/CompletePage';
 import CheckoutPage from './Pages/CheckoutPage';
+import PrivacyPage from './Pages/PrivacyPage';
 import 'react-toastify/dist/ReactToastify.css';
 import MainLayout from './components/MainLayout';
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/complete" element={<CompletePage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>
