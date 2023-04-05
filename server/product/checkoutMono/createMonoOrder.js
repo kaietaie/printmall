@@ -25,7 +25,7 @@ export default async function createMonoOrder(req, res) {
         destination: "KRAM Market purchase", // Призначення платежу
         basketOrder: [],
       },
-      redirectUrl: "http://localhost:3000/complete",
+      redirectUrl: "http://localhost:3000/checkpayment", 
       // webHookUrl: "",
     };
 

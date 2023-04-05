@@ -7,6 +7,7 @@ import SellerPage from './Pages/SellerPage';
 import ProductPage from './Pages/ProductPage';
 import CartPage from './Pages/CartPage';
 import PaymentPage from './Pages/PaymentPage';
+import CheckPaymentPage from './Pages/CheckPaymentPage';
 import CompletePage from './Pages/CompletePage';
 import CheckoutPage from './Pages/CheckoutPage';
 import PrivacyPage from './Pages/PrivacyPage';
@@ -33,6 +34,7 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/checkpayment" element={<CheckPaymentPage />} />
             <Route path="/complete" element={<CompletePage />} />
             <Route path="/policy" element={<PrivacyPage />} />
           </Routes>

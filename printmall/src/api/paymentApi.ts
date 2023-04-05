@@ -64,10 +64,10 @@ export const getMonobankOrderDetails = async (
       'http://localhost:5000/paymentmono/check-mono-payment',
       { orderId }
     );
-
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw new Error('Failed to get monobank order details');
+    // console.error(error);
+    // throw new Error('Failed to get monobank order details');
+    return Promise.reject(error);
   }
 };
