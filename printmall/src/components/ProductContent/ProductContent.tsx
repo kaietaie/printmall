@@ -1,6 +1,5 @@
 import React, { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ProductContentPickers from './ProductContentPickers';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { CartProduct } from '../../types/Cart';
 import { addItem, getTotals } from '../../store/cart/cartSlice';
@@ -14,12 +13,17 @@ import Loader from '../common/Loader';
 import makeSku from '../../utils/makeSku';
 import ProductSideBar from './ProductSideBar';
 import ProductContentActions from './ProductContentActions';
+import ColorPicker from './ColorPicker';
+import SizePicker from './SizePicker';
+import QuantityChangeButton from '../common/Buttons/QuantityChangeButton';
+import { useTranslation } from 'react-i18next';
 
 import './ProductContent.sass';
 
 const ProductContent = () => {
   const product = useSelector<RootState, Product | null>(selectProduct);
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
 
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
@@ -107,6 +111,8 @@ const ProductContent = () => {
     }
   };
 
+  const availableSizes = size_color[selectedColor];
+
   return (
     <div className="product-content">
       <ReturnButton />
@@ -128,17 +134,36 @@ const ProductContent = () => {
             {product_description}
           </p>
 
-          <ProductContentPickers
-            isSizeChosen={isSizeChosen}
-            sizeColor={size_color}
-            onSizeChange={handleSizeChange}
-            onIncrease={handleIncreaseQuantity}
-            onDecrease={handleDecreaseQuantity}
-            colors={colors}
-            quantity={quantity}
-            onColorPick={handleColorPick}
-            selectedColor={selectedColor}
-          />
+          <div className="product-content-pickers">
+            <ColorPicker
+              colors={colors}
+              selectedColor={selectedColor}
+              onColorPick={handleColorPick}
+            />
+
+            <div className="product-content-pickers-box">
+              {availableSizes && (
+                <SizePicker
+                  isSizeChosen={isSizeChosen}
+                  onSizeChange={handleSizeChange}
+                  sizes={availableSizes}
+                />
+              )}
+
+              <div className="product-content-quantity-picker">
+                <span className="product-content-picker-title">
+                  {t('product.quantityPicker')}
+                </span>
+
+                <QuantityChangeButton
+                  quantity={quantity}
+                  onIncrease={handleIncreaseQuantity}
+                  onDecrease={handleDecreaseQuantity}
+                />
+              </div>
+            </div>
+          </div>
+
           <ProductContentActions onClick={handleAddToCart} />
         </div>
       </div>
