@@ -30,6 +30,7 @@
   "product": {
     "colorPicker": "Color",
     "sizePicker": "Size",
+    "sizePickerErrorMessage": "Chose size",
     "quantityPicker": "Quantity",
     "cartButton": "Add to cart",
     "supportText": "Still have a question?",

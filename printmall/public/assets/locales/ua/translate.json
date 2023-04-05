@@ -30,6 +30,7 @@
   "product": {
     "colorPicker": "Колір",
     "sizePicker": "Розмір",
+    "sizePickerErrorMessage": "Оберіть розмір",
     "quantityPicker": "Кількість",
     "cartButton": "Додати в кошик",
     "supportText": "Маєш питання?",

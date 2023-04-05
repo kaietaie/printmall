@@ -1,7 +1,6 @@
 import React, { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductContentPickers from './ProductContentPickers';
-import { useTranslation } from 'react-i18next';
 import ReturnButton from '../common/Buttons/ReturnButton';
 import { CartProduct } from '../../types/Cart';
 import { addItem, getTotals } from '../../store/cart/cartSlice';
@@ -26,6 +25,7 @@ const ProductContent = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
   const [isOpenSideBar, setOpenIsSideBar] = useState(false);
+  const [isSizeChosen, setIsSizeChosen] = useState(true);
 
   if (!product) {
     return <Loader />;
@@ -36,7 +36,7 @@ const ProductContent = () => {
     seller_id,
     colors,
     size_color,
-    sizes,
+    // sizes,
     product_price,
     product_name,
     product_description,
@@ -44,7 +44,7 @@ const ProductContent = () => {
     sku_size,
   } = product;
 
-  const productSize = selectedSize || sizes[0];
+  const productSize = selectedSize;
 
   const tShirtImage = colors.find(({ color }) => {
     return color === selectedColor;
@@ -56,7 +56,7 @@ const ProductContent = () => {
   const sku_cart_product_id = makeSku({
     seller_id,
     product_id,
-    product_size: sku_size[selectedSize || sizes[0]],
+    product_size: sku_size[selectedSize],
     product_color: sku_color[selectedColor],
   });
 
@@ -94,12 +94,17 @@ const ProductContent = () => {
 
   const handleSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedSize(event.target.value);
+    setIsSizeChosen(true);
   };
 
   const handleAddToCart = () => {
-    toggleDrawer();
-    dispatch(addItem(cartProduct));
-    dispatch(getTotals());
+    if (selectedSize) {
+      toggleDrawer();
+      dispatch(addItem(cartProduct));
+      dispatch(getTotals());
+    } else {
+      setIsSizeChosen(false);
+    }
   };
 
   return (
@@ -124,6 +129,7 @@ const ProductContent = () => {
           </p>
 
           <ProductContentPickers
+            isSizeChosen={isSizeChosen}
             sizeColor={size_color}
             onSizeChange={handleSizeChange}
             onIncrease={handleIncreaseQuantity}

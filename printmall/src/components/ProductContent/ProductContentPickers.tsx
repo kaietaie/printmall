@@ -13,6 +13,7 @@ interface ProductContentPickersProps {
   onDecrease: () => void;
   onSizeChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   sizeColor: Product['size_color'];
+  isSizeChosen: boolean;
 }
 
 const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
@@ -24,6 +25,7 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
   onIncrease,
   onSizeChange,
   sizeColor,
+  isSizeChosen,
 }) => {
   const { t } = useTranslation();
   const sizes = sizeColor[selectedColor];
@@ -69,22 +71,33 @@ const ProductContentPickers: React.FC<ProductContentPickersProps> = ({
 
       <div className="product-content-pickers-box">
         {sizes && (
-          <div className="product-content-size-picker">
+          <div
+            className={squish`
+              product-content-size-picker
+              ${!isSizeChosen ? 'error' : ''}
+            `}
+          >
             <label className="product-content-picker-title" htmlFor="size">
               {t('product.sizePicker')}
             </label>
             <select
+              className="product-content-size-picker-select"
               onChange={onSizeChange}
               name="size"
               id="size"
-              defaultValue={sizes[0]}
             >
+              <option value=""></option>
               {sizes.map((size) => (
                 <option key={size} value={size}>
                   {size}
                 </option>
               ))}
             </select>
+            {!isSizeChosen && (
+              <span className="product-content-size-picker-error-message">
+                {t('product.sizePickerErrorMessage')}
+              </span>
+            )}
           </div>
         )}
 
