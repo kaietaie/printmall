@@ -17,6 +17,7 @@ const ReviewsTopSection = () => {
         What Our Valuable Clients Say About Us
       </SectionTitle>
       <Button
+        className="reviews-top-section-button"
         onClick={handleToggleModal}
         iconEnd={<PlusIcon />}
         type="secondary"

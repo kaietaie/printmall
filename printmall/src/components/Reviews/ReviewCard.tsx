@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import redAva from './images/red_reviewer.png';
 import Rating from '@mui/material/Rating';
 
 interface ReviewCardProps {

@@ -6,10 +6,16 @@
   align-items: end
   margin-bottom: 36px
 
+.reviews-top-section-button
+  margin-left: 20px
+
 .reviews-grid
   display: grid
   grid-gap: 20px
-  grid-template-columns: repeat(2, 1fr)
+
+  @media screen and (min-width: 1280px)
+    grid-template-columns: repeat(2, 1fr)
+
 
 .review-card
   padding: 16px
