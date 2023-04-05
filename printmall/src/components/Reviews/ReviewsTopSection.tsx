@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import SectionTitle from '../common/SectionTitle';
 import Button from '../common/Buttons';
 import SupportModal from '../common/SupportModal/SupportModal';
 import { ReactComponent as PlusIcon } from '../images/plus_icon.svg';
+import { useTranslation } from 'react-i18next';
 
 const ReviewsTopSection = () => {
+  const { t } = useTranslation();
   const [isOpenModal, setOpenIsModal] = useState(false);
 
   const handleToggleModal = () => {
@@ -13,8 +15,8 @@ const ReviewsTopSection = () => {
 
   return (
     <div className="reviews-top-section">
-      <SectionTitle topSubTitle="Reviews">
-        What Our Valuable Clients Say About Us
+      <SectionTitle topSubTitle={t('reviews.subTitle')}>
+        {t('reviews.title')}
       </SectionTitle>
       <Button
         className="reviews-top-section-button"
@@ -22,11 +24,11 @@ const ReviewsTopSection = () => {
         iconEnd={<PlusIcon />}
         type="secondary"
       >
-        Add review
+        {t('reviews.addReviewButton')}
       </Button>
       {isOpenModal && <SupportModal onClose={handleToggleModal} />}
     </div>
   );
 };
 
-export default ReviewsTopSection;
+export default memo(ReviewsTopSection);

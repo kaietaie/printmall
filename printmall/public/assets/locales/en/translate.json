@@ -145,5 +145,22 @@
     "security": "We implement a variety of security measures to maintain the safety of your personal information when you place an order or enter, submit, or access your personal information.",
     "changePolicyTitle": "Changes to this Privacy Policy",
     "changePolicy": "Kram Market may change this Privacy Policy from time to time. If we make changes, we will notify you by revising the date at the top of the policy and, in some cases, we may provide you with additional notice (such as adding a statement to our homepage or sending you an email notification)."
+  },
+  "reviews":{
+    "subTitle": "Reviews",
+    "title": "What Our Valuable Clients Say About Us",
+    "addReviewButton": "Add review",
+    "redMessage": "I never thought online shopping could be so fun! Thanks to KRAM, I can now buy all the things I need without leaving my den",
+    "redName": "Furry the Fox",
+    "redAddress": "Poland, Krakow",
+    "darkGreenMessage": "KRAM is the bamboo to my appetite for online shopping! Fast delivery, excellent customer service, and the cutest products.",
+    "darkGreenName": "Polly the Panda",
+    "darkGreenAddress": "Lviv, Ukraine",
+    "greenMessage": "Hop hop hooray for KRAM! I was a little hesitant to buy online, but KRAM made it so easy and enjoyable. Carrots never tasted so good!",
+    "greenName": "Benny the Bunny",
+    "greenAddress": "Berlin, Germany",
+    "purpleMessage": "I usually take my time to make decisions, but with KRAM, I don't have to! Their products are just what I need, and the delivery is so fast, I don't even have to leave my tree.",
+    "purpleName": "Sammy the Sloth",
+    "purpleAddress": "Riga, Latvia"
   }
 }
