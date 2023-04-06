@@ -6,9 +6,9 @@ import { shippingPal } from "./createOrder.js";
 
 // Call API with your client and get a response for your call
 export default async function capturePayPalOrder(req, res) {
-  const { orderID } = req.body;
+  const { orderId } = req.body;
   try {
-    const captureData = await paypal.capturePayment(orderID);
+    const captureData = await paypal.capturePayment(orderId);
 
     const capturedOrder = {
       paymentInfo: { id: captureData.id, data: captureData },
@@ -19,7 +19,7 @@ export default async function capturePayPalOrder(req, res) {
     };
     const data = await saveOrder(capturedOrder);
     sendConfirmationMail(captureData, data);
-    res.json({ data });
+    res.json(data);
   } catch (error) {
     const errorMsg = `capturePayPalOrder is failed: ${error.message}`;
     logger.error(errorMsg);
