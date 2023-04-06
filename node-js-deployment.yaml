@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-js-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-js
+  template:
+    metadata:
+      labels:
+        app: node-js
+    spec:
+      containers:
+      - name: node-js
+        image: tis86/printmall:nodejs
+        resources:
+          limits:
+            memory: "356Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+      imagePullSecrets:
+      - name: regcred
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-js-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: node-js
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
