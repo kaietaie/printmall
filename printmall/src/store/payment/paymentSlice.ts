@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PaymentState } from '../../types/Payment';
-import { capturePayPalOrderThunk } from './paymentThunks';
+import { captureOrderThunk } from './paymentThunks';
 import { CheckoutFormValues } from '../../types/Forms';
 
 const initialShippingInfoValues = {
@@ -56,15 +56,15 @@ const paymentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(capturePayPalOrderThunk.pending, (state) => {
+      .addCase(captureOrderThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(capturePayPalOrderThunk.fulfilled, (state, action) => {
+      .addCase(captureOrderThunk.fulfilled, (state, action) => {
         state.paymentDetails = action.payload;
         state.status = 'succeeded';
         state.error = null;
       })
-      .addCase(capturePayPalOrderThunk.rejected, (state, action) => {
+      .addCase(captureOrderThunk.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message ?? 'Failed to create order';
       });

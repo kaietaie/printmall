@@ -1,43 +1,31 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import GeneralInfo from './GeneralInfo';
 import CompleteDetails from './CompleteDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as ArrowForward } from '../images/arrow_forward.svg';
 import { AppDispatch, RootState } from '../../store/store';
-import {
-  selectOrderId,
-  selectPayPalPaymentDetails,
-} from '../../store/payment/paymentSelectors';
+import { selectPayPalPaymentDetails } from '../../store/payment/paymentSelectors';
 import { PaymentDetails } from '../../types/Payment';
 import Button from '../common/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { clearPaymentInfo } from '../../store/payment/paymentSlice';
-import { getMonobankOrderDetails } from '../../api/paymentApi';
 import Loader from '../common/Loader';
+import { clearCart } from '../../store/cart/cartSlice';
 
 import './CompleteContent.sass';
-import { clearCart } from '../../store/cart/cartSlice';
 
 const CompleteContent = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const orderDetails = useSelector<RootState, PaymentDetails | null>(
+  const paymentDetails = useSelector<RootState, PaymentDetails | null>(
     selectPayPalPaymentDetails
   );
-  const orderId = useSelector(selectOrderId);
-
-  const [paymentDetails, setPaymentDetails] = useState(orderDetails);
 
   useEffect(() => {
     dispatch(clearCart());
-    if (orderId) {
-      getMonobankOrderDetails(orderId)
-        .then((details) => setPaymentDetails(details))
-        .catch((error) => console.error(error));
-    }
-  }, [dispatch, orderId]);
+  }, [dispatch]);
 
   if (!paymentDetails) {
     return <Loader />;

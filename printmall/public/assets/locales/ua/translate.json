@@ -55,7 +55,8 @@
   "payment": {
     "cancelMessage": "Ви скасували платіж",
     "optionsTitle": "Оберіть спосіб оплати",
-    "orderDetailsTitle": "Деталі замовлення"
+    "orderDetailsTitle": "Деталі замовлення",
+    "failedPaymentMessage": "Платіж не відбувся. Будь ласка, спробуйте ще раз."
   },
   "purchaseStatus": {
     "cart": "Кошик",
