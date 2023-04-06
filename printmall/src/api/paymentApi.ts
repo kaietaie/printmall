@@ -23,7 +23,7 @@ export const createPayPalOrder = async (
   }
 };
 
-export const capturePayPalOrder = async ({
+export const captureOrder = async ({
   orderId,
   type,
 }: captureOrderThunkProps): Promise<PaymentDetails> => {

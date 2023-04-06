@@ -27,3 +27,6 @@ export const selectPaymentData = createSelector(
 );
 
 export const selectOrderId = (state: RootState) => state.payment.orderId;
+
+export const selectOrderCaptureStatus = (state: RootState) =>
+  state.payment.status;
