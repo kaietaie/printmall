@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectOrderId } from '../store/payment/paymentSelectors';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/common/Loader/Loader';
-import { capturePayPalOrderThunk } from '../store/payment/paymentThunks';
+import { captureOrderThunk } from '../store/payment/paymentThunks';
 import { AppDispatch } from '../store/store';
 
 const CheckPaymentPage = () => {
@@ -13,7 +13,7 @@ const CheckPaymentPage = () => {
 
   useEffect(() => {
     if (orderId) {
-      dispatch(capturePayPalOrderThunk({ orderId: orderId, type: 'monobank' }))
+      dispatch(captureOrderThunk({ orderId: orderId, type: 'monobank' }))
         .then(() => {
           navigate(`/complete`);
         })

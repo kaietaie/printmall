@@ -7,7 +7,7 @@ import ErrorBanner from '../common/ErrorBanner';
 import { createPayPalOrder } from '../../api/paymentApi';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { capturePayPalOrderThunk } from '../../store/payment/paymentThunks';
+import { captureOrderThunk } from '../../store/payment/paymentThunks';
 import {
   selectPaymentData,
   selectPayPalPaymentStatus,
@@ -46,9 +46,7 @@ const PayPalCheckoutButton = () => {
 
   const handleApprove = async (data: any): Promise<void> => {
     try {
-      dispatch(
-        capturePayPalOrderThunk({ orderId: data.orderID, type: 'payPal' })
-      );
+      dispatch(captureOrderThunk({ orderId: data.orderID, type: 'payPal' }));
     } catch (error) {
       console.error(error);
       setError('Error capturing PayPal order');
