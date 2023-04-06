@@ -12,11 +12,9 @@ const MonobankButton = () => {
 
   const handleClick = async () => {
     try {
-      // window.location.href = await makeMonobankPayment(monobankData);
       const { url, orderId } = await makeMonobankPayment(monobankData);
       dispatch(setOrderId(orderId));
       window.location.href = url;
-      // dispatch(clearShippingInfo);
     } catch (error) {
       console.error(error);
     }

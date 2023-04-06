@@ -1,16 +1,14 @@
 .loader-container
-  margin-top: 40vh
   display: flex
   justify-content: center
   align-items: center
-  height: 100%
+  min-height: calc(100vh - 56px)
 
 .loader-spinner
   width: 100px
   height: 100px
   background-image: url("../../images/loader.png")
   animation: loader-spin 1s linear infinite
-
 
 @keyframes loader-spin
   to

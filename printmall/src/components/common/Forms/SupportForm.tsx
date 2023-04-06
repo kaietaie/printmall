@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { getSupportValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
+import { Link } from 'react-router-dom';
 
 import './Form.sass';
 
@@ -114,9 +115,9 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
           label={t('form.privacyCheckbox')}
           checked={isPolicyChecked}
         />
-        <button type="button" className="form-policy-button">
+        <Link target="_blank" to="policy" className="form-policy-link">
           {t('form.privacyButton')}
-        </button>
+        </Link>
       </div>
 
       <Button

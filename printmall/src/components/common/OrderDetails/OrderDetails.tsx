@@ -5,12 +5,15 @@ import { selectCartItems } from '../../../store/cart/cartSelectors';
 import CartProductItem from '../CartProductItem/CartProductItem';
 import { useTranslation } from 'react-i18next';
 import SubTotal from './SubTotal';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { getTotals } from '../../../store/cart/cartSlice';
+import cookies from 'js-cookie';
 
 import './OrderDetails.sass';
 
 const OrderDetails = () => {
+  const currentLanguage = cookies.get('i18next') || 'ua';
+  const isUkrainianLanguage = currentLanguage === 'ua';
   const { t } = useTranslation();
   const items = useSelector<RootState, CartState['items']>(selectCartItems);
   const dispatch = useDispatch<AppDispatch>();
@@ -32,11 +35,18 @@ const OrderDetails = () => {
         ))}
       </div>
       <SubTotal />
-      <span className="order-details-message">
-        {t('payment.orderDetailsMessage')}
-      </span>
+      {!isUkrainianLanguage && (
+        <>
+          <span className="order-details-message">
+            &#8226; Shipping costs depend on your location
+          </span>
+          <span className="order-details-message">
+            &#8226; Prices do not include VAT
+          </span>
+        </>
+      )}
     </div>
   );
 };
 
-export default OrderDetails;
+export default memo(OrderDetails);

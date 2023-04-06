@@ -1,10 +1,11 @@
 import axios from 'axios';
-
 import {
+  captureOrderThunkProps,
   MakeMonobankPaymentResponse,
   PaymentData,
   PaymentDetails,
 } from '../types/Payment';
+import { CAPTURE_PAYMENT_URLS } from './constants';
 
 export const createPayPalOrder = async (
   PaymentData: PaymentData
@@ -22,21 +23,21 @@ export const createPayPalOrder = async (
   }
 };
 
-export const capturePayPalOrder = async (
-  orderID: string
-): Promise<PaymentDetails> => {
+export const captureOrder = async ({
+  orderId,
+  type,
+}: captureOrderThunkProps): Promise<PaymentDetails> => {
   try {
     const response = await axios.post(
-      'http://localhost:5000/payment/capture-paypal-order',
-      {
-        orderID,
-      }
+      `http://localhost:5000/${CAPTURE_PAYMENT_URLS[type]}`,
+      { orderId }
     );
 
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.error(error);
-    throw new Error('Failed to capture PayPal order');
+    // throw new Error('Failed to capture order');
+    return Promise.reject(error);
   }
 };
 
@@ -56,18 +57,18 @@ export const makeMonobankPayment = async (
   }
 };
 
-export const getMonobankOrderDetails = async (
-  orderId: string
-): Promise<PaymentDetails> => {
-  try {
-    const response = await axios.post(
-      'http://localhost:5000/paymentmono/check-mono-payment',
-      { orderId }
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw new Error('Failed to get monobank order details');
-  }
-};
+// export const getMonobankOrderDetails = async (
+//   orderId: string
+// ): Promise<PaymentDetails> => {
+//   try {
+//     const response = await axios.post(
+//       'http://localhost:5000/paymentmono/check-mono-payment',
+//       { orderId }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     // console.error(error);
+//     // throw new Error('Failed to get monobank order details');
+//     return Promise.reject(error);
+//   }
+// };

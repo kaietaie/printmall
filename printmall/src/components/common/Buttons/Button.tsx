@@ -28,6 +28,7 @@ const Button: React.FC<ButtonProps> = ({
       className={squish`
         button
         button-${type}
+        ${iconEnd ? 'icon-end' : ''}
         ${className ? className : ''}
       `}
       type={buttonType}

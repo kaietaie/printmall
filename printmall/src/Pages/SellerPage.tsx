@@ -11,8 +11,11 @@ import ErrorBanner from '../components/common/ErrorBanner';
 import { selectProductsStatus } from '../store/products/productsSelectors';
 import { SellerState } from '../types/Sellers';
 import { selectSellerStatus } from '../store/seller/sellerSelectors';
+import Reviews from '../components/Reviews';
+import useScreen from '../components/hooks/useScreen';
 
 const SellerPage = () => {
+  const { isMobile } = useScreen(639);
   const { sellerName } = useParams<{ sellerName: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const productsStatus = useSelector<RootState, SellerState['status']>(
@@ -41,10 +44,11 @@ const SellerPage = () => {
   }
 
   return (
-    <>
+    <div className="seller-page">
       <SellerHero />
       <SellerProducts />
-    </>
+      {!isMobile() && <Reviews />}
+    </div>
   );
 };
 

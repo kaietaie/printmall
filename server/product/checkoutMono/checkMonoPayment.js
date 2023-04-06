@@ -7,15 +7,13 @@ import savePayment from "../../functions/saveOrder/savePayment.js";
 import logger from "../../logger/logger.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
 import { order, shippingMono } from "./createMonoOrder.js";
+import getPaymentMethodText from "../../functions/getPaymentMethodText.js";
 
 export default async function checkMonoPayment(req, res) {
   try {
-
     const orderId = req.body.orderId;
     const token = process.env.MONO_TOKEN;
-    console.log(token)
     const statusPay = await checkStatus(orderId, token, 10);
-    console.log(statusPay);
 
     if (
       statusPay.status === "failure" ||
@@ -24,11 +22,7 @@ export default async function checkMonoPayment(req, res) {
     ) {
       return res.status(402).json("Payment is not recived");
     }
-    console.log("before details");
-    const paymentDetails = await checkMonoPaymentDetails(
-      orderId,
-      token
-    );
+    const paymentDetails = await checkMonoPaymentDetails(orderId, token);
     const captureData = {
       paymentInfo: { id: statusPay.invoiceId, data: paymentDetails },
       shippingInfo: shippingMono,
@@ -60,12 +54,14 @@ export default async function checkMonoPayment(req, res) {
         order.total,
       ]);
     }
-    savePayment(captureData.paymentInfo)
+    savePayment(captureData.paymentInfo);
+
+
     const data = {
       products: products,
       taxes: tax,
       shipping: shippingCost,
-      payment_method: paymentDetails.paymentMethod,
+      payment_method: getPaymentMethodText(paymentDetails.paymentMethod),
       total: order.total,
       date: statusPay.createdDate,
       order_number: statusPay.reference,
@@ -81,4 +77,3 @@ export default async function checkMonoPayment(req, res) {
     res.status(500).send({ Error: error.message });
   }
 }
-

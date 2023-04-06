@@ -61,7 +61,32 @@
   font-size: 12px
   margin-bottom: 10px
 
-.product-content-color-picker-color
+.size-picker-select
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  display: block
+  background-color: transparent
+  border: 1px solid $secondary-light
+  font-size: 14px
+  height: 48px
+  min-width: 70px
+  line-height: 20px
+  background-image: url('./icons/chevron_bottom.svg')
+  background-repeat: no-repeat
+  background-position-x: calc(100% - 0.3em)
+  background-position-y: center
+  border-radius: 6px
+  padding: 12px 36px 12px 12px
+  cursor: pointer
+
+.size-picker-error-message
+  display: inline-block
+  font-size: 14px
+  color: $accent
+  margin-top: 4px
+
+.color-picker-color
   position: relative
   width: 40px
   height: 40px
@@ -74,7 +99,7 @@
   @media screen and (max-width: 639px)
     margin-bottom: 32px
 
-  &.product-content-color-picker-color--selected:after
+  &.color-picker-color--selected:after
     position: absolute
     content: url('./icons/checked.svg')
     color: red
@@ -82,27 +107,16 @@
     top: -3px
     right: -3px
 
-.product-content-size-picker
+.size-picker
   margin-right: 25px
+  max-width: 70px
 
-  select
-    -webkit-appearance: none
-    -moz-appearance: none
-    appearance: none
-    display: block
-    background-color: transparent
-    border: 1px solid $secondary-light
-    font-size: 14px
-    height: 48px
-    min-width: 70px
-    line-height: 20px
-    background-image: url('./icons/chevron_bottom.svg')
-    background-repeat: no-repeat
-    background-position-x: calc(100% - 0.3em)
-    background-position-y: center
-    border-radius: 6px
-    padding: 12px 36px 12px 12px
-    cursor: pointer
+  &.error
+    .product-content-picker-title
+      color: $accent
+
+    .size-picker-select
+      border-color: $accent
 
 
 .product-content-pickers-box
