@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { capturePayPalOrder } from '../../api/paymentApi';
-import { PaymentDetails } from '../../types/Payment';
+import { captureOrderThunkProps, PaymentDetails } from '../../types/Payment';
 
-export const capturePayPalOrderThunk = createAsyncThunk<PaymentDetails, string>(
-  'payment/createPayPalOrder',
-  async (props) => {
-    return await capturePayPalOrder(props);
-  }
-);
+export const capturePayPalOrderThunk = createAsyncThunk<
+  PaymentDetails,
+  captureOrderThunkProps
+>('payment/createPayPalOrder', async ({ orderId, type }) => {
+  return await capturePayPalOrder({ orderId, type });
+});

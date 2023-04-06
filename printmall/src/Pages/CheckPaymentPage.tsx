@@ -1,30 +1,30 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import React, { useEffect } from 'react';
-import { getMonobankOrderDetails } from '../api/paymentApi';
-import { useSelector } from 'react-redux';
+import React, { memo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectOrderId } from '../store/payment/paymentSelectors';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/common/Loader/Loader';
+import { capturePayPalOrderThunk } from '../store/payment/paymentThunks';
+import { AppDispatch } from '../store/store';
 
 const CheckPaymentPage = () => {
   const orderId = useSelector(selectOrderId);
   const navigate = useNavigate();
-console.log(orderId)
-   
-getMonobankOrderDetails(orderId)
-.then((result) => {
-//   console.log({result});
-navigate(`/complete`);
-})
-.catch((error) => {
-//   console.log({error});
-navigate(`/payment`);
-});
-    
-  return (
-<Loader />
-  );
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (orderId) {
+      dispatch(capturePayPalOrderThunk({ orderId: orderId, type: 'monobank' }))
+        .then(() => {
+          navigate(`/complete`);
+        })
+        .catch((error) => {
+          console.log({ error });
+          navigate(`/payment`);
+        });
+    }
+  }, [dispatch, navigate, orderId]);
+
+  return <Loader />;
 };
 
-export default CheckPaymentPage;
+export default memo(CheckPaymentPage);

@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
-import { SkuCartItem } from '../../types/Cart';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { selectScuCartItems } from '../../store/cart/cartSelectors';
-import { clearCart } from '../../store/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import ErrorBanner from '../common/ErrorBanner';
 import { createPayPalOrder } from '../../api/paymentApi';
@@ -49,7 +46,9 @@ const PayPalCheckoutButton = () => {
 
   const handleApprove = async (data: any): Promise<void> => {
     try {
-      dispatch(capturePayPalOrderThunk(data.orderID));
+      dispatch(
+        capturePayPalOrderThunk({ orderId: data.orderID, type: 'payPal' })
+      );
     } catch (error) {
       console.error(error);
       setError('Error capturing PayPal order');

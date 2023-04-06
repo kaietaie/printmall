@@ -35,3 +35,8 @@ export interface MakeMonobankPaymentResponse {
   url: string;
   orderId: string;
 }
+
+export interface captureOrderThunkProps {
+  orderId: string;
+  type: 'payPal' | 'monobank';
+}
