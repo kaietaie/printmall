@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './Footer';
@@ -11,14 +11,14 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     pathname.includes('/products/') ||
     pathname.includes('/policy');
 
-  // useEffect(() => {
-  //   // Add any code that needs to be executed when the location changes
-  // }, [location]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>
       <Header />
-      <div className="container container-main">{children}</div>
+      <div className="container">{children}</div>
       {showFooter && <Footer />}
     </>
   );
