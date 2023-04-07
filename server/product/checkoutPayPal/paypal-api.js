@@ -7,7 +7,6 @@ export async function createOrder(order) {
   const shippingCost = order.cart[order.cart.length - 1].price;
   const cart = [...order.cart];
   cart.pop();
-  console.log(order.cart)
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const response = await fetch(url, {

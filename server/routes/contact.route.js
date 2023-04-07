@@ -1,5 +1,5 @@
 import Router from "express";
-import contactUs from "../contactus/contactUs.js";
+import contactUs from "../mailer/contactUs.js";
 
 export const contactRouter = Router();
 

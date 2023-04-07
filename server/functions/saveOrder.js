@@ -1,5 +1,6 @@
 import { pool } from "../dbConnection.js";
 import logger from "../logger/logger.js";
+import { shippingId } from "../product/addShippingAddress.js";
 import { order } from "./makingCart.js";
 import saveOrderId from "./saveOrder/saveOrderId.js";
 import savePayment from "./saveOrder/savePayment.js";
@@ -8,7 +9,7 @@ export default async function saveOrder(capturedOrder) {
   try {
     const paymentId = await savePayment(capturedOrder.paymentInfo);
 
-    const shippingId = await saveShippingInfo(capturedOrder.shippingInfo);
+    // const shippingId = await saveShippingInfo(capturedOrder.shippingInfo);
 
     const orderId = await saveOrderId(shippingId, paymentId, capturedOrder.status);
     // order =  {

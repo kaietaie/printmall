@@ -1,6 +1,6 @@
 import { pool } from "../dbConnection.js";
 import logger from "../logger/logger.js";
-import mailSend from "../mailer/mailer.js";
+import mailSend from "./mailer.js";
 
 export default async function contactUs(req, res) {
   // const { user_message } = req.body;
@@ -10,9 +10,17 @@ export default async function contactUs(req, res) {
     emails: [email],
     subject: "Thanks for contact us!",
     text: ``,
-    html: `<b>Have you already buy our t-shirts?</b> <br>
-    Thank you, ${first_name}, for contacting us! We have received your message and will get back to you as soon as possible.
-    `,
+    html: `<>Dear ${first_name},
+    Thank you for contacting us. We appreciate your interest in our products.
+
+    In order for us to better assist you, please provide us with additional information about your inquiry. This may include details such as your order number, account information, or specific details about the issue you are experiencing.
+    
+    Once we receive this information, we will do our best to provide you with a timely response. Thank you for your patience and we look forward to resolving your inquiry.
+    
+    Best regards,
+
+    Kram Market team
+    </>`,
   };
 
   mailSend(data);
