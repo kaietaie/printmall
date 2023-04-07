@@ -5,7 +5,7 @@ export const selectCartTotalQuantity = (state: RootState) =>
 
 export const selectCartItems = (state: RootState) => state.cart.items;
 
-export const selectScuCartItems = (state: RootState) => {
+export const selectSkuCartItems = (state: RootState) => {
   return state.cart.items.map((item) => {
     return {
       sku: item.sku_cart_product_id,

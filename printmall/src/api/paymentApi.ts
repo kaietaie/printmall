@@ -2,18 +2,19 @@ import axios from 'axios';
 import {
   captureOrderThunkProps,
   MakeMonobankPaymentResponse,
-  PaymentData,
   PaymentDetails,
 } from '../types/Payment';
+import { SkuCartItem } from '../types/Cart';
 import { CAPTURE_PAYMENT_URLS } from './constants';
+import { CheckoutFormValues } from '../types/Forms';
 
 export const createPayPalOrder = async (
-  PaymentData: PaymentData
+  skuCartItems: SkuCartItem[]
 ): Promise<string> => {
   try {
     const response = await axios.post<{ id: string }>(
       'http://localhost:5000/payment/create-paypal-order',
-      PaymentData
+      skuCartItems
     );
 
     return response.data.id;
@@ -42,18 +43,35 @@ export const captureOrder = async ({
 };
 
 export const makeMonobankPayment = async (
-  PaymentData: PaymentData
+  skuCartItems: SkuCartItem[]
 ): Promise<MakeMonobankPaymentResponse> => {
   try {
     const response = await axios.post(
       'http://localhost:5000/paymentmono/create-mono-order',
-      PaymentData
+      skuCartItems
     );
 
     return response.data;
   } catch (error) {
     console.error(error);
     throw new Error('Failed to make monobank payment');
+  }
+};
+
+export const sendShippingInfo = async (
+  shippingInfo: CheckoutFormValues
+): Promise<string> => {
+  console.log(shippingInfo);
+  try {
+    const response = await axios.post(
+      'http://localhost:5000/shipping/add',
+      shippingInfo
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to create PayPal order');
   }
 };
 

@@ -1,18 +1,20 @@
 import minoIcon from '../images/monobank-icon.jpeg';
 import { makeMonobankPayment } from '../../api/paymentApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPaymentData } from '../../store/payment/paymentSelectors';
 import { AppDispatch, RootState } from '../../store/store';
-import { PaymentData } from '../../types/Payment';
 import { setOrderId } from '../../store/payment/paymentSlice';
+import { selectSkuCartItems } from '../../store/cart/cartSelectors';
+import { SkuCartItem } from '../../types/Cart';
 
 const MonobankButton = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const monobankData = useSelector<RootState, PaymentData>(selectPaymentData);
+  const scuCartItems = useSelector<RootState, SkuCartItem[]>(
+    selectSkuCartItems
+  );
 
   const handleClick = async () => {
     try {
-      const { url, orderId } = await makeMonobankPayment(monobankData);
+      const { url, orderId } = await makeMonobankPayment(scuCartItems);
       dispatch(setOrderId(orderId));
       window.location.href = url;
     } catch (error) {

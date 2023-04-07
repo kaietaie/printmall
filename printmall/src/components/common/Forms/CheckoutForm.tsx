@@ -5,7 +5,6 @@ import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
 import { CheckoutFormValues } from '../../../types/Forms';
 import Button from '../Buttons';
 import { useTranslation } from 'react-i18next';
-import { addShippingInfo } from '../../../store/payment/paymentSlice';
 import { getCheckoutValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 import countryList from 'react-select-country-list';
@@ -13,6 +12,7 @@ import Select from '../Select';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
+import { sendShippingInfoThunk } from '../../../store/shipping/shippingThunks';
 
 import './Form.sass';
 
@@ -38,7 +38,7 @@ const CheckoutForm: React.FC = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(addShippingInfo(values));
+      dispatch(sendShippingInfoThunk(values));
       navigate(`/payment`);
     },
   });

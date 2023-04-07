@@ -20,15 +20,9 @@ export interface PaymentDetails {
 
 export interface PaymentState {
   orderId: string | null;
-  shippingInfo: CheckoutFormValues;
   paymentDetails: PaymentDetails | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
-}
-
-export interface PaymentData {
-  cart: SkuCartItem[];
-  shippingInfo: CheckoutFormValues;
 }
 
 export interface MakeMonobankPaymentResponse {
