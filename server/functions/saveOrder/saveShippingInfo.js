@@ -13,12 +13,13 @@ export default async function saveShippingInfo(shippingInfo) {
   //   region: "Київська область";
   //   zip_code: "07540";
   // }
-
-    const sql_address = `insert into shipping_info( first_name, last_name, phone, email, 
-      address_line_1, address_line_2, city, country, region, zip  ) 
-      values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-      RETURNING shipping_info_id;`;
-
+try {
+  
+  const sql_address = `insert into shipping_info( first_name, last_name, phone, email, 
+    address_line_1, address_line_2, city, country, region, zip  ) 
+    values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    RETURNING shipping_info_id;`;
+    
     const addressInfo = await pool.query(sql_address, [
       shippingInfo.first_name,
       shippingInfo.last_name,
@@ -31,6 +32,10 @@ export default async function saveShippingInfo(shippingInfo) {
       shippingInfo.region,
       shippingInfo.zip_code,
     ]);
-
+    
     return addressInfo.rows[0].shipping_info_id
+  } catch (error) {
+    const errorMsg = `Save shipping is failed: ${error.message}`;
+    logger.error(errorMsg);
+  }
 }

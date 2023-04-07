@@ -27,16 +27,18 @@ const CheckPaymentPage = () => {
     if (orderId) {
       dispatch(captureOrderThunk({ orderId, type: 'monobank' }));
     }
+  }, [dispatch, orderId]);
 
+  useEffect(() => {
     if (status === 'failed') {
-      navigate(`/payment`);
+      navigate('/payment');
       toast.error(t('payment.failedPaymentMessage'));
     }
 
     if (status === 'succeeded') {
-      navigate(`/complete`);
+      navigate('/complete');
     }
-  }, [dispatch, navigate, orderId, status, t]);
+  }, [navigate, status, t]);
 
   return <Loader />;
 };
