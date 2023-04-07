@@ -7,6 +7,7 @@ export const getSupportValidationSchema = (t: any) => {
     email: yup
       .string()
       .email(t('form.emailErrorInvalid'))
+      .matches(/@[^.]*\./, t('form.emailErrorInvalid'))
       .required(t('form.emailErrorRequired')),
     phone: yup
       .string()
@@ -23,6 +24,7 @@ export const getCheckoutValidationSchema = (t: any) => {
     email: yup
       .string()
       .email(t('form.emailErrorInvalid'))
+      .matches(/@[^.]*\./, t('form.emailErrorInvalid'))
       .required(t('form.emailErrorRequired')),
     phone: yup
       .string()
