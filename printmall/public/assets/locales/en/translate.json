@@ -79,8 +79,7 @@
   "supportModal": {
     "subTitle": "Contact us",
     "title": "Get in touch",
-    "message": "We’d love to hear from you. Please fill out this form.",
-    "firstName": ""
+    "message": "We’d love to hear from you. Please fill out this form."
   },
   "form": {
     "checkoutTitle": "Checkout",
@@ -98,8 +97,10 @@
     "zipErrorInvalid": "Zip code must be a number",
     "firstName": "First Name",
     "firstNameError": "First name is required",
+    "firstNameValidError": "Please enter a valid first name without numbers",
     "lastName": "Last Name",
     "lastNameError": "Last name is required",
+    "lastNameValidError": "Please enter a valid last name without numbers",
     "email": "Email",
     "emailErrorInvalid": "Invalid email address",
     "emailErrorRequired": "Email is required",
