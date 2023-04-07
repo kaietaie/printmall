@@ -31,7 +31,7 @@ export default async function mailSend(data) {
   });
   
   const info = await transporter.sendMail({
-    from: `"KRAM Market" ${process.env.MAILER_LOGIN}`, // sender address
+    from: `"Kram Market" ${process.env.MAILER_LOGIN}`, // sender address
     to: emails, // list of receivers
     subject: data.subject, // Subject line
     text: data.text, // plain text body

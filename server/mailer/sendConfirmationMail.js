@@ -20,7 +20,7 @@ export default async function sendConfirmationMail(captureData, data) {
         <p>If you have any questions or concercaptureDatans about your order, please don't hesitate to contact us. We are always happy to help.</p>
         <p>Thank you for your business!</p>
         <p>Sincerely,</p>
-        <p>The KRAM Market Team</p>`,
+        <p>The Kram Market Team</p>`,
       };
       mailSend(mailText);
     } catch (error) {

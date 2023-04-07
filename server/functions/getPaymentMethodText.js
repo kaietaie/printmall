@@ -1,6 +1,6 @@
 export default function getPaymentMethodText(key) {
   const paymentMethods = {
-    pan: `Credit Cart`,
+    pan: `Credit Card`,
     apple: `Apple pay`,
     google: `Google pay`,
     monobank: `Monobank`,
