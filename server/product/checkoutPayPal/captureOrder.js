@@ -2,7 +2,7 @@ import * as paypal from "./paypal-api.js";
 import saveOrder from "../../functions/saveOrder.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
 import logger from "../../logger/logger.js";
-import { shippingPal } from "./createOrder.js";
+import { shippingAddress } from "../addShippingAddress.js";
 
 // Call API with your client and get a response for your call
 export default async function capturePayPalOrder(req, res) {
@@ -12,7 +12,7 @@ export default async function capturePayPalOrder(req, res) {
 
     const capturedOrder = {
       paymentInfo: { id: captureData.id, data: captureData },
-      shippingInfo: shippingPal,
+      shippingInfo: shippingAddress,
       status: captureData.status,
       payment_method: "PayPal",
       date: captureData.purchase_units[0].payments.captures[0].create_time,

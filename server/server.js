@@ -11,6 +11,7 @@ import { paymentRouter } from "./routes/payment.route.js";
 import { paymentmonoRouter } from "./routes/paymentmono.route.js";
 import { newslistRouter } from "./routes/newslist.route.js";
 import { contactRouter } from "./routes/contact.route.js";
+import { shippingRouter } from "./routes/shipping.route.js";
 
 const host = process.env.HOST || "localhost";
 const port = process.env.SERVER_PORT || 5000;
@@ -36,7 +37,8 @@ app.use('/products', productRouter);
 app.use('/seller', sellerRouter);
 app.use('/payment', paymentRouter);
 app.use('/paymentmono', paymentmonoRouter);
-app.use('/contactus', contactRouter)
+app.use('/contactus', contactRouter);
+app.use('/shipping', shippingRouter);
 // app.use('/auth', );
 // app.use('/refresh', );
 // app.use('/logout',  );

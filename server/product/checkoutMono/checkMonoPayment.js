@@ -23,7 +23,7 @@ export default async function checkMonoPayment(req, res) {
     const paymentDetails = await checkMonoPaymentDetails(orderId, token);
     const captureData = {
       paymentInfo: { id: statusPay.invoiceId, data: paymentDetails },
-      shippingInfo: order.cart[order.cart.length-1].price,
+      shippingInfo: order.cart[order.cart.length-1].price, // нащо тут це????
       status: statusPay.status,
       payment_method: paymentDetails.paymentMethod,
       date: statusPay.createdDate,

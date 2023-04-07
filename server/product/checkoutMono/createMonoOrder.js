@@ -3,14 +3,12 @@ import saveOrderId from "../../functions/saveOrder/saveOrderId.js";
 import saveShippingInfo from "../../functions/saveOrder/saveShippingInfo.js";
 import logger from "../../logger/logger.js";
 import makingCart from "../../functions/makingCart.js";
-export var shippingMono = {};
+import { shippingId } from "../addShippingAddress.js";
 
 export default async function createMonoOrder(req, res) {
-  const { cart, shippingInfo } = req.body; // [{quantity, sku },{quantity, sku }...]
-  shippingMono = shippingInfo;
+  const { cart } = req.body; // [{quantity, sku },{quantity, sku }...]
   try {
     const status = "";
-    const shippingId = await saveShippingInfo(shippingInfo);
     const orderId = await saveOrderId(shippingId, status); // потім додоати id_payment
 
 

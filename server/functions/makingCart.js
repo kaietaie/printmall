@@ -1,8 +1,9 @@
+import { shippingCost } from "../product/addShippingAddress.js";
 import getIdAndEtc from "./getIdAndEtc.js";
 export var order = {};
 export default async function makingCart(cart, paymentreq) {
   let total = 0;
-  const shippingCost = 250;
+  
   for (let i = 0; i < cart.length; i++) {
     const prod = await getIdAndEtc(
       cart[i].sku,
