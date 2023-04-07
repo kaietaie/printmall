@@ -51,6 +51,6 @@ export const getCheckoutValidationSchema = (t: any) => {
     zip_code: yup
       .string()
       .required(t('form.zipErrorRequired'))
-      .matches(/^[0-9]+$/, t('form.zipErrorInvalid')),
+      .matches(/^[0-9]{5}$/, t('form.zipErrorInvalid')),
   });
 };

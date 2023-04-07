@@ -95,7 +95,7 @@
     "cityValidError": "Please enter a valid city without numbers",
     "regionError": "Region is required",
     "zipErrorRequired": "Zip code is required",
-    "zipErrorInvalid": "Zip code must be a number",
+    "zipErrorInvalid": "Enter a valid Zip code",
     "firstName": "First Name",
     "firstNameError": "First name is required",
     "firstNameValidError": "Please enter a valid first name without numbers",

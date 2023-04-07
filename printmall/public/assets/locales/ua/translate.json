@@ -95,7 +95,7 @@
     "cityValidError": "Введіть валідне місто без цифр",
     "regionError": "Вкажіть область",
     "zipErrorRequired": "Вкажіть поштовий індекс",
-    "zipErrorInvalid": "Поштовий індекс має містити цифри",
+    "zipErrorInvalid": "Введіть правильний поштовий індекс",
     "firstName": "Ім'я",
     "firstNameError" :"Вкажіть ім'я",
     "firstNameValidError": "Введіть валідне ім’я без цифр",
