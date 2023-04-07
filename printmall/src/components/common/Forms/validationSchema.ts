@@ -4,11 +4,11 @@ export const getSupportValidationSchema = (t: any) => {
   return yup.object().shape({
     first_name: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.firstNameValidError'))
+      .matches(/^[A-Za-z -]+$/, t('form.firstNameValidError'))
       .required(t('form.firstNameError')),
     last_name: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.lastNameValidError'))
+      .matches(/^[A-Za-z -]+$/, t('form.lastNameValidError'))
       .required(t('form.lastNameError')),
     email: yup
       .string()
@@ -27,11 +27,11 @@ export const getCheckoutValidationSchema = (t: any) => {
   return yup.object().shape({
     first_name: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.firstNameValidError'))
+      .matches(/^[A-Za-z -]+$/, t('form.firstNameValidError'))
       .required(t('form.firstNameError')),
     last_name: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.lastNameValidError'))
+      .matches(/^[A-Za-z -]+$/, t('form.lastNameValidError'))
       .required(t('form.lastNameError')),
     email: yup
       .string()
