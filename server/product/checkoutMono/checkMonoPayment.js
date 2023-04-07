@@ -4,8 +4,8 @@ import checkStatus from "../../functions/checkMonoPaymentStatus.js";
 import savePayment from "../../functions/saveOrder/savePayment.js";
 import logger from "../../logger/logger.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
-import { order, shippingMono } from "./createMonoOrder.js";
 import getPaymentMethodText from "../../functions/getPaymentMethodText.js";
+import { order } from "../../functions/makingCart.js";
 
 export default async function checkMonoPayment(req, res) {
   try {
@@ -23,7 +23,7 @@ export default async function checkMonoPayment(req, res) {
     const paymentDetails = await checkMonoPaymentDetails(orderId, token);
     const captureData = {
       paymentInfo: { id: statusPay.invoiceId, data: paymentDetails },
-      shippingInfo: shippingMono,
+      shippingInfo: order.cart[order.cart.length-1].price,
       status: statusPay.status,
       payment_method: paymentDetails.paymentMethod,
       date: statusPay.createdDate,

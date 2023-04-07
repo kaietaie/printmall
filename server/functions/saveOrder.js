@@ -1,12 +1,11 @@
 import { pool } from "../dbConnection.js";
 import logger from "../logger/logger.js";
-import { order } from "../product/checkoutPayPal/createOrder.js";
+import { order } from "./makingCart.js";
 import saveOrderId from "./saveOrder/saveOrderId.js";
 import savePayment from "./saveOrder/savePayment.js";
 import saveShippingInfo from "./saveOrder/saveShippingInfo.js";
 export default async function saveOrder(capturedOrder) {
   try {
-    console.log(capturedOrder)
     const paymentId = await savePayment(capturedOrder.paymentInfo);
 
     const shippingId = await saveShippingInfo(capturedOrder.shippingInfo);
@@ -25,14 +24,14 @@ export default async function saveOrder(capturedOrder) {
     //     }
     //   ]
     // }
-    const sub_total = order.total,
-      tax = 0,
-      shipping = 0;
+
+    const  tax = 0;
     let products = [];
     for (const item in order.cart) {
-      products.push({
+      const sub_total = Number(order.cart[item].price) * Number(order.cart[item].quantity);
+        products.push({
         title: order.cart[item].name,
-        value: order.cart[item].price,
+        value: order.cart[item].price * order.cart[item].quantity,
         quantity: order.cart[item].quantity,
       });
       const sql_order_line = `insert into order_lines( order_id, product_id, item_type, price, qty, sub_total, tax, total  )
@@ -48,23 +47,11 @@ export default async function saveOrder(capturedOrder) {
         order.total,
       ]);
     }
-    // console.log({products})
-    // const data = {
-    //   products: [
-    //     { title: 'Custom Printed T-Shirt', value: '230', quantity: 1 },
-    //     { title: 'Ocean View Tee', value: '270', quantity: 1 },
-    //   ],
-    //   taxes: 10,
-    //   shipping: 10,
-    //   payment_method:  'PayPal',
-    //   total: 500,
-    //   date: 123423413,
-    //   order_number: 234,
-    // };
+    products.pop()
     const data = {
       products: products,
       taxes: tax,
-      shipping: shipping,
+      shipping: order.cart[order.cart.length-1].price,
       payment_method: capturedOrder.payment_method,
       total: order.total,
       date: capturedOrder.date,

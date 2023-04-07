@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectOrderCaptureStatus,
@@ -22,8 +22,14 @@ const CheckPaymentPage = () => {
   );
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     if (orderId) {
       dispatch(captureOrderThunk({ orderId, type: 'monobank' }));
     }

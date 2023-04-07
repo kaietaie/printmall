@@ -8,7 +8,6 @@ export default async function checkStatus(orderId, token, retries) {
             "X-Token": token,
         },
     });
-    console.log({retries})
     if (retries === 0) {
         return response.data
     }

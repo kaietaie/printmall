@@ -4,6 +4,10 @@ const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 
 export async function createOrder(order) {
+  const shippingCost = order.cart[order.cart.length - 1].price;
+  const cart = [...order.cart];
+  cart.pop();
+  console.log(order.cart)
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const response = await fetch(url, {
@@ -20,17 +24,17 @@ export async function createOrder(order) {
             currency_code: "EUR",
             value: order.total,
             breakdown: {
-              shipping_total :{
+              shipping: {
                 currency_code: "EUR",
-                value: 15,
+                value: shippingCost,
               },
               item_total: {
                 currency_code: "EUR",
-                value: order.total+15,
-              }
+                value: order.total - shippingCost,
+              },
             },
           },
-          items: order.cart.map( ({name, quantity, price}) => {
+          items: cart.map(({ name, quantity, price }) => {
             return {
               name: name,
               unit_amount: {
@@ -38,8 +42,8 @@ export async function createOrder(order) {
                 value: price,
               },
               quantity: quantity,
-            }
-          })
+            };
+          }),
         },
       ],
     }),
@@ -77,7 +81,9 @@ export async function generateClientToken() {
 
 // access token is used to authenticate all REST API requests
 export async function generateAccessToken() {
-  const auth = Buffer.from(PAYPAL_CLIENT_ID + ":" + PAYPAL_CLIENT_SECRET).toString("base64");
+  const auth = Buffer.from(
+    PAYPAL_CLIENT_ID + ":" + PAYPAL_CLIENT_SECRET
+  ).toString("base64");
   const response = await fetch(`${base}/v1/oauth2/token`, {
     method: "post",
     body: "grant_type=client_credentials",
