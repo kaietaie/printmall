@@ -92,6 +92,7 @@
     "zipCode": "Поштовий індекс",
     "addressError": "Вкажіть адресу",
     "cityError": "Вкажіть місто",
+    "cityValidError": "Введіть валідне місто без цифр",
     "regionError": "Вкажіть область",
     "zipErrorRequired": "Вкажіть поштовий індекс",
     "zipErrorInvalid": "Поштовий індекс має містити цифри",
