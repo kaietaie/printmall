@@ -20,9 +20,13 @@ export async function createOrder(order) {
             currency_code: "EUR",
             value: order.total,
             breakdown: {
+              shipping_total :{
+                currency_code: "EUR",
+                value: 15,
+              },
               item_total: {
                 currency_code: "EUR",
-                value: order.total,
+                value: order.total+15,
               }
             },
           },
