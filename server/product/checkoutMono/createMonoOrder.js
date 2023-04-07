@@ -1,8 +1,6 @@
 import axios from "axios";
-import fetch from "node-fetch";
 import getIdAndEtc from "../../functions/getIdAndEtc.js";
 import saveOrderId from "../../functions/saveOrder/saveOrderId.js";
-import savePayment from "../../functions/saveOrder/savePayment.js";
 import saveShippingInfo from "../../functions/saveOrder/saveShippingInfo.js";
 import logger from "../../logger/logger.js";
 export var order = {},
@@ -14,7 +12,7 @@ export default async function createMonoOrder(req, res) {
   try {
     const status = "";
     const shippingId = await saveShippingInfo(shippingInfo);
-
+    const shippingCost = 250;
     const orderId = await saveOrderId(shippingId, status); // потім додоати id_payment
 
     let total = 0;
@@ -25,7 +23,7 @@ export default async function createMonoOrder(req, res) {
         destination: "KRAM Market purchase", // Призначення платежу
         basketOrder: [],
       },
-      redirectUrl: "http://localhost:3000/checkpayment", 
+      redirectUrl: "http://localhost:3000/checkpayment",
       // webHookUrl: "",
     };
 
@@ -48,6 +46,12 @@ export default async function createMonoOrder(req, res) {
         code: cart[i].sku,
       });
     }
+    cart.push({
+      price: shippingCost,
+      quantity: 1,
+      type: "Shipping"
+    })
+    total += cart[cart.length-1].price
     order = { total, cart };
     paymentreq.amount = total * 100;
 
@@ -63,9 +67,10 @@ export default async function createMonoOrder(req, res) {
     });
 
     if (send.data?.errCode) {
+      const errorMsg = `createMonoOrder is failed. ErrCode: ${send.data?.errCode}`;
+      logger.error(errorMsg);
       res.status(send.status).json(send.statusText);
     }
-
 
     const response = {
       url: send.data.pageUrl,

@@ -1,5 +1,3 @@
-import axios from "axios";
-import fetch from "node-fetch";
 import { pool } from "../../dbConnection.js";
 import checkMonoPaymentDetails from "../../functions/checkMonoPaymentDetails.js";
 import checkStatus from "../../functions/checkMonoPaymentStatus.js";
@@ -13,7 +11,7 @@ export default async function checkMonoPayment(req, res) {
   try {
     const orderId = req.body.orderId;
     const token = process.env.MONO_TOKEN;
-    const statusPay = await checkStatus(orderId, token, 10);
+    const statusPay = await checkStatus(orderId, token, 8);
 
     if (
       statusPay.status === "failure" ||
@@ -31,14 +29,13 @@ export default async function checkMonoPayment(req, res) {
       date: statusPay.createdDate,
     };
 
-    const sub_total = order.total,
-      tax = 0,
-      shippingCost = 0;
+    const tax = 0;
     let products = [];
     for (const item in order.cart) {
+      const sub_total = Number(order.cart[item].price) * Number(order.cart[item].quantity);
       products.push({
         title: order.cart[item].name,
-        value: order.cart[item].price,
+        value: order.cart[item].price * order.cart[item].quantity,
         quantity: order.cart[item].quantity,
       });
       const sql_order_line = `insert into order_lines( order_id, product_id, item_type, price, qty, sub_total, tax, total  )
@@ -54,13 +51,13 @@ export default async function checkMonoPayment(req, res) {
         order.total,
       ]);
     }
-    savePayment(captureData.paymentInfo);
+    savePayment(captureData.paymentInfo, statusPay.reference);
 
-
+    products.pop()
     const data = {
       products: products,
       taxes: tax,
-      shipping: shippingCost,
+      shipping: order.cart[order.cart.length-1].price,
       payment_method: getPaymentMethodText(paymentDetails.paymentMethod),
       total: order.total,
       date: statusPay.createdDate,
