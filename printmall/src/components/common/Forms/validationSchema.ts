@@ -4,11 +4,11 @@ export const getSupportValidationSchema = (t: any) => {
   return yup.object().shape({
     first_name: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.firstNameValidError'))
+      .matches(/^[A-Za-z\u0400-\u04FF -]+$/, t('form.firstNameValidError'))
       .required(t('form.firstNameError')),
     last_name: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.lastNameValidError'))
+      .matches(/^[A-Za-z\u0400-\u04FF -]+$/, t('form.lastNameValidError'))
       .required(t('form.lastNameError')),
     email: yup
       .string()
@@ -27,11 +27,11 @@ export const getCheckoutValidationSchema = (t: any) => {
   return yup.object().shape({
     first_name: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.firstNameValidError'))
+      .matches(/^[A-Za-z\u0400-\u04FF -]+$/, t('form.firstNameValidError'))
       .required(t('form.firstNameError')),
     last_name: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.lastNameValidError'))
+      .matches(/^[A-Za-z\u0400-\u04FF -]+$/, t('form.lastNameValidError'))
       .required(t('form.lastNameError')),
     email: yup
       .string()
@@ -45,7 +45,7 @@ export const getCheckoutValidationSchema = (t: any) => {
     address_line_1: yup.string().required(t('form.addressError')),
     city: yup
       .string()
-      .matches(/^[A-Za-z]+$/, t('form.cityValidError'))
+      .matches(/^[A-Za-z\u0400-\u04FF -]+$/, t('form.cityValidError'))
       .required(t('form.cityError')),
     region: yup.string().required(t('form.regionError')),
     zip_code: yup
