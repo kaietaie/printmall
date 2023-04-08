@@ -62,12 +62,11 @@ export const sendShippingInfo = async (
   shippingInfo: CheckoutFormValues
 ): Promise<string> => {
   try {
-    const response = await axios.post(
-      'http://localhost:5000/shipping/add',
-      {shippingInfo}
-    );
+    const response = await axios.post('http://localhost:5000/shipping/add', {
+      shippingInfo,
+    });
 
-    return response.data;
+    return response.data.shippingCost;
   } catch (error) {
     console.error(error);
     throw new Error('Failed to create PayPal order');

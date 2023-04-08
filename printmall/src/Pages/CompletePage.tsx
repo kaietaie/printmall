@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '../store/store';
 import { PaymentState } from '../types/Payment';
 import { selectOrderCaptureStatus } from '../store/payment/paymentSelectors';
 import { useNavigate } from 'react-router-dom';
+import { clearShippingPrice } from '../store/shipping/shippingSlice';
 
 const CompletePage = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const CompletePage = () => {
     }
 
     dispatch(clearCart());
+    dispatch(clearShippingPrice());
 
     return () => {
       dispatch(clearPaymentInfo());
