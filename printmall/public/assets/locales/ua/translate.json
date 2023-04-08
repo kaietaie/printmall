@@ -43,7 +43,7 @@
   },
   "cart": {
     "title": "Кошик покупця",
-    "totalAmount": "Проміжна сума",
+    "subtotalAmount": "Проміжна вартість",
     "deleteAllButton": "Видалити все",
     "checkoutButton": "Оформити замовлення",
     "emptyMessage": "Ваш кошик порожній."
@@ -68,13 +68,18 @@
     "gratitudeBanner": "Дякуюємо. Ваше замовлення отримано.",
     "orderNumber": "Номер замовлення:",
     "date": "Дата:",
-    "total": "Загальна сума:",
+    "total": "Загальна вартість:",
     "paymentMethod": "Спосіб оплати:",
     "detailsTitle": "Деталі замовлення",
     "product": "Товар",
     "details": "Деталі",
     "taxes": "Податки:",
     "shipping": "Доставка:"
+  },
+  "orderDetails": {
+    "total": "Загальна вартість",
+    "shipping": "Доставка",
+    "subtotal": "Проміжна вартість"
   },
   "supportModal": {
     "subTitle": "Зв'яжіться з нами",

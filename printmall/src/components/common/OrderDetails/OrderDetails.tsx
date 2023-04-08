@@ -4,7 +4,7 @@ import { CartState } from '../../../types/Cart';
 import { selectCartItems } from '../../../store/cart/cartSelectors';
 import CartProductItem from '../CartProductItem/CartProductItem';
 import { useTranslation } from 'react-i18next';
-import SubTotal from './SubTotal';
+import OrderDetailsInfo from './OrderDetailsInfo';
 import { memo, useEffect } from 'react';
 import { getTotals } from '../../../store/cart/cartSlice';
 import cookies from 'js-cookie';
@@ -34,7 +34,7 @@ const OrderDetails = () => {
           />
         ))}
       </div>
-      <SubTotal />
+      <OrderDetailsInfo />
       {!isUkrainianLanguage && (
         <>
           <span className="order-details-message">

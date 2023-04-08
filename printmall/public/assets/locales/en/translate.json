@@ -43,7 +43,7 @@
   },
   "cart": {
     "title": "Shopping Cart",
-    "totalAmount": "Subtotal",
+    "subtotalAmount": "Subtotal",
     "deleteAllButton": "Delete All",
     "checkoutButton": "Proceed to checkout",
     "emptyMessage": "Your cart is empty."
@@ -75,6 +75,11 @@
     "details": "Details",
     "taxes": "Taxes:",
     "shipping": "Shipping:"
+  },
+  "orderDetails": {
+    "total": "Total",
+    "shipping": "Shipping",
+    "subtotal": "Subtotal"
   },
   "supportModal": {
     "subTitle": "Contact us",
