@@ -1,23 +1,11 @@
 import React, { memo } from 'react';
 import { ReactComponent as AppLogo } from '../images/logo.svg';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store/store';
-import { clearPaymentInfo } from '../../store/payment/paymentSlice';
+import { Link } from 'react-router-dom';
 
 const Logo: React.FC = () => {
-  const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
-
-  const handleLogoClick = () => {
-    if (location.pathname === '/complete') {
-      dispatch(clearPaymentInfo());
-    }
-  };
-
   return (
     <Link to="/seller/Go_A">
-      <AppLogo className="logo" onClick={handleLogoClick} />
+      <AppLogo className="logo" />
     </Link>
   );
 };
