@@ -15,18 +15,18 @@ const OrderDetailsInfo = () => {
 
   return (
     <>
-      <div className="sub-total">
+      <div className="order-details-info-item">
         <span>{t('orderDetails.subtotal')}</span>
         <span>${subTotalAmount}</span>
       </div>
 
       {shippingPrice && (
         <>
-          <div className="sub-total">
+          <div className="order-details-info-item">
             <span>{t('orderDetails.shipping')}</span>
             <span>${shippingPrice}</span>
           </div>
-          <div className="sub-total">
+          <div className="order-details-info-item">
             <span>{t('orderDetails.total')}</span>
             <span>${shippingPrice + subTotalAmount}</span>
           </div>
