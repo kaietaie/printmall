@@ -5,9 +5,9 @@ export var shippingAddress = {}, shippingCost, shippingId;
 export default async function addShippingAddress (req, res) {
     const { shippingInfo } = req.body;
     shippingAddress = shippingInfo
-    shippingId = await saveShippingInfo(capturedOrder.shippingInfo);
-
+    console.log({shippingInfo})
+    shippingId = await saveShippingInfo(shippingInfo);
+    console.log({shippingId})
     shippingCost = 250;
-    console.log(shippingCost)
     return res.status(200).json({shippingCost})
 }

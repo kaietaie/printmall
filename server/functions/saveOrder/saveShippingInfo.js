@@ -1,4 +1,5 @@
 import { pool } from "../../dbConnection.js";
+import logger from "../../logger/logger.js";
 
 export default async function saveShippingInfo(shippingInfo) {
   // {

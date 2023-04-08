@@ -23,7 +23,7 @@ export default async function createMonoOrder(req, res) {
       // webHookUrl: "",
     };
 
-    
+    console.log(cart)
     const orderCart = await makingCart(cart, paymentreq); // order = { total, cart };
     const total = orderCart.order.total
     paymentreq.amount = total * 100;
@@ -55,7 +55,6 @@ export default async function createMonoOrder(req, res) {
     const errorMsg = `createMonoOrder is failed: ${error.message}`;
     logger.error(errorMsg);
     res
-      .status(error.response.status)
-      .send({ Error: error.message, Message: error.response.data.errText });
+      .status(error)
   }
 }

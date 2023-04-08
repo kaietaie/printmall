@@ -9,12 +9,12 @@ import { CAPTURE_PAYMENT_URLS } from './constants';
 import { CheckoutFormValues } from '../types/Forms';
 
 export const createPayPalOrder = async (
-  skuCartItems: SkuCartItem[]
+  SkuCartItem: SkuCartItem[]
 ): Promise<string> => {
   try {
     const response = await axios.post<{ id: string }>(
       'http://localhost:5000/payment/create-paypal-order',
-      skuCartItems
+      { cart: SkuCartItem }
     );
 
     return response.data.id;
@@ -43,12 +43,12 @@ export const captureOrder = async ({
 };
 
 export const makeMonobankPayment = async (
-  skuCartItems: SkuCartItem[]
+  SkuCartItem: SkuCartItem[]
 ): Promise<MakeMonobankPaymentResponse> => {
   try {
     const response = await axios.post(
       'http://localhost:5000/paymentmono/create-mono-order',
-      skuCartItems
+      { cart: SkuCartItem }
     );
 
     return response.data;
@@ -61,11 +61,10 @@ export const makeMonobankPayment = async (
 export const sendShippingInfo = async (
   shippingInfo: CheckoutFormValues
 ): Promise<string> => {
-  console.log(shippingInfo);
   try {
     const response = await axios.post(
       'http://localhost:5000/shipping/add',
-      shippingInfo
+      {shippingInfo}
     );
 
     return response.data;
