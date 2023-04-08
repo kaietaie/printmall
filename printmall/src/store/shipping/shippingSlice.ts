@@ -2,8 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { sendShippingInfoThunk } from './shippingThunks';
 import { ShippingState } from '../../types/Shipping';
 
+const storedShippingPrice = localStorage.getItem('shippingPrice');
+const initialShippingPrice =
+  storedShippingPrice != null ? JSON.parse(storedShippingPrice) : '';
+
 const initialState: ShippingState = {
-  shippingPrice: '',
+  shippingPrice: initialShippingPrice,
   status: 'idle',
   error: null,
 };
@@ -11,7 +15,15 @@ const initialState: ShippingState = {
 const shippingSlice = createSlice({
   name: 'shipping',
   initialState,
-  reducers: {},
+  reducers: {
+    clearShippingPrice: (state) => {
+      state.shippingPrice = '';
+      localStorage.setItem(
+        'shippingPrice',
+        JSON.stringify(state.shippingPrice)
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(sendShippingInfoThunk.pending, (state) => {
@@ -21,6 +33,11 @@ const shippingSlice = createSlice({
         state.shippingPrice = action.payload;
         state.status = 'succeeded';
         state.error = null;
+
+        localStorage.setItem(
+          'shippingPrice',
+          JSON.stringify(state.shippingPrice)
+        );
       })
       .addCase(sendShippingInfoThunk.rejected, (state, action) => {
         state.status = 'failed';
@@ -28,5 +45,7 @@ const shippingSlice = createSlice({
       });
   },
 });
+
+export const { clearShippingPrice } = shippingSlice.actions;
 
 export default shippingSlice.reducer;
