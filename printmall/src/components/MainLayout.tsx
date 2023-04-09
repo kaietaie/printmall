@@ -6,7 +6,7 @@ import Footer from './Footer';
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { pathname } = useLocation();
   const showFooter =
-    pathname === '/' ||
+    // pathname === '/' ||
     pathname.includes('/seller/') ||
     pathname.includes('/products/') ||
     pathname.includes('/policy');
@@ -17,7 +17,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <>
-      <Header />
+      {showFooter && <Header />}
       <div className="container">{children}</div>
       {showFooter && <Footer />}
     </>
