@@ -15,6 +15,9 @@
     "blog": "Blog",
     "contactUs": "Contact Us"
   },
+  "home": {
+    "temporaryMessage": "Our team is currently engaged in developing this webpage. By subscribing to the news, you can be among the first to receive updates about its launch."
+  },
   "hero": {
     "subTitle": "Marketplace featuring Influencers and Creative Freedom",
     "title": "Custom Stuff from your Favorite Influencers",
