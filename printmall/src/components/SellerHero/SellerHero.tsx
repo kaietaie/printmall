@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { selectSeller } from '../../store/seller/sellerSelectors';
 import { Seller } from '../../types/Sellers';
-import AvatarUpload from './AvatarUpload';
+import defaultAvatar from '../images/defaultImages/avatar_big.png';
 
 import './SellerHero.sass';
 
@@ -15,8 +15,13 @@ const SellerHero = () => {
     <div className="seller-hero">
       <Banner />
       <div className="seller-hero-info">
-        <AvatarUpload />
-
+        {/*<AvatarUpload />*/}
+        {/*<mvp solution />*/}
+        <img
+          className="seller-hero-avatar"
+          src={defaultAvatar}
+          alt="Seller avatar"
+        />
         <h1 className="seller-hero-title">{seller?.seller_name}</h1>
         <span className="seller-hero-announcement">
           {seller?.seller_announcement}
