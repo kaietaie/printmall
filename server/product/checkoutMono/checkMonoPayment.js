@@ -6,7 +6,7 @@ import logger from "../../logger/logger.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
 import getPaymentMethodText from "../../functions/getPaymentMethodText.js";
 import { order } from "../../functions/makingCart.js";
-import checkDataDB from "../../functions/checkDataDB.js";
+import { shippingAddress } from "../addShippingAddress.js";
 
 export default async function checkMonoPayment(req, res) {
   try {
@@ -22,13 +22,7 @@ export default async function checkMonoPayment(req, res) {
       return res.status(402).json("Payment is not recived");
     }
     const paymentDetails = await checkMonoPaymentDetails(orderId, token);
-    const captureData = {
-      paymentInfo: { id: statusPay.invoiceId, data: paymentDetails },
-      shippingInfo: order.cart[order.cart.length - 1].price, // нащо тут це????
-      status: statusPay.status,
-      payment_method: paymentDetails.paymentMethod,
-      date: statusPay.createdDate,
-    };
+    const paymentInfo = { id: statusPay.invoiceId, data: paymentDetails };
     const tax = 0;
     let products = [];
     for (const item in order.cart) {
@@ -40,21 +34,6 @@ export default async function checkMonoPayment(req, res) {
         quantity: order.cart[item].quantity,
       });
 
-      // if (!checkDataDB(statusPay.reference, "order_lines")) {
-      //   products.pop();
-      //   const data = {
-      //     products: products,
-      //     taxes: tax,
-      //     shipping: order.cart[order.cart.length - 1].price,
-      //     payment_method: getPaymentMethodText(paymentDetails.paymentMethod),
-      //     total: order.total,
-      //     date: statusPay.createdDate,
-      //     order_number: statusPay.reference,
-      //     status: statusPay.status,
-      //   };
-      //   console.log("if checkDataDB is true")
-      //   return res.json(data);
-      // } 
       products.pop();
       const data = {
         products: products,
@@ -66,36 +45,36 @@ export default async function checkMonoPayment(req, res) {
         order_number: statusPay.reference,
         status: statusPay.status,
       };
-        const sql_order_line = `insert into order_lines( order_id, product_id, item_type, price, qty, sub_total, tax, total  )
+      const sql_order_line = `insert into order_lines( order_id, product_id, item_type, price, qty, sub_total, tax, total  )
         values ($1, $2, $3, $4, $5, $6, $7, $8);`;
-        await pool.query(sql_order_line, [
-          statusPay.reference,
-          order.cart[item].id,
-          order.cart[item].type, // t-short OR delivery
-          order.cart[item].price,
-          order.cart[item].quantity,
-          sub_total,
-          tax,
-          order.total,
-        ]);
-      }
-      savePayment(captureData.paymentInfo, statusPay.reference);
+      await pool.query(sql_order_line, [
+        statusPay.reference,
+        order.cart[item].id,
+        order.cart[item].type, // t-short OR delivery
+        order.cart[item].price,
+        order.cart[item].quantity,
+        sub_total,
+        tax,
+        order.total,
+      ]);
+    }
+    savePayment(paymentInfo, statusPay.reference);
 
-      products.pop();
-      const data = {
-        products: products,
-        taxes: tax,
-        shipping: order.cart[order.cart.length - 1].price,
-        payment_method: getPaymentMethodText(paymentDetails.paymentMethod),
-        total: order.total,
-        date: statusPay.createdDate,
-        order_number: statusPay.reference,
-        status: statusPay.status,
-      };
+    products.pop();
+    const data = {
+      products: products,
+      taxes: tax,
+      shipping: order.cart[order.cart.length - 1].price,
+      payment_method: getPaymentMethodText(paymentDetails.paymentMethod),
+      total: order.total,
+      date: statusPay.createdDate,
+      order_number: statusPay.reference,
+      status: statusPay.status,
+    };
 
-      sendConfirmationMail(captureData, data);
-      return res.json(data);
-    
+    sendConfirmationMail(shippingAddress, data);
+    sendOrderToAdmin(shippingAddress, data, sql_order_line);
+    return res.json(data);
   } catch (error) {
     console.error(error);
     const errorMsg = `createMonoOrder is failed: ${error.message}`;

@@ -10,17 +10,17 @@ export default async function contactUs(req, res) {
     emails: [email],
     subject: "Thanks for contact us!",
     text: ``,
-    html: `<>Dear ${first_name},
-    Thank you for contacting us. We appreciate your interest in our products.
+    html: `Dear ${first_name},\n
+    Thank you for contacting us. We appreciate your interest in our products.\n
 
-    In order for us to better assist you, please provide us with additional information about your inquiry. This may include details such as your order number, account information, or specific details about the issue you are experiencing.
+    In order for us to better assist you, please provide us with additional information about your inquiry. This may include details such as your order number, account information, or specific details about the issue you are experiencing.\n
     
-    Once we receive this information, we will do our best to provide you with a timely response. Thank you for your patience and we look forward to resolving your inquiry.
-    
+    Once we receive this information, we will do our best to provide you with a timely response. Thank you for your patience and we look forward to resolving your inquiry.\n
+    <br>
     Best regards,
-
+<br>
     Kram Market team
-    </>`,
+    `,
   };
 
   mailSend(data);
