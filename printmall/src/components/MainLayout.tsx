@@ -11,13 +11,15 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     pathname.includes('/products/') ||
     pathname.includes('/policy');
 
+  const showHeader = pathname !== '/';
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
   return (
     <>
-      {showFooter && <Header />}
+      {showHeader && <Header />}
       <div className="container">{children}</div>
       {showFooter && <Footer />}
     </>
