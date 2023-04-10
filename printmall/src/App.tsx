@@ -11,6 +11,7 @@ import TemporaryHomePage from './Pages/TemporaryHomePage';
 import CompletePage from './Pages/CompletePage';
 import CheckoutPage from './Pages/CheckoutPage';
 import PrivacyPage from './Pages/PrivacyPage';
+import ErrorPage from './Pages/ErrorPage';
 import MainLayout from './components/MainLayout';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/checkpayment" element={<CheckPaymentPage />} />
             <Route path="/complete" element={<CompletePage />} />
             <Route path="/policy" element={<PrivacyPage />} />
+            <Route path="/error" element={<ErrorPage />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>
