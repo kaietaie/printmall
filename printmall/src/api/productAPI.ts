@@ -8,9 +8,8 @@ export const fetchProducts = async (
 ): Promise<Product[]> => {
   try {
     const response = await axios.get(
-      `${BACKEND_URL}/products${
-        props ? `?limit=${props.limit}&page=${props.page}` : ''
-      }`
+      `${BACKEND_URL}/products
+      ${props ? `?limit=${props.limit}&page=${props.page}` : ''}`
     );
 
     return response.data;
