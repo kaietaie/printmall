@@ -1,6 +1,5 @@
 import axios from "axios";
 import saveOrderId from "../../functions/saveOrder/saveOrderId.js";
-import saveShippingInfo from "../../functions/saveOrder/saveShippingInfo.js";
 import logger from "../../logger/logger.js";
 import makingCart from "../../functions/makingCart.js";
 import { shippingId } from "../addShippingAddress.js";
@@ -23,7 +22,6 @@ export default async function createMonoOrder(req, res) {
       // webHookUrl: "",
     };
 
-    console.log(cart)
     const orderCart = await makingCart(cart, paymentreq); // order = { total, cart };
     const total = orderCart.order.total
     paymentreq.amount = total * 100;
