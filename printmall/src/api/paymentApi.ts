@@ -5,7 +5,7 @@ import {
   PaymentDetails,
 } from '../types/Payment';
 import { SkuCartItem } from '../types/Cart';
-import { CAPTURE_PAYMENT_URLS } from './constants';
+import { BACKEND_URL, CAPTURE_PAYMENT_URLS } from './constants';
 import { CheckoutFormValues } from '../types/Forms';
 
 export const createPayPalOrder = async (
@@ -13,7 +13,7 @@ export const createPayPalOrder = async (
 ): Promise<string> => {
   try {
     const response = await axios.post<{ id: string }>(
-      'http://localhost:5000/payment/create-paypal-order',
+      `${BACKEND_URL}/payment/create-paypal-order`,
       { cart: SkuCartItem }
     );
 
@@ -30,7 +30,7 @@ export const captureOrder = async ({
 }: captureOrderThunkProps): Promise<PaymentDetails> => {
   try {
     const response = await axios.post(
-      `http://localhost:5000/${CAPTURE_PAYMENT_URLS[type]}`,
+      `${BACKEND_URL}/${CAPTURE_PAYMENT_URLS[type]}`,
       { orderId }
     );
 
@@ -47,7 +47,7 @@ export const makeMonobankPayment = async (
 ): Promise<MakeMonobankPaymentResponse> => {
   try {
     const response = await axios.post(
-      'http://localhost:5000/paymentmono/create-mono-order',
+      `${BACKEND_URL}/paymentmono/create-mono-order`,
       { cart: SkuCartItem }
     );
 
@@ -62,7 +62,7 @@ export const sendShippingInfo = async (
   shippingInfo: CheckoutFormValues
 ): Promise<string> => {
   try {
-    const response = await axios.post('http://localhost:5000/shipping/add', {
+    const response = await axios.post(`${BACKEND_URL}/shipping/add`, {
       shippingInfo,
     });
 
