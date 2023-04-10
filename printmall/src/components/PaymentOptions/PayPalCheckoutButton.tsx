@@ -3,7 +3,6 @@ import { PayPalButtons } from '@paypal/react-paypal-js';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
-import ErrorBanner from '../common/ErrorBanner';
 import { createPayPalOrder } from '../../api/paymentApi';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -55,10 +54,6 @@ const PayPalCheckoutButton = () => {
     navigate('/complete');
   }
 
-  if (error) {
-    return <ErrorBanner />;
-  }
-
   return (
     <PayPalButtons
       className="pay-pal-buttons"
@@ -71,6 +66,9 @@ const PayPalCheckoutButton = () => {
       }}
       onCancel={() => {
         toast.info(t('payment.cancelMessage'));
+        if (error === 'Detected popup close') {
+          window.location.reload();
+        }
       }}
       style={{ color: 'blue', shape: 'pill', height: 55 }}
     />
