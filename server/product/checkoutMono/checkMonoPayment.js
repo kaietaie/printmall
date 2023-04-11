@@ -7,6 +7,7 @@ import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
 import getPaymentMethodText from "../../functions/getPaymentMethodText.js";
 import { order } from "../../functions/makingCart.js";
 import { shippingAddress } from "../addShippingAddress.js";
+import sendOrderToAdmin from "../../mailer/sendOrderToAdmin.js";
 
 export default async function checkMonoPayment(req, res) {
   try {
@@ -71,9 +72,9 @@ export default async function checkMonoPayment(req, res) {
       order_number: statusPay.reference,
       status: statusPay.status,
     };
-
+    console.dir(order.cart)
     sendConfirmationMail(shippingAddress, data);
-    sendOrderToAdmin(shippingAddress, data, sql_order_line);
+    // sendOrderToAdmin(shippingAddress, data, order.cart);
     return res.json(data);
   } catch (error) {
     console.error(error);

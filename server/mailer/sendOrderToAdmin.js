@@ -4,6 +4,7 @@ import mailSend from "./mailer.js";
 export default async function sendOrderToAdmin(shippingAddress, data, sql_order_line) {
   try {
     const {order_id, product_id, item_type, price, qty, sub_total, tax, total} = sql_order_line.rows[0]
+    console.log(sql_order_line.rows[0])
     const mailText = {
       emails: [shippingAddress.email],
       subject: `New order`,
