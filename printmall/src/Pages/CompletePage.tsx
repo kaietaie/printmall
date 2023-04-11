@@ -26,6 +26,7 @@ const CompletePage = () => {
 
     if (status !== 'succeeded') {
       navigate(`/seller/Go_A`);
+      return;
     }
 
     dispatch(clearCart());
@@ -33,6 +34,7 @@ const CompletePage = () => {
 
     return () => {
       dispatch(clearPaymentInfo());
+      navigate('/seller/Go_A');
     };
   }, [dispatch, navigate, status]);
 
