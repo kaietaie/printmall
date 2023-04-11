@@ -35,17 +35,7 @@ export default async function checkMonoPayment(req, res) {
         quantity: order.cart[item].quantity,
       });
 
-      products.pop();
-      const data = {
-        products: products,
-        taxes: tax,
-        shipping: order.cart[order.cart.length - 1].price,
-        payment_method: getPaymentMethodText(paymentDetails.paymentMethod),
-        total: order.total,
-        date: statusPay.createdDate,
-        order_number: statusPay.reference,
-        status: statusPay.status,
-      };
+      
       const sql_order_line = `insert into order_lines( order_id, product_id, item_type, price, qty, sub_total, tax, total  )
         values ($1, $2, $3, $4, $5, $6, $7, $8);`;
       await pool.query(sql_order_line, [

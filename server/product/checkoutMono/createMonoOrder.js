@@ -10,7 +10,6 @@ export default async function createMonoOrder(req, res) {
     const status = "";
     const orderId = await saveOrderId(shippingId, status); // потім додоати id_payment
 
-
     let paymentreq = {
       ccy: 980, // ISO 4217 код валюти, за замовчуванням 980 (гривня)
       merchantPaymInfo: {
@@ -18,12 +17,12 @@ export default async function createMonoOrder(req, res) {
         destination: "Kram Market purchase", // Призначення платежу
         basketOrder: [],
       },
-      redirectUrl: "http://localhost:3000/checkpayment",
+      redirectUrl: "http://" + process.env.REACT_APP_HOST + "/checkpayment",
       // webHookUrl: "",
     };
 
     const orderCart = await makingCart(cart, paymentreq); // order = { total, cart };
-    const total = orderCart.order.total
+    const total = orderCart.order.total;
     paymentreq.amount = total * 100;
 
     const token = process.env.MONO_TOKEN;
@@ -52,7 +51,6 @@ export default async function createMonoOrder(req, res) {
     console.error(error);
     const errorMsg = `createMonoOrder is failed: ${error.message}`;
     logger.error(errorMsg);
-    res
-      .status(error)
+    res.status(error);
   }
 }
