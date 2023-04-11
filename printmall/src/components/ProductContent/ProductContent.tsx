@@ -86,8 +86,12 @@ const ProductContent = () => {
   }
 
   const handleIncreaseQuantity = () => {
-    dispatch(addItem(cartProduct));
-    setQuantity(quantity + 1);
+    if (selectedSize) {
+      dispatch(addItem(cartProduct));
+      setQuantity(quantity + 1);
+    } else {
+      setIsSizeChosen(false);
+    }
   };
 
   const handleDecreaseQuantity = () => {

@@ -23,6 +23,7 @@ const paymentSlice = createSlice({
     clearPaymentInfo: (state) => {
       state.paymentDetails = null;
       state.orderId = null;
+      state.status = 'idle';
       localStorage.setItem('orderId', JSON.stringify(state.orderId));
     },
   },

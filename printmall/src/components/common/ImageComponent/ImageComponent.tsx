@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
+import { BACKEND_URL } from '../../../api/constants';
 
 interface ImageComponentProps {
   imageUrl: string | undefined;
@@ -16,7 +17,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
   onClick,
 }) => {
   //todo: find better solution to access server images
-  const withServerUrl = 'http://localhost:5000' + imageUrl;
+  const withServerUrl = BACKEND_URL + imageUrl;
   const [imgSrc, setImgSrc] = useState(withServerUrl);
 
   useEffect(() => {

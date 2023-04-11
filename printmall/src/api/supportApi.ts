@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { SupportFormValues } from '../types/Forms';
+import { BACKEND_URL } from './constants';
 
 export const sendUserMessage = async (userMessage: SupportFormValues) => {
   try {
-    const response = await axios.post('http://localhost:5000/contactus/send', {
+    const response = await axios.post(`${BACKEND_URL}/contactus/send`, {
       user_message: userMessage,
     });
 
@@ -16,12 +17,9 @@ export const sendUserMessage = async (userMessage: SupportFormValues) => {
 
 export const sendUserEmail = async (email: string) => {
   try {
-    const response = await axios.post(
-      'http://localhost:5000/newslist/addemail',
-      {
-        email,
-      }
-    );
+    const response = await axios.post(`${BACKEND_URL}/newslist/addemail`, {
+      email,
+    });
 
     return response.data;
   } catch (error: any) {

@@ -59,7 +59,7 @@ const CartProducts: React.FC = () => {
             </button>
           </div>
           <div className="cart-products-total">
-            {t('cart.totalAmount')}:&nbsp;
+            {t('cart.subtotalAmount')}:&nbsp;
             <span>${cartTotalAmount}</span>
           </div>
           <Button
