@@ -1,5 +1,6 @@
 import axios from "axios";
 import logger from "../../logger/logger.js";
+import downloadNovaPoshtaOffices from "./novaPostaAPI.js";
 
 export default async function ukrposhtaDeliveryPriceInternational(req, res) {
   try {
@@ -8,7 +9,7 @@ export default async function ukrposhtaDeliveryPriceInternational(req, res) {
     cart.forEach((el) => {
       subtotal += el.price;
     });
-    
+
     const deliveryData = {
       counrty: req.body.counrty,
       price: subtotal,
@@ -19,11 +20,12 @@ export default async function ukrposhtaDeliveryPriceInternational(req, res) {
         "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json&valcode=USD&date=" +
           new Date().toISOString().slice(0, 10).replace(/-/g, "")
       );
-     
+
       return response.data[0].rate;
     }
     const exchangeRate = await getUSDtoUAH();
-console.log(exchangeRate)
+    console.log({ exchangeRate });
+
     async function delivery(deliveryData) {
       const price = await axios({
         method: "post",
@@ -51,7 +53,7 @@ console.log(exchangeRate)
     const devP = await delivery(deliveryData);
 
     console.log(devP);
-
+    downloadNovaPoshtaOffices("Київ")
     return res.json(Math.ceil(devP.deliveryPrice));
   } catch (error) {
     console.error(error);
