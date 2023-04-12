@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
@@ -37,6 +37,54 @@ const CheckoutForm: React.FC = () => {
   const [selectedCountry, setSelectedCountry] =
     useState<selectedOptionType>(initialCountryValue);
 
+  // const initialShippingMethod =
+  //   selectedCountry.value === 'UA'
+  //     ? {
+  //         value: 'ukr_post',
+  //         label: 'Ukr post',
+  //       }
+  //     : {
+  //         value: 'new_post',
+  //         label: 'New post',
+  //       };
+
+  const shippingMethods =
+    selectedCountry.value === 'UA'
+      ? [
+          {
+            value: 'new_post',
+            label: 'New post',
+          },
+        ]
+      : [
+          {
+            value: 'ukr_post',
+            label: 'Ukr post',
+          },
+        ];
+
+  const [selectedShippingMethod, setSelectedShippingMethod] =
+    useState<selectedOptionType>({
+      value: 'new_post',
+      label: 'New post',
+    });
+
+  console.log(shippingMethods);
+
+  useEffect(() => {
+    if (selectedCountry.value === 'UA') {
+      setSelectedShippingMethod({
+        value: 'new_post',
+        label: 'New post',
+      });
+    } else {
+      setSelectedShippingMethod({
+        value: 'ukr_post',
+        label: 'Ukr post',
+      });
+    }
+  }, [selectedCountry.value]);
+
   const formik = useFormik<CheckoutFormValues>({
     initialValues: {
       first_name: '',
@@ -49,6 +97,7 @@ const CheckoutForm: React.FC = () => {
       city: '',
       region: '',
       zip_code: '',
+      shipping_method: '',
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -88,6 +137,84 @@ const CheckoutForm: React.FC = () => {
             fullWidth
           />
         </div>
+
+        {/*todo replace to separate component*/}
+        <div className="select-search checkout-form-short-input">
+          <label htmlFor="country">{t('form.country')}</label>
+          <Select
+            defaultInputValue="Ukraine"
+            styles={{
+              control: (baseStyles) => ({
+                ...baseStyles,
+                // borderColor: state.isFocused ? '#CCCCCC' : '#2AA5BE',
+                borderColor: '#CCCCCC',
+                height: 48,
+                borderRadius: 6,
+              }),
+            }}
+            options={options}
+            value={selectedCountry}
+            onChange={(selectedOption) => {
+              if (selectedOption) {
+                const { value } = selectedOption as selectedOptionType;
+                setSelectedCountry({ value, label: selectedOption.label });
+                formik.setFieldValue('country', value);
+              } else {
+                setSelectedCountry(initialCountryValue);
+                formik.setFieldValue('country', initialCountryValue);
+              }
+            }}
+            onBlur={formik.handleBlur('country')}
+          />
+        </div>
+
+        <div className="select-search checkout-form-short-input">
+          <label htmlFor="country">Shipping method</label>
+          <Select
+            defaultInputValue={selectedShippingMethod.label}
+            styles={{
+              control: (baseStyles) => ({
+                ...baseStyles,
+                // borderColor: state.isFocused ? '#CCCCCC' : '#2AA5BE',
+                borderColor: '#CCCCCC',
+                height: 48,
+                borderRadius: 6,
+              }),
+            }}
+            options={shippingMethods}
+            value={selectedShippingMethod}
+            onChange={(selectedShippingMethod) => {
+              if (selectedShippingMethod) {
+                setSelectedShippingMethod(selectedShippingMethod);
+                formik.setFieldValue(
+                  'shipping_method',
+                  selectedShippingMethod.value
+                );
+              } else {
+                setSelectedShippingMethod({
+                  value: 'new_post',
+                  label: 'New post',
+                });
+                formik.setFieldValue('shipping_method', {
+                  value: 'new_post',
+                  label: 'New post',
+                });
+              }
+            }}
+            onBlur={formik.handleBlur('shipping_method')}
+          />
+        </div>
+
+        <TextInput
+          className="checkout-form-short-input"
+          label={t('form.city')}
+          type="text"
+          name="city"
+          error={formik.touched.city && formik.errors.city}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.city}
+        />
 
         <TextInput
           label={t('form.email')}
@@ -131,63 +258,6 @@ const CheckoutForm: React.FC = () => {
           onBlur={formik.handleBlur}
           value={formik.values.address_line_2}
           fullWidth
-        />
-
-        {/*todo replace to separate component*/}
-        <div className="select-search checkout-form-short-input">
-          <label htmlFor="country">{t('form.country')}</label>
-          <Select
-            defaultInputValue="Ukraine"
-            styles={{
-              control: (baseStyles) => ({
-                ...baseStyles,
-                // borderColor: state.isFocused ? '#CCCCCC' : '#2AA5BE',
-                borderColor: '#CCCCCC',
-                height: 48,
-                borderRadius: 6,
-              }),
-            }}
-            options={options}
-            value={selectedCountry}
-            onChange={(selectedOption) => {
-              if (selectedOption) {
-                const { value } = selectedOption as selectedOptionType;
-                setSelectedCountry({ value, label: selectedOption.label });
-                formik.setFieldValue('country', value);
-              } else {
-                setSelectedCountry(initialCountryValue);
-                formik.setFieldValue('country', initialCountryValue);
-              }
-            }}
-            onBlur={formik.handleBlur('country')}
-          />
-        </div>
-
-        {/*{formik.touched.country && formik.errors.country ? (*/}
-        {/*  <div>{formik.errors.country}</div>*/}
-        {/*) : null}*/}
-        {/*<Select*/}
-        {/*  className="checkout-form-short-input"*/}
-        {/*  label={t('form.country')}*/}
-        {/*  name="country"*/}
-        {/*  // options={options}*/}
-        {/*  value={selectedCountry}*/}
-        {/*  onChange={(selectedOption: any) => {*/}
-        {/*    setSelectedCountry(selectedOption);*/}
-        {/*    formik.setFieldValue('country', selectedOption.value);*/}
-        {/*  }}*/}
-        {/*  onBlur={formik.handleBlur}*/}
-        {/*/>*/}
-
-        <TextInput
-          className="checkout-form-short-input"
-          label={t('form.city')}
-          type="text"
-          name="city"
-          error={formik.touched.city && formik.errors.city}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.city}
         />
 
         <TextInput

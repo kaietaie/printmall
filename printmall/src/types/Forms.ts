@@ -17,4 +17,5 @@ export interface CheckoutFormValues {
   city: string;
   region: string;
   zip_code: string;
+  shipping_method: string;
 }
