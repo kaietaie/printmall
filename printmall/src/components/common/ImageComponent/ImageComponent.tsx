@@ -17,7 +17,10 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
   onClick,
 }) => {
   //todo: find better solution to access server images
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const withServerUrl = BACKEND_URL + imageUrl;
+
   const [imgSrc, setImgSrc] = useState(withServerUrl);
 
   useEffect(() => {
