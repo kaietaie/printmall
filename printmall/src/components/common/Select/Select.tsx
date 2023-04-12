@@ -3,14 +3,14 @@ import squish from '../../../Helpers/ClassNameHelper';
 
 import './Select.sass';
 
-interface countryOption {
+interface selectOption {
   value: string;
   label: string;
 }
 
 interface SelectProps {
   className?: string;
-  options: countryOption[];
+  options: selectOption[];
   label: string;
   name: string;
   value: string;
@@ -18,6 +18,7 @@ interface SelectProps {
   onBlur?: (e: any) => void;
   fullWidth?: boolean;
 }
+
 const Select: React.FC<SelectProps> = ({
   className,
   options,
