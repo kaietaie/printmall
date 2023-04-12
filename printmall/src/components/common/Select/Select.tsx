@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import squish from '../../../Helpers/ClassNameHelper';
 
 import './Select.sass';
@@ -15,7 +15,7 @@ interface SelectProps {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<any>) => void;
-  onBlur: (e: any) => void;
+  onBlur?: (e: any) => void;
   fullWidth?: boolean;
 }
 const Select: React.FC<SelectProps> = ({
@@ -45,7 +45,6 @@ const Select: React.FC<SelectProps> = ({
         name={name}
         id={name}
       >
-        <option value="UA">Ukraine</option>
         {options.map((option) => {
           return (
             <option key={option.value} value={option.value}>
@@ -58,4 +57,4 @@ const Select: React.FC<SelectProps> = ({
   );
 };
 
-export default Select;
+export default memo(Select);

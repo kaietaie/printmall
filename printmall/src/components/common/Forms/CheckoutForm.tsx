@@ -8,12 +8,12 @@ import { useTranslation } from 'react-i18next';
 import { getCheckoutValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 import countryList from 'react-select-country-list';
-// import Select from '../Select';
-import Select from 'react-select';
+import SelectSearch from 'react-select';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
 import { sendShippingInfoThunk } from '../../../store/shipping/shippingThunks';
+import Select from '../Select';
 
 import './Form.sass';
 
@@ -63,28 +63,25 @@ const CheckoutForm: React.FC = () => {
           },
         ];
 
-  const [selectedShippingMethod, setSelectedShippingMethod] =
-    useState<selectedOptionType>({
-      value: 'new_post',
-      label: 'New post',
-    });
-
-  console.log(shippingMethods);
-
-  useEffect(() => {
-    if (selectedCountry.value === 'UA') {
-      setSelectedShippingMethod({
-        value: 'new_post',
-        label: 'New post',
-      });
-    } else {
-      setSelectedShippingMethod({
-        value: 'ukr_post',
-        label: 'Ukr post',
-      });
-    }
-  }, [selectedCountry.value]);
-
+  // const [selectedShippingMethod, setSelectedShippingMethod] =
+  //   useState<selectedOptionType>({
+  //     value: 'new_post',
+  //     label: 'New post',
+  //   });
+  //
+  // useEffect(() => {
+  //   if (selectedCountry.value === 'UA') {
+  //     setSelectedShippingMethod({
+  //       value: 'new_post',
+  //       label: 'New post',
+  //     });
+  //   } else {
+  //     setSelectedShippingMethod({
+  //       value: 'ukr_post',
+  //       label: 'Ukr post',
+  //     });
+  //   }
+  // }, [selectedCountry.value]);
   const formik = useFormik<CheckoutFormValues>({
     initialValues: {
       first_name: '',
@@ -101,7 +98,13 @@ const CheckoutForm: React.FC = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(sendShippingInfoThunk(values));
+      dispatch(
+        sendShippingInfoThunk({
+          ...values,
+          //todo find better solution
+          shipping_method: shippingMethods[0].value,
+        })
+      );
       navigate(`/payment`);
     },
   });
@@ -141,7 +144,7 @@ const CheckoutForm: React.FC = () => {
         {/*todo replace to separate component*/}
         <div className="select-search checkout-form-short-input">
           <label htmlFor="country">{t('form.country')}</label>
-          <Select
+          <SelectSearch
             defaultInputValue="Ukraine"
             styles={{
               control: (baseStyles) => ({
@@ -168,42 +171,50 @@ const CheckoutForm: React.FC = () => {
           />
         </div>
 
-        <div className="select-search checkout-form-short-input">
-          <label htmlFor="country">Shipping method</label>
-          <Select
-            defaultInputValue={selectedShippingMethod.label}
-            styles={{
-              control: (baseStyles) => ({
-                ...baseStyles,
-                // borderColor: state.isFocused ? '#CCCCCC' : '#2AA5BE',
-                borderColor: '#CCCCCC',
-                height: 48,
-                borderRadius: 6,
-              }),
-            }}
-            options={shippingMethods}
-            value={selectedShippingMethod}
-            onChange={(selectedShippingMethod) => {
-              if (selectedShippingMethod) {
-                setSelectedShippingMethod(selectedShippingMethod);
-                formik.setFieldValue(
-                  'shipping_method',
-                  selectedShippingMethod.value
-                );
-              } else {
-                setSelectedShippingMethod({
-                  value: 'new_post',
-                  label: 'New post',
-                });
-                formik.setFieldValue('shipping_method', {
-                  value: 'new_post',
-                  label: 'New post',
-                });
-              }
-            }}
-            onBlur={formik.handleBlur('shipping_method')}
-          />
-        </div>
+        <Select
+          options={shippingMethods}
+          label="Shipping method"
+          name="shipping_method"
+          value={formik.values.shipping_method}
+          onChange={formik.handleChange('shipping_method')}
+        />
+
+        {/*<div className="select-search checkout-form-short-input">*/}
+        {/*  <label htmlFor="country">Shipping method</label>*/}
+        {/*  <SelectSearch*/}
+        {/*    defaultInputValue={selectedShippingMethod.label}*/}
+        {/*    styles={{*/}
+        {/*      control: (baseStyles) => ({*/}
+        {/*        ...baseStyles,*/}
+        {/*        // borderColor: state.isFocused ? '#CCCCCC' : '#2AA5BE',*/}
+        {/*        borderColor: '#CCCCCC',*/}
+        {/*        height: 48,*/}
+        {/*        borderRadius: 6,*/}
+        {/*      }),*/}
+        {/*    }}*/}
+        {/*    options={shippingMethods}*/}
+        {/*    value={selectedShippingMethod}*/}
+        {/*    onChange={(selectedShippingMethod) => {*/}
+        {/*      if (selectedShippingMethod) {*/}
+        {/*        setSelectedShippingMethod(selectedShippingMethod);*/}
+        {/*        formik.setFieldValue(*/}
+        {/*          'shipping_method',*/}
+        {/*          selectedShippingMethod.value*/}
+        {/*        );*/}
+        {/*      } else {*/}
+        {/*        setSelectedShippingMethod({*/}
+        {/*          value: 'new_post',*/}
+        {/*          label: 'New post',*/}
+        {/*        });*/}
+        {/*        formik.setFieldValue('shipping_method', {*/}
+        {/*          value: 'new_post',*/}
+        {/*          label: 'New post',*/}
+        {/*        });*/}
+        {/*      }*/}
+        {/*    }}*/}
+        {/*    onBlur={formik.handleBlur('shipping_method')}*/}
+        {/*  />*/}
+        {/*</div>*/}
 
         <TextInput
           className="checkout-form-short-input"
