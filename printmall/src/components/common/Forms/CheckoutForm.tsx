@@ -20,11 +20,18 @@ import {
   ReactSelectOptionsType,
   ReactSelectValueType,
 } from '../SelectSearch/SelectSearch';
+import { getNovaPostCities } from '../../../api/shippingApi';
 
 export interface selectedOptionType {
   value: string;
   label: string;
 }
+
+const initialCountryValue = {
+  value: 'UA',
+  label: 'Ukraine',
+};
+
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -32,14 +39,9 @@ const CheckoutForm: React.FC = () => {
   const options = useMemo(() => countryList().getData(), []);
   const validationSchema = getCheckoutValidationSchema(t);
 
-  const initialCountryValue = {
-    value: 'UA',
-    label: 'Ukraine',
-  };
-
+  const [cityOptions, setCityOptions] = useState<selectedOptionType[]>([]);
   const [selectedCountry, setSelectedCountry] =
     useState<selectedOptionType>(initialCountryValue);
-
   const shippingMethods =
     selectedCountry.value === 'UA'
       ? [
@@ -54,6 +56,10 @@ const CheckoutForm: React.FC = () => {
             label: 'Ukr post',
           },
         ];
+  const handleCityInputChange = async (inputValue: string) => {
+    const options = await getNovaPostCities(inputValue);
+    setCityOptions(options);
+  };
 
   const formik = useFormik<CheckoutFormValues>({
     initialValues: {
@@ -140,16 +146,34 @@ const CheckoutForm: React.FC = () => {
           onChange={formik.handleChange('shipping_method')}
         />
 
-        <TextInput
-          className="checkout-form-short-input"
-          label={t('form.city')}
-          type="text"
+        <SelectSearch
           name="city"
-          error={formik.touched.city && formik.errors.city}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.city}
+          options={cityOptions as unknown as ReactSelectOptionsType}
+          onInputChange={(option) => {
+            return handleCityInputChange(option);
+          }}
+          onChange={(option) => {
+            const { value } = option as unknown as selectedOptionType;
+            formik.setFieldValue('city', value);
+          }}
+          value={
+            cityOptions.find(
+              (option) => option.value === formik.values.city
+            ) as ReactSelectValueType
+          }
+          label={t('form.city')}
         />
+
+        {/*<TextInput*/}
+        {/*  className="checkout-form-short-input"*/}
+        {/*  label={t('form.city')}*/}
+        {/*  type="text"*/}
+        {/*  name="city"*/}
+        {/*  error={formik.touched.city && formik.errors.city}*/}
+        {/*  onChange={formik.handleChange}*/}
+        {/*  onBlur={formik.handleBlur}*/}
+        {/*  value={formik.values.city}*/}
+        {/*/>*/}
 
         <TextInput
           label={t('form.email')}
