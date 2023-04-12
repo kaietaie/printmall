@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
@@ -8,7 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { getCheckoutValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 import countryList from 'react-select-country-list';
-import Select from '../Select';
+// import Select from '../Select';
+import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
@@ -22,6 +23,19 @@ const CheckoutForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const options = useMemo(() => countryList().getData(), []);
   const validationSchema = getCheckoutValidationSchema(t);
+
+  interface selectedOptionType {
+    value: string;
+    label: string;
+  }
+
+  const initialCountryValue = {
+    value: 'UA',
+    label: 'Ukraine',
+  };
+
+  const [selectedCountry, setSelectedCountry] =
+    useState<selectedOptionType>(initialCountryValue);
 
   const formik = useFormik<CheckoutFormValues>({
     initialValues: {
@@ -119,15 +133,51 @@ const CheckoutForm: React.FC = () => {
           fullWidth
         />
 
-        <Select
-          className="checkout-form-short-input"
-          label={t('form.country')}
-          name="country"
-          options={options}
-          value={formik.values.country}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
+        {/*todo replace to separate component*/}
+        <div className="select-search checkout-form-short-input">
+          <label htmlFor="country">{t('form.country')}</label>
+          <Select
+            defaultInputValue="Ukraine"
+            styles={{
+              control: (baseStyles) => ({
+                ...baseStyles,
+                // borderColor: state.isFocused ? '#CCCCCC' : '#2AA5BE',
+                borderColor: '#CCCCCC',
+                height: 48,
+                borderRadius: 6,
+              }),
+            }}
+            options={options}
+            value={selectedCountry}
+            onChange={(selectedOption) => {
+              if (selectedOption) {
+                const { value } = selectedOption as selectedOptionType;
+                setSelectedCountry({ value, label: selectedOption.label });
+                formik.setFieldValue('country', value);
+              } else {
+                setSelectedCountry(initialCountryValue);
+                formik.setFieldValue('country', initialCountryValue);
+              }
+            }}
+            onBlur={formik.handleBlur('country')}
+          />
+        </div>
+
+        {/*{formik.touched.country && formik.errors.country ? (*/}
+        {/*  <div>{formik.errors.country}</div>*/}
+        {/*) : null}*/}
+        {/*<Select*/}
+        {/*  className="checkout-form-short-input"*/}
+        {/*  label={t('form.country')}*/}
+        {/*  name="country"*/}
+        {/*  // options={options}*/}
+        {/*  value={selectedCountry}*/}
+        {/*  onChange={(selectedOption: any) => {*/}
+        {/*    setSelectedCountry(selectedOption);*/}
+        {/*    formik.setFieldValue('country', selectedOption.value);*/}
+        {/*  }}*/}
+        {/*  onBlur={formik.handleBlur}*/}
+        {/*/>*/}
 
         <TextInput
           className="checkout-form-short-input"
