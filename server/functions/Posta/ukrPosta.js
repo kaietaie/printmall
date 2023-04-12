@@ -1,6 +1,5 @@
 import axios from "axios";
 import logger from "../../logger/logger.js";
-import downloadNovaPoshtaOffices from "./novaPostaAPI.js";
 
 export default async function ukrposhtaDeliveryPriceInternational(req, res) {
   try {
@@ -53,7 +52,6 @@ export default async function ukrposhtaDeliveryPriceInternational(req, res) {
     const devP = await delivery(deliveryData);
 
     console.log(devP);
-    downloadNovaPoshtaOffices("Київ")
     return res.json(Math.ceil(devP.deliveryPrice));
   } catch (error) {
     console.error(error);
