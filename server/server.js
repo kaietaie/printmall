@@ -13,9 +13,10 @@ import { newslistRouter } from "./routes/newslist.route.js";
 import { contactRouter } from "./routes/contact.route.js";
 import { shippingRouter } from "./routes/shipping.route.js";
 import { ordersRouter } from "./routes/orders.route.js";
+import { postRouter } from "./routes/ukrposta.route.js";
 
-const host = process.env.HOST || "localhost";
-const port = process.env.SERVER_PORT || 5000;
+const host = process.env.HOST;
+const port = process.env.SERVER_PORT;
 const app = express();
 
 // Handle options credentials check - before CORS!
@@ -40,6 +41,7 @@ app.use('/payment', paymentRouter);
 app.use('/paymentmono', paymentmonoRouter);
 app.use('/contactus', contactRouter);
 app.use('/shipping', shippingRouter);
+app.use('/post', postRouter);
 app.use('/orders', ordersRouter);
 // app.use('/auth', );
 // app.use('/refresh', );

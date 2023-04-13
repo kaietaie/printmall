@@ -72,19 +72,3 @@ export const sendShippingInfo = async (
     throw new Error('Failed to create PayPal order');
   }
 };
-
-// export const getMonobankOrderDetails = async (
-//   orderId: string
-// ): Promise<PaymentDetails> => {
-//   try {
-//     const response = await axios.post(
-//       'http://localhost:5000/paymentmono/check-mono-payment',
-//       { orderId }
-//     );
-//     return response.data;
-//   } catch (error) {
-//     // console.error(error);
-//     // throw new Error('Failed to get monobank order details');
-//     return Promise.reject(error);
-//   }
-// };

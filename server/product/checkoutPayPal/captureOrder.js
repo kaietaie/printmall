@@ -19,6 +19,7 @@ export default async function capturePayPalOrder(req, res) {
     };
     const data = await saveOrder(capturedOrder);
     sendConfirmationMail(captureData, data);
+    // sendOrderToAdmin(shippingAddress, data, sql_order_line);
     res.json(data);
   } catch (error) {
     const errorMsg = `capturePayPalOrder is failed: ${error.message}`;
