@@ -40,6 +40,15 @@ const initialSelectSearchValue = {
   label: '',
 };
 
+const initialCityOptions = [
+  { value: '8d5a980d-391c-11dd-90d9-001a92567626', label: 'Київ' },
+  { value: 'db5c88f5-391c-11dd-90d9-001a92567626', label: 'Львів' },
+  { value: 'db5c88d0-391c-11dd-90d9-001a92567626', label: 'Одеса' },
+  { value: 'db5c88e0-391c-11dd-90d9-001a92567626', label: 'Харків' },
+  { value: 'db5c88e0-391c-11dd-90d9-001a92567626', label: 'Харків' },
+  { value: 'db5c88f0-391c-11dd-90d9-001a92567626', label: 'Дніпро' },
+];
+
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -81,6 +90,7 @@ const CheckoutForm: React.FC = () => {
     setCityInputValue(inputValue);
     const options = await getNovaPostCities(inputValue);
     setCityOptions(options);
+    setSelectedWarehouse(initialSelectSearchValue);
   };
 
   useEffect(() => {
@@ -122,6 +132,10 @@ const CheckoutForm: React.FC = () => {
       navigate(`/payment`);
     },
   });
+
+  const novaPoshtaCityOptions = selectedCity.value
+    ? cityOptions
+    : initialCityOptions;
 
   return (
     <div className="checkout-form-container">
@@ -207,7 +221,9 @@ const CheckoutForm: React.FC = () => {
             <SelectSearch
               label={t('form.city')}
               inputValue={cityInputValue}
-              options={cityOptions as unknown as ReactSelectOptionsType}
+              options={
+                novaPoshtaCityOptions as unknown as ReactSelectOptionsType
+              }
               onInputChange={handleCityInputChange}
               onChange={(option) => {
                 const { value, label } =
@@ -219,6 +235,7 @@ const CheckoutForm: React.FC = () => {
               fullWidth
               error={formik.touched.city && formik.errors.city}
             />
+
             <SelectSearch
               inputValue={warehouseInputValue}
               options={warehouseOptions as unknown as ReactSelectOptionsType}
