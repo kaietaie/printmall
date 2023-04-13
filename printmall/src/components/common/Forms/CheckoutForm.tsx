@@ -202,89 +202,96 @@ const CheckoutForm: React.FC = () => {
           value={formik.values.shipping_method}
           onChange={formik.handleChange('shipping_method')}
         />
+        {selectedCountry.value === 'UA' ? (
+          <>
+            <SelectSearch
+              label={t('form.city')}
+              inputValue={cityInputValue}
+              options={cityOptions as unknown as ReactSelectOptionsType}
+              onInputChange={handleCityInputChange}
+              onChange={(option) => {
+                const { value, label } =
+                  option as unknown as selectedOptionType;
+                setSelectedCity({ value, label });
+                formik.setFieldValue('city', value);
+              }}
+              value={selectedCity as unknown as ReactSelectValueType}
+              fullWidth
+              error={formik.touched.city && formik.errors.city}
+            />
+            <SelectSearch
+              inputValue={warehouseInputValue}
+              options={warehouseOptions as unknown as ReactSelectOptionsType}
+              onInputChange={handleWarehouseInputChange}
+              onChange={(option) => {
+                const { value, label } =
+                  option as unknown as selectedOptionType;
+                setSelectedWarehouse({ value, label });
+                formik.setFieldValue('warehouse', value);
+              }}
+              value={selectedWarehouse as unknown as ReactSelectValueType}
+              label="Відділення"
+              fullWidth
+              error={formik.touched.city && formik.errors.city}
+            />
+          </>
+        ) : (
+          <>
+            <TextInput
+              className="checkout-form-short-input"
+              label={t('form.city')}
+              type="text"
+              name="city"
+              error={formik.touched.city && formik.errors.city}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.city}
+            />
 
-        <SelectSearch
-          label={t('form.city')}
-          inputValue={cityInputValue}
-          options={cityOptions as unknown as ReactSelectOptionsType}
-          onInputChange={handleCityInputChange}
-          onChange={(option) => {
-            const { value, label } = option as unknown as selectedOptionType;
-            setSelectedCity({ value, label });
-            formik.setFieldValue('city', value);
-          }}
-          value={selectedCity as unknown as ReactSelectValueType}
-          fullWidth
-          error={formik.touched.city && formik.errors.city}
-        />
-
-        <SelectSearch
-          inputValue={warehouseInputValue}
-          options={warehouseOptions as unknown as ReactSelectOptionsType}
-          onInputChange={handleWarehouseInputChange}
-          onChange={(option) => {
-            const { value, label } = option as unknown as selectedOptionType;
-            setSelectedWarehouse({ value, label });
-            formik.setFieldValue('warehouse', value);
-          }}
-          value={selectedWarehouse as unknown as ReactSelectValueType}
-          label="Відділення"
-          fullWidth
-          error={formik.touched.city && formik.errors.city}
-        />
-
-        {/*<TextInput*/}
-        {/*  className="checkout-form-short-input"*/}
-        {/*  label={t('form.city')}*/}
-        {/*  type="text"*/}
-        {/*  name="city"*/}
-        {/*  error={formik.touched.city && formik.errors.city}*/}
-        {/*  onChange={formik.handleChange}*/}
-        {/*  onBlur={formik.handleBlur}*/}
-        {/*  value={formik.values.city}*/}
-        {/*/>*/}
-
-        <TextInput
-          label={t('form.address1')}
-          type="text"
-          name="address_line_1"
-          error={formik.touched.address_line_1 && formik.errors.address_line_1}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.address_line_1}
-          fullWidth
-        />
-
-        <TextInput
-          label={t('form.address2')}
-          type="text"
-          name="address_line_2"
-          error={formik.touched.address_line_2 && formik.errors.address_line_2}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.address_line_2}
-          fullWidth
-        />
-
-        <TextInput
-          label={t('form.region')}
-          type="text"
-          name="region"
-          error={formik.touched.region && formik.errors.region}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.region}
-        />
-
-        <TextInput
-          label={t('form.zipCode')}
-          type="text"
-          name="zip_code"
-          error={formik.touched.zip_code && formik.errors.zip_code}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.zip_code}
-        />
+            <TextInput
+              label={t('form.address1')}
+              type="text"
+              name="address_line_1"
+              error={
+                formik.touched.address_line_1 && formik.errors.address_line_1
+              }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.address_line_1}
+              fullWidth
+            />
+            <TextInput
+              label={t('form.address2')}
+              type="text"
+              name="address_line_2"
+              error={
+                formik.touched.address_line_2 && formik.errors.address_line_2
+              }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.address_line_2}
+              fullWidth
+            />
+            <TextInput
+              label={t('form.region')}
+              type="text"
+              name="region"
+              error={formik.touched.region && formik.errors.region}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.region}
+            />
+            <TextInput
+              label={t('form.zipCode')}
+              type="text"
+              name="zip_code"
+              error={formik.touched.zip_code && formik.errors.zip_code}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.zip_code}
+            />
+          </>
+        )}
 
         <Button
           className="form-submit-button"
