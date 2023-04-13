@@ -315,7 +315,7 @@ const CheckoutForm: React.FC = () => {
           iconEnd={<ArrowForward />}
           buttonType="submit"
         >
-          Proceed to payment
+          {t('form.proceedToPaymentBtn')}
         </Button>
       </form>
     </div>

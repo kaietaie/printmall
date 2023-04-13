@@ -126,7 +126,8 @@
     "submitFailMessage": "Failed to send user message",
     "shippingMethod": "Shipping method",
     "warehouse": "Warehouse",
-    "warehouseErrorRequired": "Warehouse is required"
+    "warehouseErrorRequired": "Warehouse is required",
+    "proceedToPaymentBtn": "Proceed to payment"
   },
   "footer": {
     "infoMessage": "Shop the latest trends and styles from our marketplace, and stand out with unique and personalized printed clothes.",
