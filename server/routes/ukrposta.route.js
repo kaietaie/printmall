@@ -1,6 +1,8 @@
 import Router from "express";
 import ukrposhtaDeliveryPriceInternational from "../functions/Posta/ukrPosta.js";
+import downloadNovaPoshtaOffices from "../functions/Posta/novaPostaAPI.js";
 
-export const ukrpostaRouter = Router();
+export const postRouter = Router();
 
-ukrpostaRouter.get('/interdeliveryprice', ukrposhtaDeliveryPriceInternational)
+postRouter.get('/interdeliveryprice', ukrposhtaDeliveryPriceInternational)
+postRouter.get('/novapostawarehouses', downloadNovaPoshtaOffices)

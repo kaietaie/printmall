@@ -64,8 +64,9 @@ const apiUrl = "https://api.novaposhta.ua/v2.0/json/";
 
 // Функція, яка завантажує список відділень Нової Пошти в обраному місті
 
-export default async function downloadNovaPoshtaOffices(cityName) {
-  const apiKey = process.env.NOVA_POSTA_KEY
+export default async function downloadNovaPoshtaOffices(req, res) {
+  const apiKey = process.env.NOVA_POSTA_KEY;
+  const { cityName } = req.body;
   try {
     const response = await axios.post(apiUrl, {
       modelName: "Address",
@@ -85,7 +86,7 @@ export default async function downloadNovaPoshtaOffices(cityName) {
       methodProperties: {
         CityRef: cityRef,
         Limit: 50,
-        Page: 1
+        Page: 1,
       },
       apiKey: apiKey,
     });
@@ -96,11 +97,11 @@ export default async function downloadNovaPoshtaOffices(cityName) {
         value: office.Description,
       };
     });
-
-    const fileName = `${cityName}_offices.json`;
-    console.log(offices)
-    fs.writeFileSync(fileName, JSON.stringify(offices, null, 2));
-    console.log(`File ${fileName} saved!`);
+return res.json(offices)
+    // const fileName = `${cityName}_offices.json`;
+    // console.log(offices)
+    // fs.writeFileSync(fileName, JSON.stringify(offices, null, 2));
+    // console.log(`File ${fileName} saved!`);
   } catch (error) {
     console.error(error);
     const errorMsg = `NovaPosta get warehouses is failed: ${error.message}`;
