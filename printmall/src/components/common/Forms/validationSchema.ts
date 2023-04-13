@@ -56,7 +56,7 @@ export const getCheckoutValidationSchema = (t: any) => {
       .required(t('form.cityError')),
     warehouse: yup.string().when('country', {
       is: (country) => country === 'UA',
-      then: () => yup.string().required(t('form.cityError')),
+      then: () => yup.string().required(t('form.warehouseErrorRequired')),
     }),
     region: yup.string().when('country', {
       is: (country) => country !== 'UA',

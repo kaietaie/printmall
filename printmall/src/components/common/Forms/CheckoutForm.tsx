@@ -77,13 +77,13 @@ const CheckoutForm: React.FC = () => {
       ? [
           {
             value: 'new_post',
-            label: 'New post',
+            label: t('shipping.novaPoshta'),
           },
         ]
       : [
           {
             value: 'ukr_post',
-            label: 'Ukr post',
+            label: t('shipping.ukrposhta'),
           },
         ];
   const handleCityInputChange = async (inputValue: string) => {
@@ -211,7 +211,7 @@ const CheckoutForm: React.FC = () => {
 
         <Select
           options={shippingMethods}
-          label="Shipping method"
+          label={t('form.shippingMethod')}
           name="shipping_method"
           value={formik.values.shipping_method}
           onChange={formik.handleChange('shipping_method')}
@@ -247,7 +247,7 @@ const CheckoutForm: React.FC = () => {
                 formik.setFieldValue('warehouse', value);
               }}
               value={selectedWarehouse as unknown as ReactSelectValueType}
-              label="Відділення"
+              label={t('form.warehouse')}
               fullWidth
               error={formik.touched.warehouse && formik.errors.warehouse}
             />
