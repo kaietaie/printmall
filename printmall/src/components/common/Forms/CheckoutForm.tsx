@@ -232,7 +232,7 @@ const CheckoutForm: React.FC = () => {
               value={selectedWarehouse as unknown as ReactSelectValueType}
               label="Відділення"
               fullWidth
-              error={formik.touched.city && formik.errors.city}
+              error={formik.touched.warehouse && formik.errors.warehouse}
             />
           </>
         ) : (
