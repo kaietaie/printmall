@@ -27,6 +27,7 @@ interface SelectSearchProps {
   defaultInputValue?: string;
   onInputChange?: (inputValue: string) => Promise<void>;
   name?: string;
+  inputValue?: string;
   // onBlur?: (e: any) => void;
   // fullWidth?: boolean;
 }
@@ -40,6 +41,7 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
   className,
   defaultInputValue,
   onInputChange,
+  inputValue,
 }) => {
   return (
     <div
@@ -50,6 +52,7 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
     >
       <label htmlFor="country">{label}</label>
       <Select
+        inputValue={inputValue}
         name={name}
         defaultInputValue={defaultInputValue}
         styles={{

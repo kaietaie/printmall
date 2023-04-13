@@ -32,6 +32,11 @@ const initialCountryValue = {
   label: 'Ukraine',
 };
 
+const initialCityValue = {
+  value: '',
+  label: '',
+};
+
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -39,9 +44,14 @@ const CheckoutForm: React.FC = () => {
   const options = useMemo(() => countryList().getData(), []);
   const validationSchema = getCheckoutValidationSchema(t);
 
-  const [cityOptions, setCityOptions] = useState<selectedOptionType[]>([]);
   const [selectedCountry, setSelectedCountry] =
     useState<selectedOptionType>(initialCountryValue);
+
+  const [cityInputValue, setCityInputValue] = useState<string>('');
+  const [selectedCity, setSelectedCity] =
+    useState<selectedOptionType>(initialCityValue);
+  const [cityOptions, setCityOptions] = useState<selectedOptionType[]>([]);
+
   const shippingMethods =
     selectedCountry.value === 'UA'
       ? [
@@ -57,6 +67,7 @@ const CheckoutForm: React.FC = () => {
           },
         ];
   const handleCityInputChange = async (inputValue: string) => {
+    setCityInputValue(inputValue);
     const options = await getNovaPostCities(inputValue);
     setCityOptions(options);
   };
@@ -73,17 +84,11 @@ const CheckoutForm: React.FC = () => {
       city: '',
       region: '',
       zip_code: '',
-      shipping_method: '',
+      shipping_method: shippingMethods[0].value,
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(
-        sendShippingInfoThunk({
-          ...values,
-          //todo: find better solution
-          shipping_method: shippingMethods[0].value,
-        })
-      );
+      dispatch(sendShippingInfoThunk(values));
       navigate(`/payment`);
     },
   });
@@ -132,7 +137,7 @@ const CheckoutForm: React.FC = () => {
               formik.setFieldValue('country', value);
             } else {
               setSelectedCountry(initialCountryValue);
-              formik.setFieldValue('country', initialCountryValue);
+              formik.setFieldValue('country', '');
             }
           }}
           defaultInputValue="Ukraine"
@@ -147,20 +152,15 @@ const CheckoutForm: React.FC = () => {
         />
 
         <SelectSearch
-          name="city"
+          inputValue={cityInputValue}
           options={cityOptions as unknown as ReactSelectOptionsType}
-          onInputChange={(option) => {
-            return handleCityInputChange(option);
-          }}
+          onInputChange={handleCityInputChange}
           onChange={(option) => {
-            const { value } = option as unknown as selectedOptionType;
+            const { value, label } = option as unknown as selectedOptionType;
+            setSelectedCity({ value, label });
             formik.setFieldValue('city', value);
           }}
-          value={
-            cityOptions.find(
-              (option) => option.value === formik.values.city
-            ) as ReactSelectValueType
-          }
+          value={selectedCity as unknown as ReactSelectValueType}
           label={t('form.city')}
         />
 
