@@ -43,10 +43,11 @@ export const getCheckoutValidationSchema = (t: any) => {
       .matches(/^[\d\s()-]{11,16}$/, t('form.phoneErrorInvalid'))
       .required(t('form.phoneErrorRequired')),
     address_line_1: yup.string().required(t('form.addressError')),
-    // city: yup
-    //   .string()
-    //   .matches(/^[A-Za-z\u0400-\u04FF -]+$/, t('form.cityValidError'))
-    //   .required(t('form.cityError')),
+    city: yup
+      .string()
+      // .matches(/^[A-Za-z\u0400-\u04FF -]+$/, t('form.cityValidError'))
+      .required(t('form.cityError')),
+    warehouse: yup.string().required(t('form.cityError')),
     region: yup.string().required(t('form.regionError')),
     zip_code: yup
       .string()

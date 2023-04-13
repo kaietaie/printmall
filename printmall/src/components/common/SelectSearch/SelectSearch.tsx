@@ -28,8 +28,9 @@ interface SelectSearchProps {
   onInputChange?: (inputValue: string) => Promise<void>;
   name?: string;
   inputValue?: string;
+  fullWidth?: boolean;
   // onBlur?: (e: any) => void;
-  // fullWidth?: boolean;
+  error?: string | boolean | undefined;
 }
 
 const SelectSearch: React.FC<SelectSearchProps> = ({
@@ -42,11 +43,15 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
   defaultInputValue,
   onInputChange,
   inputValue,
+  fullWidth,
+  error,
 }) => {
   return (
     <div
       className={squish`
         select-search
+        ${error ? 'error' : ''}
+        ${fullWidth ? 'full-width' : ''}
         ${className ? className : ''}
       `}
     >
@@ -59,7 +64,7 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
           control: (baseStyles) => ({
             ...baseStyles,
             // borderColor: state.isFocused ? '#CCCCCC' : '#2AA5BE',
-            borderColor: '#CCCCCC',
+            borderColor: `${error ? '#CE4257' : '#CCCCCC'}`,
             height: 48,
             borderRadius: 6,
           }),
@@ -69,6 +74,8 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
         onChange={onChange}
         onInputChange={onInputChange}
       />
+
+      {error && <span className="text-input-error-message">{error}</span>}
     </div>
   );
 };

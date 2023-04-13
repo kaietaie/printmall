@@ -15,6 +15,7 @@ export interface CheckoutFormValues {
   address_line_2: string;
   country: string;
   city: string;
+  warehouse: string;
   region: string;
   zip_code: string;
   shipping_method: string;

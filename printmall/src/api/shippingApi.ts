@@ -24,15 +24,39 @@ export const getNovaPostCities = async (
       },
       apiKey: apiKey,
     });
-
-    const res = response.data.data[0].Addresses.map((city: any) => ({
+    return response.data.data[0].Addresses.map((city: any) => ({
       label: city.Present,
-      value: city.Ref,
+      value: city.DeliveryCity,
     }));
-
-    return res;
   } catch (error) {
     console.error(error);
     throw new Error('Failed to get cities.');
+  }
+};
+
+export const getNovaPostWarehouses = async (
+  cityRef: string,
+  warehouseInputValue: string
+): Promise<CityOption[]> => {
+  const apiKey = process.env.REACT_APP_NOVA_POSTA_KEY;
+  try {
+    const response = await axios.post(NOVA_POST_URL, {
+      modelName: 'AddressGeneral',
+      calledMethod: 'getWarehouses',
+      methodProperties: {
+        CityRef: cityRef,
+        Limit: 50,
+        FindByString: warehouseInputValue,
+      },
+      apiKey: apiKey,
+    });
+
+    return response.data.data.map((warehouse: any) => ({
+      label: warehouse.Description,
+      value: warehouse.Ref,
+    }));
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to get warehouses.');
   }
 };

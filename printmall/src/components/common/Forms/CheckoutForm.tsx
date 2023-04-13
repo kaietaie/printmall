@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
@@ -20,7 +20,10 @@ import {
   ReactSelectOptionsType,
   ReactSelectValueType,
 } from '../SelectSearch/SelectSearch';
-import { getNovaPostCities } from '../../../api/shippingApi';
+import {
+  getNovaPostCities,
+  getNovaPostWarehouses,
+} from '../../../api/shippingApi';
 
 export interface selectedOptionType {
   value: string;
@@ -32,7 +35,7 @@ const initialCountryValue = {
   label: 'Ukraine',
 };
 
-const initialCityValue = {
+const initialSelectSearchValue = {
   value: '',
   label: '',
 };
@@ -48,9 +51,17 @@ const CheckoutForm: React.FC = () => {
     useState<selectedOptionType>(initialCountryValue);
 
   const [cityInputValue, setCityInputValue] = useState<string>('');
-  const [selectedCity, setSelectedCity] =
-    useState<selectedOptionType>(initialCityValue);
+  const [selectedCity, setSelectedCity] = useState<selectedOptionType>(
+    initialSelectSearchValue
+  );
   const [cityOptions, setCityOptions] = useState<selectedOptionType[]>([]);
+
+  const [warehouseInputValue, setWarehouseInputValue] = useState<string>('');
+  const [selectedWarehouse, setSelectedWarehouse] =
+    useState<selectedOptionType>(initialSelectSearchValue);
+  const [warehouseOptions, setWarehouseOptions] = useState<
+    selectedOptionType[]
+  >([]);
 
   const shippingMethods =
     selectedCountry.value === 'UA'
@@ -72,6 +83,24 @@ const CheckoutForm: React.FC = () => {
     setCityOptions(options);
   };
 
+  useEffect(() => {
+    if (selectedCity.value) {
+      getNovaPostWarehouses(selectedCity.value, warehouseInputValue)
+        .then((options) => {
+          setWarehouseOptions(options);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [selectedCity.value, warehouseInputValue]);
+
+  const handleWarehouseInputChange = async (inputValue: string) => {
+    setWarehouseInputValue(inputValue);
+    // const options = await getNovaPostWarehouses(selectedCity.value);
+    // setWarehouseOptions(options);
+  };
+
   const formik = useFormik<CheckoutFormValues>({
     initialValues: {
       first_name: '',
@@ -82,6 +111,7 @@ const CheckoutForm: React.FC = () => {
       address_line_2: '',
       country: 'UA',
       city: '',
+      warehouse: '',
       region: '',
       zip_code: '',
       shipping_method: shippingMethods[0].value,
@@ -125,6 +155,28 @@ const CheckoutForm: React.FC = () => {
           />
         </div>
 
+        <TextInput
+          label={t('form.email')}
+          type="email"
+          name="email"
+          placeholder="you@company.com"
+          error={formik.touched.email && formik.errors.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+          fullWidth
+        />
+
+        <TelephoneInput
+          name="phone"
+          label={t('form.phone')}
+          error={formik.touched.phone && formik.errors.phone}
+          onChange={(value) => formik.setFieldValue('phone', value)}
+          onBlur={formik.handleBlur('phone')}
+          value={formik.values.phone}
+          fullWidth
+        />
+
         <SelectSearch
           options={options as unknown as ReactSelectOptionsType}
           label={t('form.country')}
@@ -152,6 +204,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <SelectSearch
+          label={t('form.city')}
           inputValue={cityInputValue}
           options={cityOptions as unknown as ReactSelectOptionsType}
           onInputChange={handleCityInputChange}
@@ -161,7 +214,23 @@ const CheckoutForm: React.FC = () => {
             formik.setFieldValue('city', value);
           }}
           value={selectedCity as unknown as ReactSelectValueType}
-          label={t('form.city')}
+          fullWidth
+          error={formik.touched.city && formik.errors.city}
+        />
+
+        <SelectSearch
+          inputValue={warehouseInputValue}
+          options={warehouseOptions as unknown as ReactSelectOptionsType}
+          onInputChange={handleWarehouseInputChange}
+          onChange={(option) => {
+            const { value, label } = option as unknown as selectedOptionType;
+            setSelectedWarehouse({ value, label });
+            formik.setFieldValue('warehouse', value);
+          }}
+          value={selectedWarehouse as unknown as ReactSelectValueType}
+          label="Відділення"
+          fullWidth
+          error={formik.touched.city && formik.errors.city}
         />
 
         {/*<TextInput*/}
@@ -174,28 +243,6 @@ const CheckoutForm: React.FC = () => {
         {/*  onBlur={formik.handleBlur}*/}
         {/*  value={formik.values.city}*/}
         {/*/>*/}
-
-        <TextInput
-          label={t('form.email')}
-          type="email"
-          name="email"
-          placeholder="you@company.com"
-          error={formik.touched.email && formik.errors.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-          fullWidth
-        />
-
-        <TelephoneInput
-          name="phone"
-          label={t('form.phone')}
-          error={formik.touched.phone && formik.errors.phone}
-          onChange={(value) => formik.setFieldValue('phone', value)}
-          onBlur={formik.handleBlur('phone')}
-          value={formik.values.phone}
-          fullWidth
-        />
 
         <TextInput
           label={t('form.address1')}
@@ -220,7 +267,6 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
-          className="checkout-form-short-input"
           label={t('form.region')}
           type="text"
           name="region"
@@ -231,7 +277,6 @@ const CheckoutForm: React.FC = () => {
         />
 
         <TextInput
-          className="checkout-form-short-input"
           label={t('form.zipCode')}
           type="text"
           name="zip_code"
