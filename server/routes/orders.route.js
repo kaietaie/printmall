@@ -7,4 +7,4 @@ export const ordersRouter = Router();
 
 ordersRouter.get("/all", getAllOrders);
 ordersRouter.get("/:orderId", getOneOrder);
-ordersRouter.put("/all", editOrder);
+ordersRouter.put("/edit", editOrder);
