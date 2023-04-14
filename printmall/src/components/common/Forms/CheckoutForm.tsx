@@ -14,8 +14,6 @@ import { AppDispatch } from '../../../store/store';
 import { sendShippingInfoThunk } from '../../../store/shipping/shippingThunks';
 import Select from '../Select';
 import SelectSearch from '../SelectSearch';
-
-import './Form.sass';
 import {
   ReactSelectOptionsType,
   ReactSelectValueType,
@@ -24,6 +22,9 @@ import {
   getNovaPostCities,
   getNovaPostWarehouses,
 } from '../../../api/shippingApi';
+import { SingleValue } from 'react-select';
+
+import './Form.sass';
 
 export interface selectedOptionType {
   value: string;
@@ -87,17 +88,31 @@ const CheckoutForm: React.FC = () => {
             label: t('shipping.ukrposhta'),
           },
         ];
+
   const handleCityInputChange = async (inputValue: string) => {
     setCityInputValue(inputValue);
     try {
       const options = await getNovaPostCities(inputValue);
       setCityOptions(options);
-      setSelectedWarehouse(initialSelectSearchValue);
-      setCityOptionsError(false);
     } catch (error) {
       console.error(error);
       setCityOptionsError(true);
     }
+  };
+
+  const handleCityChange = (option: SingleValue<string>) => {
+    setSelectedWarehouse(initialSelectSearchValue);
+    setCityOptionsError(false);
+    const { value, label } = option as unknown as selectedOptionType;
+    setSelectedCity({ value, label });
+    formik.setFieldValue('city', value);
+  };
+
+  const handleCountryChange = (selectedOption: SingleValue<string>) => {
+    formik.setFieldValue('city', '');
+    const { value, label } = selectedOption as unknown as selectedOptionType;
+    setSelectedCountry({ value, label });
+    formik.setFieldValue('country', value);
   };
 
   useEffect(() => {
@@ -114,8 +129,6 @@ const CheckoutForm: React.FC = () => {
 
   const handleWarehouseInputChange = async (inputValue: string) => {
     setWarehouseInputValue(inputValue);
-    // const options = await getNovaPostWarehouses(selectedCity.value);
-    // setWarehouseOptions(options);
   };
 
   const formik = useFormik<CheckoutFormValues>({
@@ -143,9 +156,10 @@ const CheckoutForm: React.FC = () => {
   const novaPoshtaCityOptions =
     selectedCity.value || cityInputValue ? cityOptions : initialCityOptions;
 
-  const citySelectError = cityOptionsError
-    ? 'error'
-    : formik.touched.city && formik.errors.city;
+  const citySelectError =
+    cityOptionsError && !selectedCity.value
+      ? t('form.cityUkrError')
+      : formik.touched.city && formik.errors.city;
 
   return (
     <div className="checkout-form-container">
@@ -205,17 +219,7 @@ const CheckoutForm: React.FC = () => {
           options={options as unknown as ReactSelectOptionsType}
           label={t('form.country')}
           value={selectedCountry as unknown as ReactSelectValueType}
-          onChange={(selectedOption) => {
-            if (selectedOption) {
-              const { value, label } =
-                selectedOption as unknown as selectedOptionType;
-              setSelectedCountry({ value, label });
-              formik.setFieldValue('country', value);
-            } else {
-              setSelectedCountry(initialCountryValue);
-              formik.setFieldValue('country', '');
-            }
-          }}
+          onChange={handleCountryChange}
           defaultInputValue="Ukraine"
         />
 
@@ -235,12 +239,7 @@ const CheckoutForm: React.FC = () => {
                 novaPoshtaCityOptions as unknown as ReactSelectOptionsType
               }
               onInputChange={handleCityInputChange}
-              onChange={(option) => {
-                const { value, label } =
-                  option as unknown as selectedOptionType;
-                setSelectedCity({ value, label });
-                formik.setFieldValue('city', value);
-              }}
+              onChange={handleCityChange}
               value={selectedCity as unknown as ReactSelectValueType}
               fullWidth
               error={citySelectError}

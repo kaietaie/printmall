@@ -100,6 +100,7 @@
     "zipCode": "Zip code",
     "addressError": "Address is required",
     "cityError": "City is required",
+    "cityUkrError": "Enter a valid city in the Ukrainian language",
     "cityValidError": "Please enter a valid city without numbers",
     "regionError": "Region is required",
     "zipErrorRequired": "Zip code is required",
