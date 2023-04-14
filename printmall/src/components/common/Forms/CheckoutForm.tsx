@@ -207,6 +207,7 @@ const CheckoutForm: React.FC = () => {
         />
 
         <SelectSearch
+          className="checkout-form-short-input"
           options={options as unknown as ReactSelectOptionsType}
           label={t('form.country')}
           value={selectedCountry as unknown as ReactSelectValueType}
@@ -216,6 +217,7 @@ const CheckoutForm: React.FC = () => {
 
         {formik.values.country && (
           <Select
+            className="checkout-form-short-input"
             options={shippingMethods}
             label={t('form.shippingMethod')}
             name="shipping_method"
@@ -287,6 +289,7 @@ const CheckoutForm: React.FC = () => {
               fullWidth
             />
             <TextInput
+              className="checkout-form-short-input"
               label={t('form.region')}
               type="text"
               name="region"
@@ -295,6 +298,7 @@ const CheckoutForm: React.FC = () => {
               value={formik.values.region}
             />
             <TextInput
+              className="checkout-form-short-input"
               label={t('form.zipCode')}
               type="text"
               name="zip_code"
