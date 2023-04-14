@@ -6,6 +6,5 @@ export const sendShippingInfoThunk = createAsyncThunk<
   string,
   CheckoutFormValues
 >('shipping/sendShippingInfo', async (props) => {
-  console.log(props);
   return await sendShippingInfo(props);
 });

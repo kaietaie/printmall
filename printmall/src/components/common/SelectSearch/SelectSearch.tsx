@@ -73,6 +73,7 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
         value={value}
         onChange={onChange}
         onInputChange={onInputChange}
+        isClearable
       />
 
       {error && <span className="text-input-error-message">{error}</span>}

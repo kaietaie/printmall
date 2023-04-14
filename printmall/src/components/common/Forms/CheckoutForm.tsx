@@ -23,32 +23,14 @@ import {
   getNovaPostWarehouses,
 } from '../../../api/shippingApi';
 import { SingleValue } from 'react-select';
+import { selectedOptionType } from '../../../types/Shipping';
+import {
+  DEFAULT_COUNTRY_VALUE,
+  DEFAULT_NOVA_POSHTA_CITY_OPTIONS,
+  INITIAL_SELECT_SEARCH_VALUE,
+} from './constants';
 
 import './Form.sass';
-
-export interface selectedOptionType {
-  value: string;
-  label: string;
-}
-
-const initialCountryValue = {
-  value: 'UA',
-  label: 'Ukraine',
-};
-
-const initialSelectSearchValue = {
-  value: '',
-  label: '',
-};
-
-const initialCityOptions = [
-  { value: '8d5a980d-391c-11dd-90d9-001a92567626', label: 'Київ' },
-  { value: 'db5c88f5-391c-11dd-90d9-001a92567626', label: 'Львів' },
-  { value: 'db5c88d0-391c-11dd-90d9-001a92567626', label: 'Одеса' },
-  { value: 'db5c88e0-391c-11dd-90d9-001a92567626', label: 'Харків' },
-  { value: 'db5c88e0-391c-11dd-90d9-001a92567626', label: 'Харків' },
-  { value: 'db5c88f0-391c-11dd-90d9-001a92567626', label: 'Дніпро' },
-];
 
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
@@ -57,19 +39,20 @@ const CheckoutForm: React.FC = () => {
   const options = useMemo(() => countryList().getData(), []);
   const validationSchema = getCheckoutValidationSchema(t);
 
-  const [selectedCountry, setSelectedCountry] =
-    useState<selectedOptionType>(initialCountryValue);
+  const [selectedCountry, setSelectedCountry] = useState<selectedOptionType>(
+    DEFAULT_COUNTRY_VALUE
+  );
 
   const [cityInputValue, setCityInputValue] = useState<string>('');
   const [selectedCity, setSelectedCity] = useState<selectedOptionType>(
-    initialSelectSearchValue
+    INITIAL_SELECT_SEARCH_VALUE
   );
   const [cityOptions, setCityOptions] = useState<selectedOptionType[]>([]);
   const [cityOptionsError, setCityOptionsError] = useState<boolean>(false);
 
   const [warehouseInputValue, setWarehouseInputValue] = useState<string>('');
   const [selectedWarehouse, setSelectedWarehouse] =
-    useState<selectedOptionType>(initialSelectSearchValue);
+    useState<selectedOptionType>(INITIAL_SELECT_SEARCH_VALUE);
   const [warehouseOptions, setWarehouseOptions] = useState<
     selectedOptionType[]
   >([]);
@@ -101,18 +84,29 @@ const CheckoutForm: React.FC = () => {
   };
 
   const handleCityChange = (option: SingleValue<string>) => {
-    setSelectedWarehouse(initialSelectSearchValue);
-    setCityOptionsError(false);
-    const { value, label } = option as unknown as selectedOptionType;
-    setSelectedCity({ value, label });
-    formik.setFieldValue('city', value);
+    if (option) {
+      setSelectedWarehouse(INITIAL_SELECT_SEARCH_VALUE);
+      setCityOptionsError(false);
+      const { value, label } = option as unknown as selectedOptionType;
+      setSelectedCity({ value, label });
+      formik.setFieldValue('city', value);
+    } else {
+      setSelectedCity(INITIAL_SELECT_SEARCH_VALUE);
+      formik.setFieldValue('city', '');
+    }
   };
 
   const handleCountryChange = (selectedOption: SingleValue<string>) => {
-    formik.setFieldValue('city', '');
-    const { value, label } = selectedOption as unknown as selectedOptionType;
-    setSelectedCountry({ value, label });
-    formik.setFieldValue('country', value);
+    if (selectedOption) {
+      formik.setFieldValue('city', '');
+      const { value, label } = selectedOption as unknown as selectedOptionType;
+      setSelectedCountry({ value, label });
+      formik.setFieldValue('country', value);
+    } else {
+      setSelectedCountry(INITIAL_SELECT_SEARCH_VALUE);
+      formik.setFieldValue('country', '');
+      formik.setFieldValue('city', '');
+    }
   };
 
   useEffect(() => {
@@ -154,7 +148,9 @@ const CheckoutForm: React.FC = () => {
   });
 
   const novaPoshtaCityOptions =
-    selectedCity.value || cityInputValue ? cityOptions : initialCityOptions;
+    selectedCity.value || cityInputValue
+      ? cityOptions
+      : DEFAULT_NOVA_POSHTA_CITY_OPTIONS;
 
   const citySelectError =
     cityOptionsError && !selectedCity.value
@@ -220,17 +216,20 @@ const CheckoutForm: React.FC = () => {
           label={t('form.country')}
           value={selectedCountry as unknown as ReactSelectValueType}
           onChange={handleCountryChange}
-          defaultInputValue="Ukraine"
+          error={formik.touched.country && formik.errors.country}
         />
 
-        <Select
-          options={shippingMethods}
-          label={t('form.shippingMethod')}
-          name="shipping_method"
-          value={formik.values.shipping_method}
-          onChange={formik.handleChange('shipping_method')}
-        />
-        {selectedCountry.value === 'UA' ? (
+        {formik.values.country && (
+          <Select
+            options={shippingMethods}
+            label={t('form.shippingMethod')}
+            name="shipping_method"
+            value={formik.values.shipping_method}
+            onChange={formik.handleChange('shipping_method')}
+          />
+        )}
+
+        {selectedCountry.value === 'UA' && formik.values.country && (
           <>
             <SelectSearch
               label={t('form.city')}
@@ -261,7 +260,9 @@ const CheckoutForm: React.FC = () => {
               error={formik.touched.warehouse && formik.errors.warehouse}
             />
           </>
-        ) : (
+        )}
+
+        {selectedCountry.value !== 'UA' && formik.values.country && (
           <>
             <TextInput
               className="checkout-form-short-input"
