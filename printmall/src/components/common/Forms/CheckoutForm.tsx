@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
 import { ReactComponent as ArrowForward } from '../../images/arrow_forward.svg';
@@ -8,13 +8,46 @@ import { useTranslation } from 'react-i18next';
 import { getCheckoutValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 import countryList from 'react-select-country-list';
-import Select from '../Select';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
 import { sendShippingInfoThunk } from '../../../store/shipping/shippingThunks';
+import Select from '../Select';
+import SelectSearch from '../SelectSearch';
 
 import './Form.sass';
+import {
+  ReactSelectOptionsType,
+  ReactSelectValueType,
+} from '../SelectSearch/SelectSearch';
+import {
+  getNovaPostCities,
+  getNovaPostWarehouses,
+} from '../../../api/shippingApi';
+
+export interface selectedOptionType {
+  value: string;
+  label: string;
+}
+
+const initialCountryValue = {
+  value: 'UA',
+  label: 'Ukraine',
+};
+
+const initialSelectSearchValue = {
+  value: '',
+  label: '',
+};
+
+const initialCityOptions = [
+  { value: '8d5a980d-391c-11dd-90d9-001a92567626', label: 'Київ' },
+  { value: 'db5c88f5-391c-11dd-90d9-001a92567626', label: 'Львів' },
+  { value: 'db5c88d0-391c-11dd-90d9-001a92567626', label: 'Одеса' },
+  { value: 'db5c88e0-391c-11dd-90d9-001a92567626', label: 'Харків' },
+  { value: 'db5c88e0-391c-11dd-90d9-001a92567626', label: 'Харків' },
+  { value: 'db5c88f0-391c-11dd-90d9-001a92567626', label: 'Дніпро' },
+];
 
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +55,61 @@ const CheckoutForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const options = useMemo(() => countryList().getData(), []);
   const validationSchema = getCheckoutValidationSchema(t);
+
+  const [selectedCountry, setSelectedCountry] =
+    useState<selectedOptionType>(initialCountryValue);
+
+  const [cityInputValue, setCityInputValue] = useState<string>('');
+  const [selectedCity, setSelectedCity] = useState<selectedOptionType>(
+    initialSelectSearchValue
+  );
+  const [cityOptions, setCityOptions] = useState<selectedOptionType[]>([]);
+
+  const [warehouseInputValue, setWarehouseInputValue] = useState<string>('');
+  const [selectedWarehouse, setSelectedWarehouse] =
+    useState<selectedOptionType>(initialSelectSearchValue);
+  const [warehouseOptions, setWarehouseOptions] = useState<
+    selectedOptionType[]
+  >([]);
+
+  const shippingMethods =
+    selectedCountry.value === 'UA'
+      ? [
+          {
+            value: 'new_post',
+            label: t('shipping.novaPoshta'),
+          },
+        ]
+      : [
+          {
+            value: 'ukr_post',
+            label: t('shipping.ukrposhta'),
+          },
+        ];
+  const handleCityInputChange = async (inputValue: string) => {
+    setCityInputValue(inputValue);
+    const options = await getNovaPostCities(inputValue);
+    setCityOptions(options);
+    setSelectedWarehouse(initialSelectSearchValue);
+  };
+
+  useEffect(() => {
+    if (selectedCity.value) {
+      getNovaPostWarehouses(selectedCity.value, warehouseInputValue)
+        .then((options) => {
+          setWarehouseOptions(options);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [selectedCity.value, warehouseInputValue]);
+
+  const handleWarehouseInputChange = async (inputValue: string) => {
+    setWarehouseInputValue(inputValue);
+    // const options = await getNovaPostWarehouses(selectedCity.value);
+    // setWarehouseOptions(options);
+  };
 
   const formik = useFormik<CheckoutFormValues>({
     initialValues: {
@@ -33,8 +121,10 @@ const CheckoutForm: React.FC = () => {
       address_line_2: '',
       country: 'UA',
       city: '',
+      warehouse: '',
       region: '',
       zip_code: '',
+      shipping_method: shippingMethods[0].value,
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -42,6 +132,10 @@ const CheckoutForm: React.FC = () => {
       navigate(`/payment`);
     },
   });
+
+  const novaPoshtaCityOptions = selectedCity.value
+    ? cityOptions
+    : initialCityOptions;
 
   return (
     <div className="checkout-form-container">
@@ -97,77 +191,131 @@ const CheckoutForm: React.FC = () => {
           fullWidth
         />
 
-        <TextInput
-          label={t('form.address1')}
-          type="text"
-          name="address_line_1"
-          error={formik.touched.address_line_1 && formik.errors.address_line_1}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.address_line_1}
-          fullWidth
-        />
-
-        <TextInput
-          label={t('form.address2')}
-          type="text"
-          name="address_line_2"
-          error={formik.touched.address_line_2 && formik.errors.address_line_2}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.address_line_2}
-          fullWidth
+        <SelectSearch
+          options={options as unknown as ReactSelectOptionsType}
+          label={t('form.country')}
+          value={selectedCountry as unknown as ReactSelectValueType}
+          onChange={(selectedOption) => {
+            if (selectedOption) {
+              const { value, label } =
+                selectedOption as unknown as selectedOptionType;
+              setSelectedCountry({ value, label });
+              formik.setFieldValue('country', value);
+            } else {
+              setSelectedCountry(initialCountryValue);
+              formik.setFieldValue('country', '');
+            }
+          }}
+          defaultInputValue="Ukraine"
         />
 
         <Select
-          className="checkout-form-short-input"
-          label={t('form.country')}
-          name="country"
-          options={options}
-          value={formik.values.country}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          options={shippingMethods}
+          label={t('form.shippingMethod')}
+          name="shipping_method"
+          value={formik.values.shipping_method}
+          onChange={formik.handleChange('shipping_method')}
         />
+        {selectedCountry.value === 'UA' ? (
+          <>
+            <SelectSearch
+              label={t('form.city')}
+              inputValue={cityInputValue}
+              options={
+                novaPoshtaCityOptions as unknown as ReactSelectOptionsType
+              }
+              onInputChange={handleCityInputChange}
+              onChange={(option) => {
+                const { value, label } =
+                  option as unknown as selectedOptionType;
+                setSelectedCity({ value, label });
+                formik.setFieldValue('city', value);
+              }}
+              value={selectedCity as unknown as ReactSelectValueType}
+              fullWidth
+              error={formik.touched.city && formik.errors.city}
+            />
 
-        <TextInput
-          className="checkout-form-short-input"
-          label={t('form.city')}
-          type="text"
-          name="city"
-          error={formik.touched.city && formik.errors.city}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.city}
-        />
+            <SelectSearch
+              inputValue={warehouseInputValue}
+              options={warehouseOptions as unknown as ReactSelectOptionsType}
+              onInputChange={handleWarehouseInputChange}
+              onChange={(option) => {
+                const { value, label } =
+                  option as unknown as selectedOptionType;
+                setSelectedWarehouse({ value, label });
+                formik.setFieldValue('warehouse', value);
+              }}
+              value={selectedWarehouse as unknown as ReactSelectValueType}
+              label={t('form.warehouse')}
+              fullWidth
+              error={formik.touched.warehouse && formik.errors.warehouse}
+            />
+          </>
+        ) : (
+          <>
+            <TextInput
+              className="checkout-form-short-input"
+              label={t('form.city')}
+              type="text"
+              name="city"
+              error={formik.touched.city && formik.errors.city}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.city}
+            />
 
-        <TextInput
-          className="checkout-form-short-input"
-          label={t('form.region')}
-          type="text"
-          name="region"
-          error={formik.touched.region && formik.errors.region}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.region}
-        />
-
-        <TextInput
-          className="checkout-form-short-input"
-          label={t('form.zipCode')}
-          type="text"
-          name="zip_code"
-          error={formik.touched.zip_code && formik.errors.zip_code}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.zip_code}
-        />
+            <TextInput
+              label={t('form.address1')}
+              type="text"
+              name="address_line_1"
+              error={
+                formik.touched.address_line_1 && formik.errors.address_line_1
+              }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.address_line_1}
+              fullWidth
+            />
+            <TextInput
+              label={t('form.address2')}
+              type="text"
+              name="address_line_2"
+              error={
+                formik.touched.address_line_2 && formik.errors.address_line_2
+              }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.address_line_2}
+              fullWidth
+            />
+            <TextInput
+              label={t('form.region')}
+              type="text"
+              name="region"
+              error={formik.touched.region && formik.errors.region}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.region}
+            />
+            <TextInput
+              label={t('form.zipCode')}
+              type="text"
+              name="zip_code"
+              error={formik.touched.zip_code && formik.errors.zip_code}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.zip_code}
+            />
+          </>
+        )}
 
         <Button
           className="form-submit-button"
           iconEnd={<ArrowForward />}
           buttonType="submit"
         >
-          Proceed to payment
+          {t('form.proceedToPaymentBtn')}
         </Button>
       </form>
     </div>

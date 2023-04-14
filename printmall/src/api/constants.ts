@@ -4,3 +4,5 @@ export const CAPTURE_PAYMENT_URLS = {
 };
 
 export const BACKEND_URL = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}`;
+
+export const NOVA_POST_URL = 'https://api.novaposhta.ua/v2.0/json/';
