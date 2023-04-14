@@ -133,9 +133,8 @@ const CheckoutForm: React.FC = () => {
     },
   });
 
-  const novaPoshtaCityOptions = selectedCity.value
-    ? cityOptions
-    : initialCityOptions;
+  const novaPoshtaCityOptions =
+    selectedCity.value || cityInputValue ? cityOptions : initialCityOptions;
 
   return (
     <div className="checkout-form-container">
