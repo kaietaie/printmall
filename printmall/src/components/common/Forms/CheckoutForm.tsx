@@ -64,6 +64,7 @@ const CheckoutForm: React.FC = () => {
     initialSelectSearchValue
   );
   const [cityOptions, setCityOptions] = useState<selectedOptionType[]>([]);
+  const [cityOptionsError, setCityOptionsError] = useState<boolean>(false);
 
   const [warehouseInputValue, setWarehouseInputValue] = useState<string>('');
   const [selectedWarehouse, setSelectedWarehouse] =
@@ -88,9 +89,15 @@ const CheckoutForm: React.FC = () => {
         ];
   const handleCityInputChange = async (inputValue: string) => {
     setCityInputValue(inputValue);
-    const options = await getNovaPostCities(inputValue);
-    setCityOptions(options);
-    setSelectedWarehouse(initialSelectSearchValue);
+    try {
+      const options = await getNovaPostCities(inputValue);
+      setCityOptions(options);
+      setSelectedWarehouse(initialSelectSearchValue);
+      setCityOptionsError(false);
+    } catch (error) {
+      console.error(error);
+      setCityOptionsError(true);
+    }
   };
 
   useEffect(() => {
@@ -100,7 +107,7 @@ const CheckoutForm: React.FC = () => {
           setWarehouseOptions(options);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     }
   }, [selectedCity.value, warehouseInputValue]);
@@ -135,6 +142,10 @@ const CheckoutForm: React.FC = () => {
 
   const novaPoshtaCityOptions =
     selectedCity.value || cityInputValue ? cityOptions : initialCityOptions;
+
+  const citySelectError = cityOptionsError
+    ? 'error'
+    : formik.touched.city && formik.errors.city;
 
   return (
     <div className="checkout-form-container">
@@ -232,7 +243,7 @@ const CheckoutForm: React.FC = () => {
               }}
               value={selectedCity as unknown as ReactSelectValueType}
               fullWidth
-              error={formik.touched.city && formik.errors.city}
+              error={citySelectError}
             />
 
             <SelectSearch
