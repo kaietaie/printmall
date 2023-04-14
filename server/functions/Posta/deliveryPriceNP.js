@@ -5,7 +5,7 @@ export default async function deliveryPriceNP(cart, address) {
   try {
     const apiKey = process.env.NOVA_POSTA_KEY;
     const apiUrl = "https://api.novaposhta.ua/v2.0/json/";
-
+console.log({address})
     async function delivery(address) {
       return await axios.post(apiUrl, {
         apiKey: apiKey,

@@ -23,7 +23,7 @@ zip_code: ""
   if (address.shipping_method === "ukr_post") {
     deliveryPrice = await deliveryPriceInt(cart, address.country)
   }
-  if (address.shipping_method === "nova_post"){
+  if (address.shipping_method === "new_post"){
     deliveryPrice = await deliveryPriceNP(cart, address);
   }
 
