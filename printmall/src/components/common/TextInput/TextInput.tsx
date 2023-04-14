@@ -12,7 +12,7 @@ interface TextInputProps {
   type: 'text' | 'email' | 'textarea' | 'tel' | 'number';
   placeholder?: string;
   onChange: (e: React.ChangeEvent<any>) => void;
-  onBlur: (e: any) => void;
+  onBlur?: (e: any) => void;
   fullWidth?: boolean;
 }
 

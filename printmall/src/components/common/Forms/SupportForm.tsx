@@ -59,7 +59,6 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
           name="first_name"
           error={formik.touched.first_name && formik.errors.first_name}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
           value={formik.values.first_name}
           fullWidth
         />
@@ -70,7 +69,6 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
           name="last_name"
           error={formik.touched.last_name && formik.errors.last_name}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
           value={formik.values.last_name}
           fullWidth
         />
@@ -83,7 +81,6 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
         placeholder="you@company.com"
         error={formik.touched.email && formik.errors.email}
         onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
         value={formik.values.email}
         fullWidth
       />
@@ -93,7 +90,6 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
         label={t('form.phone')}
         error={formik.touched.phone && formik.errors.phone}
         onChange={(value) => formik.setFieldValue('phone', value)}
-        onBlur={formik.handleBlur('phone')}
         value={formik.values.phone}
         fullWidth
       />
@@ -104,7 +100,6 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
         name="message"
         error={formik.touched.message && formik.errors.message}
         onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
         value={formik.values.message}
         fullWidth
       />

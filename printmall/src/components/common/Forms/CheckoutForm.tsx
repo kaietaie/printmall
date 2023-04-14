@@ -172,7 +172,6 @@ const CheckoutForm: React.FC = () => {
             name="first_name"
             error={formik.touched.first_name && formik.errors.first_name}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             value={formik.values.first_name}
             fullWidth
           />
@@ -183,7 +182,6 @@ const CheckoutForm: React.FC = () => {
             name="last_name"
             error={formik.touched.last_name && formik.errors.last_name}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             value={formik.values.last_name}
             fullWidth
           />
@@ -196,7 +194,6 @@ const CheckoutForm: React.FC = () => {
           placeholder="you@company.com"
           error={formik.touched.email && formik.errors.email}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
           value={formik.values.email}
           fullWidth
         />
@@ -206,7 +203,6 @@ const CheckoutForm: React.FC = () => {
           label={t('form.phone')}
           error={formik.touched.phone && formik.errors.phone}
           onChange={(value) => formik.setFieldValue('phone', value)}
-          onBlur={formik.handleBlur('phone')}
           value={formik.values.phone}
           fullWidth
         />
@@ -271,7 +267,6 @@ const CheckoutForm: React.FC = () => {
               name="city"
               error={formik.touched.city && formik.errors.city}
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
               value={formik.values.city}
             />
 
@@ -283,7 +278,6 @@ const CheckoutForm: React.FC = () => {
                 formik.touched.address_line_1 && formik.errors.address_line_1
               }
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
               value={formik.values.address_line_1}
               fullWidth
             />
@@ -295,7 +289,6 @@ const CheckoutForm: React.FC = () => {
                 formik.touched.address_line_2 && formik.errors.address_line_2
               }
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
               value={formik.values.address_line_2}
               fullWidth
             />
@@ -305,7 +298,6 @@ const CheckoutForm: React.FC = () => {
               name="region"
               error={formik.touched.region && formik.errors.region}
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
               value={formik.values.region}
             />
             <TextInput
@@ -314,7 +306,6 @@ const CheckoutForm: React.FC = () => {
               name="zip_code"
               error={formik.touched.zip_code && formik.errors.zip_code}
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
               value={formik.values.zip_code}
             />
           </>
