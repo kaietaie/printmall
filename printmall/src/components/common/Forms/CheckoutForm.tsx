@@ -36,6 +36,7 @@ import {
 import { getShippingMethods } from './helpers';
 
 import './Form.sass';
+import SelectSearchAsync from '../SelectSearch/SelectSearchAsync';
 
 const CheckoutForm: React.FC = () => {
   const navigate = useNavigate();
@@ -190,7 +191,7 @@ const CheckoutForm: React.FC = () => {
     const options = await getNovaPostCities(inputValue);
     callback(options);
   };
-  console.log(shippingMethods);
+
   return (
     <div className="checkout-form-container">
       <h2 className="checkout-form-title">{t('form.checkoutTitle')}</h2>
@@ -263,7 +264,8 @@ const CheckoutForm: React.FC = () => {
 
         {isUkraineSelected && formik.values.country && (
           <>
-            <AsyncSelect
+            <SelectSearchAsync
+              label={t('form.city')}
               className="select-search"
               name="city"
               cacheOptions
@@ -274,6 +276,8 @@ const CheckoutForm: React.FC = () => {
               loadOptions={loadOptions}
               defaultOptions={DEFAULT_NOVA_POSHTA_CITY_OPTIONS}
               isClearable
+              fullWidth
+              error={citySelectError}
             />
 
             {/*<SelectSearch*/}
@@ -289,10 +293,10 @@ const CheckoutForm: React.FC = () => {
             {/*  error={citySelectError}*/}
             {/*/>*/}
 
-            <AsyncSelect
+            <SelectSearchAsync
+              label={t('form.warehouse')}
               className="select-search"
               name="warehouse"
-              cacheOptions
               value={formik.values.warehouse}
               onChange={(option: Option) =>
                 formik.setFieldValue('warehouse', option)
@@ -304,8 +308,9 @@ const CheckoutForm: React.FC = () => {
                 );
                 callback(options);
               }}
-              isClearable
               defaultOptions={warehouseOptions}
+              fullWidth
+              error={formik.touched.warehouse && formik.errors.warehouse}
             />
 
             {/*<SelectSearch*/}
