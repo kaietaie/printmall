@@ -1,8 +1,8 @@
 import { TFunction } from 'i18next';
-import { selectedOptionType } from '../../../types/Shipping';
+import { SelectedOptionType } from '../../../types/Shipping';
 
 export const getShippingMethods = (
-  selectedCountry: selectedOptionType,
+  selectedCountry: SelectedOptionType,
   t: TFunction
 ) => {
   if (selectedCountry.value === 'UA') {

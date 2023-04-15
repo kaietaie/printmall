@@ -19,7 +19,7 @@ export type ReactSelectValueType = PropsValue<string> | undefined;
 interface SelectSearchProps {
   className?: string;
   label: string;
-  value: ReactSelectValueType;
+  value: any;
   onChange:
     | ((newValue: SingleValue<string>, actionMeta: ActionMeta<string>) => void)
     | undefined;
@@ -28,7 +28,7 @@ interface SelectSearchProps {
   defaultOptions: any;
   loadOptions: any;
   // onBlur?: (e: any) => void;
-  error?: string | boolean | undefined;
+  error?: any;
 }
 
 const SelectSearchAsync: React.FC<SelectSearchProps> = ({

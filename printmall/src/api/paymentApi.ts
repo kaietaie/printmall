@@ -61,6 +61,15 @@ export const makeMonobankPayment = async (
 export const sendShippingInfo = async (
   shippingInfo: CheckoutFormValues
 ): Promise<string> => {
+  const optimizedShippingInfo = {
+    ...shippingInfo,
+    warehouse: shippingInfo.warehouse?.value,
+    city:
+      typeof shippingInfo.city === 'string'
+        ? shippingInfo.city
+        : shippingInfo.city?.value,
+  };
+
   try {
     const response = await axios.post(`${BACKEND_URL}/shipping/add`, {
       shippingInfo,

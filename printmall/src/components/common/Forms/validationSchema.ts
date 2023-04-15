@@ -75,26 +75,27 @@ export const getCheckoutValidationSchema = (t: TFunction) => {
       then: () => yup.string().required(addressError),
     }),
     country: yup.string().required(countryErrorRequired),
-    city: yup.object().when('country', {
-      is: 'UA',
-      then: () =>
-        yup.object().shape({
-          label: yup
-            .string()
-            .matches(/^[A-Za-z\u0400-\u04FF -]+$/, cityValidError)
-            .required(cityError),
-        }),
-      otherwise: () => yup.string().required(cityError),
-    }),
+    // city_nova_post: yup.string().required(cityError),
+    // city: yup.object().when('country', {
+    //   is: 'UA',
+    //   then: () =>
+    //     yup.object().shape({
+    //       label: yup
+    //         .string()
+    //         .matches(/^[A-Za-z\u0400-\u04FF -]+$/, cityValidError)
+    //         .required(cityError),
+    //     }),
+    //   otherwise: () => yup.string().required(cityError),
+    // }),
 
-    warehouse: yup.object().when('country', {
-      is: 'UA',
-      then: () =>
-        yup.object().shape({
-          label: yup.string().required(warehouseErrorRequired),
-        }),
-      otherwise: () => yup.string().notRequired(),
-    }),
+    // warehouse: yup.object().when('country', {
+    //   is: 'UA',
+    //   then: () =>
+    //     yup.object().shape({
+    //       label: yup.string().required(warehouseErrorRequired),
+    //     }),
+    //   otherwise: () => yup.string().notRequired(),
+    // }),
     region: yup.string().when('country', {
       is: (country: string) => country !== 'UA',
       then: () => yup.string().required(regionError),

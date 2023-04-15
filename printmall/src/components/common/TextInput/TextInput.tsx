@@ -8,7 +8,7 @@ interface TextInputProps {
   className?: string;
   name: string;
   value: string;
-  error?: string | boolean | undefined;
+  error?: any;
   type: 'text' | 'email' | 'textarea' | 'tel' | 'number';
   placeholder?: string;
   onChange: (e: React.ChangeEvent<any>) => void;

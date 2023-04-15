@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NOVA_POST_URL } from './constants';
-import { selectedOptionType } from '../types/Shipping';
+import { SelectedOptionType } from '../types/Shipping';
 
 interface ApiResponse {
   success: boolean;
@@ -8,7 +8,7 @@ interface ApiResponse {
 }
 export const getNovaPostCities = async (
   cityName: string
-): Promise<selectedOptionType[]> => {
+): Promise<SelectedOptionType[]> => {
   const apiKey = process.env.REACT_APP_NOVA_POSTA_KEY;
   try {
     const response = await axios.post<ApiResponse>(NOVA_POST_URL, {
@@ -32,8 +32,8 @@ export const getNovaPostCities = async (
 
 export const getNovaPostWarehouses = async (
   cityRef: string,
-  warehouseInputValue: string
-): Promise<selectedOptionType[]> => {
+  warehouseInputValue?: string
+): Promise<SelectedOptionType[]> => {
   const apiKey = process.env.REACT_APP_NOVA_POSTA_KEY;
   try {
     const response = await axios.post(NOVA_POST_URL, {

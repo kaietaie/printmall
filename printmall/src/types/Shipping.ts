@@ -4,7 +4,7 @@ export interface ShippingState {
   error: string | null;
 }
 
-export interface selectedOptionType {
+export interface SelectedOptionType {
   value: string;
   label: string;
 }

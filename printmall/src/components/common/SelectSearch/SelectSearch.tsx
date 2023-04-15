@@ -9,7 +9,6 @@ import Select, {
 import squish from '../../../Helpers/ClassNameHelper';
 
 import './SelectSearch.sass';
-import AsyncSelect from 'react-select/async';
 
 export type ReactSelectOptionsType =
   | OptionsOrGroups<string, GroupBase<string>>
@@ -21,7 +20,7 @@ interface SelectSearchProps {
   className?: string;
   options: ReactSelectOptionsType;
   label: string;
-  value: ReactSelectValueType;
+  value: any;
   onChange:
     | ((newValue: SingleValue<string>, actionMeta: ActionMeta<string>) => void)
     | undefined;
