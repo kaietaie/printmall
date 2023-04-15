@@ -69,7 +69,6 @@ export const sendShippingInfo = async (
       ? shippingInfo.city?.value
       : shippingInfo.city?.label,
   };
-  console.log(scuCartItems);
 
   try {
     const response = await axios.post(`${BACKEND_URL}/shipping/add`, {
