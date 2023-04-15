@@ -75,7 +75,6 @@ const CheckoutForm: React.FC = () => {
   );
 
   const [cityOptionsError, setCityOptionsError] = useState<boolean>(false);
-
   const [warehouseOptions, setWarehouseOptions] = useState<
     SelectedOptionType[]
   >([]);
@@ -98,7 +97,7 @@ const CheckoutForm: React.FC = () => {
   const isUkraineSelected = selectedCountry.value === 'UA';
 
   const citySelectError =
-    cityOptionsError && !formik.values.city
+    cityOptionsError && !formik.values.city?.value
       ? t('form.cityUkrError')
       : formik.touched.city?.label && formik.errors.city?.label;
 
