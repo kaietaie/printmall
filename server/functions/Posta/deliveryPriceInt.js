@@ -1,18 +1,20 @@
 import logger from "../../logger/logger.js";
 import axios from "axios";
 
-export default async function deliveryPriceInt (cart, counrty) {
-  try {  
+export default async function deliveryPriceInt (cart, country) {
+  try {
     let subtotal = 0;
     cart.forEach((el) => {
       subtotal += el.price;
     });
 
     const deliveryData = {
-      counrty: counrty,
+      country: country,
       price: subtotal,
       weight: cart.length * 200,
     };
+
+    console.log(deliveryData, 'deliveryData')
     async function getUSDtoUAH() {
       const response = await axios(
         "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json&valcode=USD&date=" +
@@ -40,7 +42,7 @@ export default async function deliveryPriceInt (cart, counrty) {
           weight: deliveryData.weight,
           length: 25,
           packageType: "SMALL_BAG",
-          recipientCountryIso3166: deliveryData.counrty,
+          recipientCountryIso3166: deliveryData.country,
           transportType: "GROUND",
           withDeliveryNotification: true,
         },
