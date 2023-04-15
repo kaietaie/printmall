@@ -9,7 +9,6 @@ export default async function deliveryPriceInt(cart, country) {
       subtotal += el.price;
       qty += el.quantity;
     });
-    console.log(qty);
     const deliveryData = {
       country: country,
       price: subtotal,
