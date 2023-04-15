@@ -30,6 +30,7 @@ const shippingSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(sendShippingInfoThunk.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.shippingPrice = action.payload;
         state.status = 'succeeded';
         state.error = null;

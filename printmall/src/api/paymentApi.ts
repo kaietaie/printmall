@@ -59,7 +59,8 @@ export const makeMonobankPayment = async (
 };
 
 export const sendShippingInfo = async (
-  shippingInfo: CheckoutFormValues
+  shippingInfo: CheckoutFormValues,
+  scuCartItems: SkuCartItem[]
 ): Promise<string> => {
   const optimizedShippingInfo = {
     ...shippingInfo,
@@ -71,9 +72,10 @@ export const sendShippingInfo = async (
 
   try {
     const response = await axios.post(`${BACKEND_URL}/shipping/add`, {
-      shippingInfo,
+      shippingInfo: optimizedShippingInfo,
+      cart: scuCartItems,
     });
-
+    console.log(response);
     return response.data.shippingCost;
   } catch (error) {
     console.error(error);

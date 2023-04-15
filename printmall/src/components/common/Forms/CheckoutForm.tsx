@@ -9,8 +9,8 @@ import { getCheckoutValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 import countryList from 'react-select-country-list';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../store/store';
 import { sendShippingInfoThunk } from '../../../store/shipping/shippingThunks';
 import Select from '../Select';
 import SelectSearch from '../SelectSearch';
@@ -28,6 +28,8 @@ import {
 } from './constants';
 import { getShippingMethods } from './helpers';
 import SelectSearchAsync from '../SelectSearch/SelectSearchAsync';
+import { SkuCartItem } from '../../../types/Cart';
+import { selectSkuCartItems } from '../../../store/cart/cartSelectors';
 
 import './Form.sass';
 
@@ -37,6 +39,9 @@ const CheckoutForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const options = useMemo(() => countryList().getData(), []);
   const validationSchema = getCheckoutValidationSchema(t);
+  const scuCartItems = useSelector<RootState, SkuCartItem[]>(
+    selectSkuCartItems
+  );
 
   const formik = useFormik<CheckoutFormValues>({
     initialValues: {
@@ -55,12 +60,11 @@ const CheckoutForm: React.FC = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(
-        sendShippingInfoThunk({
-          ...values,
-          shipping_method: shippingMethods[0].value,
-        })
-      );
+      const shippingInfo = {
+        ...values,
+        shipping_method: shippingMethods[0].value,
+      };
+      dispatch(sendShippingInfoThunk({ shippingInfo, scuCartItems }));
 
       navigate(`/payment`);
     },
