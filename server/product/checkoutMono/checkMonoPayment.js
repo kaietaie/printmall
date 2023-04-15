@@ -6,6 +6,8 @@ import logger from "../../logger/logger.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
 import getPaymentMethodText from "../../functions/getPaymentMethodText.js";
 import { order } from "../../functions/makingCart.js";
+import { shippingAddress } from "../addShippingAddress.js";
+import sendOrderToAdmin from "../../mailer/sendOrderToAdmin.js";
 
 export default async function checkMonoPayment(req, res) {
   try {
@@ -21,25 +23,21 @@ export default async function checkMonoPayment(req, res) {
       return res.status(402).json("Payment is not recived");
     }
     const paymentDetails = await checkMonoPaymentDetails(orderId, token);
-    const captureData = {
-      paymentInfo: { id: statusPay.invoiceId, data: paymentDetails },
-      shippingInfo: order.cart[order.cart.length-1].price, // нащо тут це????
-      status: statusPay.status,
-      payment_method: paymentDetails.paymentMethod,
-      date: statusPay.createdDate,
-    };
-
+    const paymentInfo = { id: statusPay.invoiceId, data: paymentDetails };
     const tax = 0;
     let products = [];
     for (const item in order.cart) {
-      const sub_total = Number(order.cart[item].price) * Number(order.cart[item].quantity);
+      const sub_total =
+        Number(order.cart[item].price) * Number(order.cart[item].quantity);
       products.push({
         title: order.cart[item].name,
         value: order.cart[item].price * order.cart[item].quantity,
         quantity: order.cart[item].quantity,
       });
+
+      
       const sql_order_line = `insert into order_lines( order_id, product_id, item_type, price, qty, sub_total, tax, total  )
-    values ($1, $2, $3, $4, $5, $6, $7, $8);`;
+        values ($1, $2, $3, $4, $5, $6, $7, $8);`;
       await pool.query(sql_order_line, [
         statusPay.reference,
         order.cart[item].id,
@@ -51,21 +49,22 @@ export default async function checkMonoPayment(req, res) {
         order.total,
       ]);
     }
-    savePayment(captureData.paymentInfo, statusPay.reference);
+    savePayment(paymentInfo, statusPay.reference);
 
-    products.pop()
+    products.pop();
     const data = {
       products: products,
       taxes: tax,
-      shipping: order.cart[order.cart.length-1].price,
+      shipping: order.cart[order.cart.length - 1].price,
       payment_method: getPaymentMethodText(paymentDetails.paymentMethod),
       total: order.total,
       date: statusPay.createdDate,
       order_number: statusPay.reference,
       status: statusPay.status,
     };
-
-    sendConfirmationMail(captureData, data);
+    console.dir(order.cart)
+    sendConfirmationMail(shippingAddress, data);
+    // sendOrderToAdmin(shippingAddress, data, order.cart);
     return res.json(data);
   } catch (error) {
     console.error(error);

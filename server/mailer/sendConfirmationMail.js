@@ -1,19 +1,28 @@
 import logger from "../logger/logger.js";
 import mailSend from "./mailer.js";
 
-export default async function sendConfirmationMail(captureData, data) {
+export default async function sendConfirmationMail(shippingAddress, data) {
  try {
   
    const mailText = {
-     emails: [captureData.shippingInfo.email],
+     emails: [shippingAddress.email],
      subject: `Order Confirmation`,
      text: `Order confirmation`,
-     html: `<p>Dear ${captureData.shippingInfo.first_name} ${captureData.shippingInfo.last_name},</p>
+     html: `<p>Dear ${shippingAddress.first_name} ${shippingAddress.last_name},</p>
      <p>We wanted to take a moment to thank you for choosing to shop with us and for placing an order on our website. This email serves as a confirmation of your order details:</p>
         <ul>
           <li>Order Number: ${data.order_number}</li>
-          <li>Order Date: ${captureData.date}</li>
-          <li>Shipping Address: ${captureData.shippingInfo}</li>
+          <li>Order Date: ${data.date}</li>
+          <li>Shipping Address:
+            <ul>
+              <li>${shippingAddress.address_line_1}</li>
+              <li>${shippingAddress.address_line_2}</li>
+              <li>${shippingAddress.city}</li>
+              <li>${shippingAddress.country}</li>
+              <li>${shippingAddress.region}</li>
+              <li>${shippingAddress.zip_code}</li>
+            </ul>
+          </li>
           <li>Order Total: ${data.total}</li>
         </ul>
         <p>We are pleased to inform you that your order has been received and is currently being processed. Our team is working diligently to ensure that your order is fulfilled and shipped as soon as possible.</p>

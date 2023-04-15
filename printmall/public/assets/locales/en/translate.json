@@ -95,11 +95,13 @@
     "address1": "Address line 1",
     "address2": "Address line 2",
     "country": "Country",
+    "countryErrorRequired": "Country is required",
     "city": "City",
     "region": "State / Region",
     "zipCode": "Zip code",
     "addressError": "Address is required",
     "cityError": "City is required",
+    "cityUkrError": "Enter a valid city in the Ukrainian language",
     "cityValidError": "Please enter a valid city without numbers",
     "regionError": "Region is required",
     "zipErrorRequired": "Zip code is required",
@@ -123,7 +125,11 @@
     "privacyButton": "privacy policy",
     "sendMessageButton": "Send message",
     "submitCompleteMessage": "Thank you for contacting us! We have received your message and will reply as soon as possible.",
-    "submitFailMessage": "Failed to send user message"
+    "submitFailMessage": "Failed to send user message",
+    "shippingMethod": "Shipping method",
+    "warehouse": "Warehouse",
+    "warehouseErrorRequired": "Warehouse is required",
+    "proceedToPaymentBtn": "Proceed to payment"
   },
   "footer": {
     "infoMessage": "Shop the latest trends and styles from our marketplace, and stand out with unique and personalized printed clothes.",
@@ -174,5 +180,9 @@
     "purpleMessage": "I usually take my time to make decisions, but with Kram, I don't have to! Their products are just what I need, and the delivery is so fast, I don't even have to leave my tree.",
     "purpleName": "Sammy the Sloth",
     "purpleAddress": "Riga, Latvia"
+  },
+  "shipping": {
+    "novaPoshta": "Nova Poshta",
+    "ukrposhta": "Ukrposhta"
   }
 }

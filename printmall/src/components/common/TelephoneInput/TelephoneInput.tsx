@@ -11,7 +11,7 @@ interface TelephoneInputProps {
   value: string;
   error?: string | boolean | undefined;
   onChange: (value: string | undefined) => void;
-  onBlur: (e: any) => void;
+  onBlur?: (e: any) => void;
   fullWidth?: boolean;
 }
 
