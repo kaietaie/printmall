@@ -1,20 +1,21 @@
 import logger from "../../logger/logger.js";
 import axios from "axios";
 
-export default async function deliveryPriceInt (cart, country) {
+export default async function deliveryPriceInt(cart, country) {
   try {
-    let subtotal = 0;
+    let subtotal = 0,
+      qty = 0;
     cart.forEach((el) => {
       subtotal += el.price;
+      qty += el.quantity;
     });
-
+    console.log(qty);
     const deliveryData = {
       country: country,
       price: subtotal,
-      weight: cart.length * 200,
+      weight: qty * 200,
     };
 
-    console.log(deliveryData, 'deliveryData')
     async function getUSDtoUAH() {
       const response = await axios(
         "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json&valcode=USD&date=" +
@@ -50,8 +51,8 @@ export default async function deliveryPriceInt (cart, country) {
       return price.data;
     }
     const devP = await delivery(deliveryData);
-   return Math.ceil(devP.deliveryPrice)
-  } catch(error) {
+    return Math.ceil(devP.deliveryPrice);
+  } catch (error) {
     const errorMsg = `Delivery price Int calculation is failed: ${error.message}`;
     logger.error(errorMsg);
   }

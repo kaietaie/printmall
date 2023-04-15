@@ -27,7 +27,6 @@ zip_code: ""
     deliveryPrice = await deliveryPriceNP(cart, address);
   }
 
-console.log(deliveryPrice)
   return deliveryPrice;
   } catch (error) {
     const errorMsg = `Delivery price calculation is failed: ${error.message}`;

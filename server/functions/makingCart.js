@@ -23,12 +23,19 @@ export default async function makingCart(cart, paymentreq) {
       sum: price * 100,
       code: cart[i].sku,
     });}
-  }
+  } 
   cart.push({
     price: shippingCost,
     quantity: 1,
     type: "Shipping",
   });
+  if (paymentreq){
+    paymentreq.merchantPaymInfo.basketOrder.push({
+      name: "Доставка",
+      qty: 1,
+      sum: shippingCost*100,
+      code: '',
+    });}
   total += cart[cart.length - 1].price;
   order = { total, cart };
   if (paymentreq){
