@@ -8,7 +8,7 @@ export const getShippingMethods = (
   if (selectedCountry.value === 'UA') {
     return [
       {
-        value: 'new_post',
+        value: 'nova_post',
         label: t('shipping.novaPoshta'),
       },
     ];

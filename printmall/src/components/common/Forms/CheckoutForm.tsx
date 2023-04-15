@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
+
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import TextInput from '../TextInput';
 import { useFormik } from 'formik';
@@ -14,6 +17,7 @@ import { AppDispatch } from '../../../store/store';
 import { sendShippingInfoThunk } from '../../../store/shipping/shippingThunks';
 import Select from '../Select';
 import SelectSearch from '../SelectSearch';
+import AsyncSelect from 'react-select/async';
 import {
   ReactSelectOptionsType,
   ReactSelectValueType,
@@ -60,17 +64,17 @@ const CheckoutForm: React.FC = () => {
 
   const shippingMethods = getShippingMethods(selectedCountry, t);
 
-  useEffect(() => {
-    if (selectedCity.value) {
-      getNovaPostWarehouses(selectedCity.value, warehouseInputValue)
-        .then((options) => {
-          setWarehouseOptions(options);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [selectedCity.value, warehouseInputValue]);
+  // useEffect(() => {
+  //   if (selectedCity.value) {
+  //     getNovaPostWarehouses(selectedCity.value, warehouseInputValue)
+  //       .then((options) => {
+  //         setWarehouseOptions(options);
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   }
+  // }, [selectedCity.value, warehouseInputValue]);
 
   const handleCityInputChange = async (inputValue: string) => {
     setCityInputValue(inputValue);
@@ -103,6 +107,7 @@ const CheckoutForm: React.FC = () => {
   const handleCountryChange = (selectedOption: SingleValue<string>) => {
     if (selectedOption) {
       formik.setFieldValue('city', '');
+      // formik.setFieldValue('shi', '');
       const { value, label } = selectedOption as unknown as selectedOptionType;
       setSelectedCountry({ value, label });
       formik.setFieldValue('country', value);
@@ -123,6 +128,7 @@ const CheckoutForm: React.FC = () => {
       formik.setFieldValue('warehouse', '');
     }
   };
+  const isUkraineSelected = selectedCountry.value === 'UA';
 
   const formik = useFormik<CheckoutFormValues>({
     initialValues: {
@@ -133,15 +139,24 @@ const CheckoutForm: React.FC = () => {
       address_line_1: '',
       address_line_2: '',
       country: 'UA',
-      city: '',
-      warehouse: '',
+      city: null,
+      warehouse: null,
       region: '',
       zip_code: '',
-      shipping_method: shippingMethods[0].value,
+      shipping_method: '',
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(sendShippingInfoThunk(values));
+      const cityValue = isUkraineSelected ? values.city.value : values.city;
+      dispatch(
+        sendShippingInfoThunk({
+          ...values,
+          city: cityValue,
+          warehouse: values.city.value,
+          shipping_method: shippingMethods[0].value,
+        })
+      );
+
       navigate(`/payment`);
     },
   });
@@ -156,6 +171,26 @@ const CheckoutForm: React.FC = () => {
       ? t('form.cityUkrError')
       : formik.touched.city && formik.errors.city;
 
+  useEffect(() => {
+    if (formik.values.city) {
+      getNovaPostWarehouses(formik.values.city.value, warehouseInputValue)
+        .then((options) => {
+          setWarehouseOptions(options);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [formik.values.city, selectedCity.value, warehouseInputValue]);
+
+  const loadOptions = async (
+    inputValue: string,
+    callback: (options: any) => void
+  ) => {
+    const options = await getNovaPostCities(inputValue);
+    callback(options);
+  };
+  console.log(shippingMethods);
   return (
     <div className="checkout-form-container">
       <h2 className="checkout-form-title">{t('form.checkoutTitle')}</h2>
@@ -226,35 +261,67 @@ const CheckoutForm: React.FC = () => {
           />
         )}
 
-        {selectedCountry.value === 'UA' && formik.values.country && (
+        {isUkraineSelected && formik.values.country && (
           <>
-            <SelectSearch
-              label={t('form.city')}
-              inputValue={cityInputValue}
-              options={
-                novaPoshtaCityOptions as unknown as ReactSelectOptionsType
+            <AsyncSelect
+              className="select-search"
+              name="city"
+              cacheOptions
+              value={formik.values.city}
+              onChange={(option: Option) =>
+                formik.setFieldValue('city', option)
               }
-              onInputChange={handleCityInputChange}
-              onChange={handleCityChange}
-              value={selectedCity as unknown as ReactSelectValueType}
-              fullWidth
-              error={citySelectError}
+              loadOptions={loadOptions}
+              defaultOptions={DEFAULT_NOVA_POSHTA_CITY_OPTIONS}
+              isClearable
             />
 
-            <SelectSearch
-              inputValue={warehouseInputValue}
-              options={warehouseOptions as unknown as ReactSelectOptionsType}
-              onInputChange={handleWarehouseInputChange}
-              onChange={handleWarehouseChange}
-              value={selectedWarehouse as unknown as ReactSelectValueType}
-              label={t('form.warehouse')}
-              fullWidth
-              error={formik.touched.warehouse && formik.errors.warehouse}
+            {/*<SelectSearch*/}
+            {/*  label={t('form.city')}*/}
+            {/*  inputValue={cityInputValue}*/}
+            {/*  options={*/}
+            {/*    novaPoshtaCityOptions as unknown as ReactSelectOptionsType*/}
+            {/*  }*/}
+            {/*  onInputChange={handleCityInputChange}*/}
+            {/*  onChange={handleCityChange}*/}
+            {/*  value={selectedCity as unknown as ReactSelectValueType}*/}
+            {/*  fullWidth*/}
+            {/*  error={citySelectError}*/}
+            {/*/>*/}
+
+            <AsyncSelect
+              className="select-search"
+              name="warehouse"
+              cacheOptions
+              value={formik.values.warehouse}
+              onChange={(option: Option) =>
+                formik.setFieldValue('warehouse', option)
+              }
+              loadOptions={async (inputValue: string, callback) => {
+                const options = await getNovaPostWarehouses(
+                  formik.values.city.value,
+                  inputValue
+                );
+                callback(options);
+              }}
+              isClearable
+              defaultOptions={warehouseOptions}
             />
+
+            {/*<SelectSearch*/}
+            {/*  inputValue={warehouseInputValue}*/}
+            {/*  options={warehouseOptions as unknown as ReactSelectOptionsType}*/}
+            {/*  onInputChange={handleWarehouseInputChange}*/}
+            {/*  onChange={handleWarehouseChange}*/}
+            {/*  value={selectedWarehouse as unknown as ReactSelectValueType}*/}
+            {/*  label={t('form.warehouse')}*/}
+            {/*  fullWidth*/}
+            {/*  error={formik.touched.warehouse && formik.errors.warehouse}*/}
+            {/*/>*/}
           </>
         )}
 
-        {selectedCountry.value !== 'UA' && formik.values.country && (
+        {!isUkraineSelected && formik.values.country && (
           <>
             <TextInput
               className="checkout-form-short-input"

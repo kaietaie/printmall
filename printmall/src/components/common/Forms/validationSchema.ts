@@ -45,6 +45,7 @@ export const getCheckoutValidationSchema = (t: TFunction) => {
   const phoneErrorRequired = t('form.phoneErrorRequired');
   const addressError = t('form.addressError');
   const cityError = t('form.cityError');
+  const cityValidError = t('form.cityValidError');
   const countryErrorRequired = t('form.countryErrorRequired');
   const warehouseErrorRequired = t('form.warehouseErrorRequired');
   const regionError = t('form.regionError');
@@ -74,13 +75,25 @@ export const getCheckoutValidationSchema = (t: TFunction) => {
       then: () => yup.string().required(addressError),
     }),
     country: yup.string().required(countryErrorRequired),
-    city: yup
-      .string()
-      // .matches(/^[A-Za-z\u0400-\u04FF -]+$/, t('form.cityValidError'))
-      .required(cityError),
-    warehouse: yup.string().when('country', {
-      is: (country: string) => country === 'UA',
-      then: () => yup.string().required(warehouseErrorRequired),
+    city: yup.object().when('country', {
+      is: 'UA',
+      then: () =>
+        yup.object().shape({
+          label: yup
+            .string()
+            .matches(/^[A-Za-z\u0400-\u04FF -]+$/, cityValidError)
+            .required(cityError),
+        }),
+      otherwise: () => yup.string().required(cityError),
+    }),
+
+    warehouse: yup.object().when('country', {
+      is: 'UA',
+      then: () =>
+        yup.object().shape({
+          label: yup.string().required(warehouseErrorRequired),
+        }),
+      otherwise: () => yup.string().notRequired(),
     }),
     region: yup.string().when('country', {
       is: (country: string) => country !== 'UA',
