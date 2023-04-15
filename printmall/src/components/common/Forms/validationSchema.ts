@@ -78,7 +78,7 @@ export const getCheckoutValidationSchema = (t: TFunction) => {
     city: yup.object().shape({
       label: yup
         .string()
-        .matches(/^[A-Za-z\u0400-\u04FF -]+$/, cityValidError)
+        // .matches(/^[A-Za-z\u0400-\u04FF -]+$/, cityValidError)
         .required(cityError),
     }),
     warehouse: yup.object().when('country', {
