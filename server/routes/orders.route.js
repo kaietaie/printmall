@@ -1,7 +1,7 @@
 import Router from "express";
-import getAllOrders from "../orders/getAllOrders.js";
-import editOrder from "../orders/editOrder.js";
-import getOneOrder from "../orders/getOneOrder.js";
+import getAllOrders from "../adminpanel/getAllOrders.js";
+import editOrder from "../adminpanel/editOrder.js";
+import getOneOrder from "../adminpanel/getOneOrder.js";
 
 export const ordersRouter = Router();
 

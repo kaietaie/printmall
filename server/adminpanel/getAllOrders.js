@@ -44,7 +44,7 @@ export default async function getAllOrders(req, res) {
         // WHERE payment_id IS NOT NULL AND delivered = $1;
       const pagination = [archive, limit, offset];
       const response = await pool.query(sql, pagination);
-      console.dir(response.rows)
+      // console.dir(response.rows)
       const orders = response.rows;
       const total_pages = response.rows[0].total_pages;
       

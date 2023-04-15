@@ -10,6 +10,9 @@ export const selectSkuCartItems = (state: RootState) => {
     return {
       sku: item.sku_cart_product_id,
       quantity: item.quantity,
+      name: item.product_name,
+      price: item.product_price,
+      id: item.product_id,
     };
   });
 };

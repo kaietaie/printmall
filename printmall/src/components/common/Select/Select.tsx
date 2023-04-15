@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { memo } from 'react';
 import squish from '../../../Helpers/ClassNameHelper';
 
 import './Select.sass';
 
-interface countryOption {
+interface selectOption {
   value: string;
   label: string;
 }
 
 interface SelectProps {
   className?: string;
-  options: countryOption[];
+  options: selectOption[];
   label: string;
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<any>) => void;
-  onBlur: (e: any) => void;
+  onBlur?: (e: any) => void;
   fullWidth?: boolean;
 }
+
 const Select: React.FC<SelectProps> = ({
   className,
   options,
@@ -26,6 +27,7 @@ const Select: React.FC<SelectProps> = ({
   onChange,
   value,
   fullWidth,
+  name,
 }) => {
   return (
     <div
@@ -35,16 +37,15 @@ const Select: React.FC<SelectProps> = ({
         ${className ? className : ''}
       `}
     >
-      <label htmlFor="country">{label}</label>
+      <label htmlFor={name}>{label}</label>
       <select
         defaultChecked={true}
         onBlur={onBlur}
         onChange={onChange}
         value={value}
-        name="country"
-        id="country"
+        name={name}
+        id={name}
       >
-        <option value="UA">Ukraine</option>
         {options.map((option) => {
           return (
             <option key={option.value} value={option.value}>
@@ -57,4 +58,4 @@ const Select: React.FC<SelectProps> = ({
   );
 };
 
-export default Select;
+export default memo(Select);
