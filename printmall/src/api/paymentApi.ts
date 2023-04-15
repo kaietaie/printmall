@@ -64,10 +64,9 @@ export const sendShippingInfo = async (
   const optimizedShippingInfo = {
     ...shippingInfo,
     warehouse: shippingInfo.warehouse?.value,
-    city:
-      typeof shippingInfo.city === 'string'
-        ? shippingInfo.city
-        : shippingInfo.city?.value,
+    city: shippingInfo.city.value
+      ? shippingInfo.city?.value
+      : shippingInfo.city?.label,
   };
 
   try {
@@ -81,19 +80,3 @@ export const sendShippingInfo = async (
     throw new Error('Failed to create PayPal order');
   }
 };
-
-// export const getMonobankOrderDetails = async (
-//   orderId: string
-// ): Promise<PaymentDetails> => {
-//   try {
-//     const response = await axios.post(
-//       'http://localhost:5000/paymentmono/check-mono-payment',
-//       { orderId }
-//     );
-//     return response.data;
-//   } catch (error) {
-//     // console.error(error);
-//     // throw new Error('Failed to get monobank order details');
-//     return Promise.reject(error);
-//   }
-// };
