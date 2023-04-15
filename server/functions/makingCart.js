@@ -29,10 +29,8 @@ export default async function makingCart(cart, paymentreq) {
     quantity: 1,
     type: "Shipping",
   });
-  console.log(cart[cart.length - 1])
   total += cart[cart.length - 1].price;
   order = { total, cart };
-  console.log(order.total)
   if (paymentreq){
     return {paymentreq, order}
   }

@@ -6,7 +6,6 @@ export default async function savePayment(paymentInfo, order_id) {
     RETURNING payment_id;`;
   if (paymentInfo.id) {
     const { id, data } = paymentInfo;
-    console.log({id})
     const paymentId = await pool.query(sql, [id, data]);
     const pay_id = paymentId.rows[0].payment_id;
     if ( order_id) {
