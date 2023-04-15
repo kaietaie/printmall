@@ -18,12 +18,12 @@ shipping_method: "nova_post"
 warehouse: "1ec09d2e-e1c2-11e3-8c4a-0050568002cf"
 zip_code: ""
     */
-   
+
    let deliveryPrice
   if (address.shipping_method === "ukr_post") {
     deliveryPrice = await deliveryPriceInt(cart, address.country)
   }
-  if (address.shipping_method === "new_post"){
+  if (address.shipping_method === "nova_post"){
     deliveryPrice = await deliveryPriceNP(cart, address);
   }
 

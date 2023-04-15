@@ -1,3 +1,5 @@
+import { SelectedOptionType } from './Shipping';
+
 export interface SupportFormValues {
   first_name: string;
   last_name: string;
@@ -14,8 +16,8 @@ export interface CheckoutFormValues {
   address_line_1: string;
   address_line_2: string;
   country: string;
-  city: string;
-  warehouse: string;
+  city: SelectedOptionType;
+  warehouse: SelectedOptionType;
   region: string;
   zip_code: string;
   shipping_method: string;

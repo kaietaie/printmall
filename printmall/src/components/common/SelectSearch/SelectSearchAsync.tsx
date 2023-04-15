@@ -1,5 +1,5 @@
 import React from 'react';
-import Select, {
+import {
   ActionMeta,
   GroupBase,
   OptionsOrGroups,
@@ -7,7 +7,7 @@ import Select, {
   SingleValue,
 } from 'react-select';
 import squish from '../../../Helpers/ClassNameHelper';
-
+import AsyncSelect from 'react-select/async';
 import './SelectSearch.sass';
 
 export type ReactSelectOptionsType =
@@ -18,33 +18,29 @@ export type ReactSelectValueType = PropsValue<string> | undefined;
 
 interface SelectSearchProps {
   className?: string;
-  options: ReactSelectOptionsType;
   label: string;
   value: any;
   onChange:
     | ((newValue: SingleValue<string>, actionMeta: ActionMeta<string>) => void)
     | undefined;
-  defaultInputValue?: string;
-  onInputChange?: (inputValue: string) => Promise<void>;
   name?: string;
-  inputValue?: string;
   fullWidth?: boolean;
+  defaultOptions: any;
+  loadOptions: any;
   // onBlur?: (e: any) => void;
-  error?: string | boolean | undefined;
+  error?: any;
 }
 
-const SelectSearch: React.FC<SelectSearchProps> = ({
-  options,
+const SelectSearchAsync: React.FC<SelectSearchProps> = ({
   name,
   value,
   label,
   onChange,
   className,
-  defaultInputValue,
-  onInputChange,
-  inputValue,
   fullWidth,
   error,
+  defaultOptions,
+  loadOptions,
 }) => {
   return (
     <div
@@ -56,10 +52,8 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
       `}
     >
       <label htmlFor="country">{label}</label>
-      <Select
-        inputValue={inputValue}
+      <AsyncSelect
         name={name}
-        defaultInputValue={defaultInputValue}
         styles={{
           control: (baseStyles) => ({
             ...baseStyles,
@@ -69,11 +63,12 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
             borderRadius: 6,
           }),
         }}
-        options={options}
         value={value}
         onChange={onChange}
-        onInputChange={onInputChange}
+        defaultOptions={defaultOptions}
+        loadOptions={loadOptions}
         isClearable
+        cacheOptions
       />
 
       {error && <span className="text-input-error-message">{error}</span>}
@@ -81,4 +76,4 @@ const SelectSearch: React.FC<SelectSearchProps> = ({
   );
 };
 
-export default SelectSearch;
+export default SelectSearchAsync;

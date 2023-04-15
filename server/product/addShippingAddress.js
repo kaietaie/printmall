@@ -9,5 +9,5 @@ export default async function addShippingAddress (req, res) {
     cart = req.body.cart;
     shippingId = await saveShippingInfo(shippingInfo);
     shippingCost = await deliveryPrice(cart, shippingInfo);
-    return res.status(200).json(shippingCost)
+    return res.status(200).json({shippingCost})
 }
