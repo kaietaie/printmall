@@ -62,17 +62,9 @@ export const sendShippingInfo = async (
   shippingInfo: CheckoutFormValues,
   scuCartItems: SkuCartItem[]
 ): Promise<string> => {
-  const optimizedShippingInfo = {
-    ...shippingInfo,
-    warehouse: shippingInfo.warehouse?.value,
-    city: shippingInfo.city.value
-      ? shippingInfo.city?.value
-      : shippingInfo.city?.label,
-  };
-
   try {
     const response = await axios.post(`${BACKEND_URL}/shipping/add`, {
-      shippingInfo: optimizedShippingInfo,
+      shippingInfo: shippingInfo,
       cart: scuCartItems,
     });
     return response.data.shippingCost;
