@@ -9,8 +9,6 @@ export async function createOrder(order) {
   const shippingCost = Number((order.cart[order.cart.length - 1].price / exchangeRate).toFixed(2));
   const total = Number((order.total / exchangeRate).toFixed(2));
   const cart = [...order.cart];
-  console.log(order.cart)
-  console.log({total, shippingCost})
   cart.pop();
 
 

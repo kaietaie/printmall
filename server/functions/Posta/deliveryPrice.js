@@ -30,7 +30,6 @@ zip_code: ""
       price: subtotal,
       weight: qty * 200,
     };
-console.log({deliveryData})
     let deliveryPrice;
     if (address.shipping_method === "ukr_post") {
       deliveryPrice = await deliveryPriceInt(deliveryData);
