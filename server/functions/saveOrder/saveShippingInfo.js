@@ -2,23 +2,25 @@ import { pool } from "../../dbConnection.js";
 import logger from "../../logger/logger.js";
 
 export default async function saveShippingInfo(shippingInfo) {
-  // {
-  //   address_line_1: "м. Березань, вул. Шевченків шлях, б. 112, кв 10";
-  //   address_line_2: "м. Березань, вул. Шевченків шлях, б. 112, кв 10";
-  //   city: "Berezan";
-  //   country: "UA";
-  //   email: "aratatem2013@gmail.com";
-  //   first_name: "фіуа";
-  //   last_name: "Smirnov";
-  //   phone: "380639366753";
-  //   region: "Київська область";
-  //   zip_code: "07540";
-  // }
+  /* income
+address_line_1: ""
+address_line_2: ""
+city: "b1a78da1-cfab-11e0-baa0-c8912765d3f7"
+country: "UA"
+email: "aratatem2013@gmail.com"
+first_name: "Artem"
+last_name: "Smirnov"
+phone: "380639366753"
+region: ""
+shipping_method: "nova_post"
+warehouse: "1ec09d2e-e1c2-11e3-8c4a-0050568002cf"
+zip_code: ""
+    */
 try {
   
   const sql_address = `insert into shipping_info( first_name, last_name, phone, email, 
-    address_line_1, address_line_2, city, country, region, zip  ) 
-    values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    address_line_1, address_line_2, city, country, region, zip, shipping_method,  warehouse ) 
+    values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     RETURNING shipping_info_id;`;
     
     const addressInfo = await pool.query(sql_address, [
@@ -28,12 +30,13 @@ try {
       shippingInfo.email,
       shippingInfo.address_line_1,
       shippingInfo.address_line_2,
-      shippingInfo.city,
+      JSON.stringify(shippingInfo.city),
       shippingInfo.country,
       shippingInfo.region,
       shippingInfo.zip_code,
+      shippingInfo.shipping_method,
+      JSON.stringify(shippingInfo.warehouse)
     ]);
-    
     return addressInfo.rows[0].shipping_info_id
   } catch (error) {
     const errorMsg = `Save shipping is failed: ${error.message}`;

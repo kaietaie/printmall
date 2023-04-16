@@ -1,6 +1,6 @@
 import logger from "../../logger/logger.js";
 import deliveryPriceInt from "./deliveryPriceInt.js";
-import deliveryPriceNP from "./deliveryPriceNP.js";
+import { deliveryPriceNP } from "./novaPostaAPI.js";
 
 export default async function deliveryPrice(cart, address) {
   try {
@@ -18,19 +18,30 @@ shipping_method: "nova_post"
 warehouse: "1ec09d2e-e1c2-11e3-8c4a-0050568002cf"
 zip_code: ""
     */
+    let subtotal = 0,
+      qty = 0;
+    cart.forEach((el) => {
+      subtotal += el.price;
+      qty += el.quantity;
+    });
+    const deliveryData = {
+      country: address.country,
+      city: address.city.value,
+      price: subtotal,
+      weight: qty * 200,
+    };
+console.log({deliveryData})
+    let deliveryPrice;
+    if (address.shipping_method === "ukr_post") {
+      deliveryPrice = await deliveryPriceInt(deliveryData);
+    }
+    if (address.shipping_method === "nova_post") {
+      deliveryPrice = await deliveryPriceNP(deliveryData);
+    }
 
-   let deliveryPrice
-  if (address.shipping_method === "ukr_post") {
-    deliveryPrice = await deliveryPriceInt(cart, address.country)
-  }
-  if (address.shipping_method === "nova_post"){
-    deliveryPrice = await deliveryPriceNP(cart, address);
-  }
-
-  return deliveryPrice;
+    return deliveryPrice;
   } catch (error) {
     const errorMsg = `Delivery price calculation is failed: ${error.message}`;
     logger.error(errorMsg);
-    res.status(500).send({ Error: error.message });
   }
 }

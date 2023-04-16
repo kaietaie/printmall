@@ -1,7 +1,7 @@
 import Router from "express";
 import createProduct from "../product/poductCard/createProduct.js";
 import getProduct from "../product/poductCard/getProduct.js";
-import getAdminProduct from "../product/poductCard/getAdminProduct.js";
+import getAdminProduct from "../adminpanel/getAdminProduct.js";
 export const productRouter = Router();
 
 productRouter.post('/create', createProduct)

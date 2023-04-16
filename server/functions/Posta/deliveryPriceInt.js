@@ -1,28 +1,12 @@
 import logger from "../../logger/logger.js";
 import axios from "axios";
+import getUSDtoUAH from "./getExchange.js";
 
-export default async function deliveryPriceInt(cart, country) {
+export default async function deliveryPriceInt(deliveryData) {
   try {
-    let subtotal = 0,
-      qty = 0;
-    cart.forEach((el) => {
-      subtotal += el.price;
-      qty += el.quantity;
-    });
-    const deliveryData = {
-      country: country,
-      price: subtotal,
-      weight: qty * 200,
-    };
+    
 
-    async function getUSDtoUAH() {
-      const response = await axios(
-        "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json&valcode=USD&date=" +
-          new Date().toISOString().slice(0, 10).replace(/-/g, "")
-      );
-
-      return response.data[0].rate;
-    }
+   
     const exchangeRate = await getUSDtoUAH();
 
     async function delivery(deliveryData) {

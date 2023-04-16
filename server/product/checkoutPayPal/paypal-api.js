@@ -1,12 +1,19 @@
 import fetch from "node-fetch";
+import getUSDtoUAH from "../../functions/Posta/getExchange.js";
 
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 
 export async function createOrder(order) {
-  const shippingCost = order.cart[order.cart.length - 1].price;
+  const exchangeRate = await getUSDtoUAH();
+  const shippingCost = Number((order.cart[order.cart.length - 1].price / exchangeRate).toFixed(2));
+  const total = Number((order.total / exchangeRate).toFixed(2));
   const cart = [...order.cart];
+  console.log(order.cart)
+  console.log({total, shippingCost})
   cart.pop();
+
+
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const response = await fetch(url, {
@@ -21,7 +28,7 @@ export async function createOrder(order) {
         {
           amount: {
             currency_code: "EUR",
-            value: order.total,
+            value: total,
             breakdown: {
               shipping: {
                 currency_code: "EUR",
@@ -29,7 +36,7 @@ export async function createOrder(order) {
               },
               item_total: {
                 currency_code: "EUR",
-                value: order.total - shippingCost,
+                value: Number((total - shippingCost).toFixed(2)),
               },
             },
           },
@@ -38,7 +45,7 @@ export async function createOrder(order) {
               name: name,
               unit_amount: {
                 currency_code: "EUR",
-                value: price,
+                value: Number((price / exchangeRate).toFixed(2)),
               },
               quantity: quantity,
             };

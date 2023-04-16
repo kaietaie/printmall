@@ -15,6 +15,8 @@ export default async function getOneOrder(req, res) {
       'city', s.city,
       'region', s.region,
       'country', s.country,
+      'shipping_method', shipping_method,
+      'warehouse', warehouse,
       'zip', s.zip
     ) AS shipping ,
     json_build_object( 
@@ -38,6 +40,8 @@ export default async function getOneOrder(req, res) {
       'city', s.city,
       'region', s.region,
       'country', s.country,
+      'shipping_method', shipping_method,
+      'warehouse', warehouse,
       'zip', s.zip
     ) AS shipping 
     from orders as o
@@ -48,6 +52,7 @@ export default async function getOneOrder(req, res) {
     const response_all = await pool.query(sql_all, [orderId]);
 
     const order = { order: response.rows[0], orderLines: response_line.rows, allinfo: response_all.rows};
+    console.dir(order)
     return res.json(order);
   } catch (error) {
     const errorMsg = `Get order is failed: ${error.message}`;

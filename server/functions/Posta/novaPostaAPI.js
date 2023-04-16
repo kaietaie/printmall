@@ -1,71 +1,11 @@
 import axios from "axios";
-import fs from "fs";
 import logger from "../../logger/logger.js";
 const apiUrl = "https://api.novaposhta.ua/v2.0/json/";
-
-// const CityRecipient = "";
-
-// const getCities = (string) => {
-//   const query = {
-//     apiKey: process.env.NOVA_POSTA_KEY,
-//     modelName: "Address",
-//     calledMethod: "getCities",
-//     methodProperties: {
-//       FindByString: string || "",
-//     },
-//   };
-
-//   return data.Ref
-// };
-
-// const getWarehouses = {
-//   apiKey: process.env.NOVA_POSTA_KEY,
-//   modelName: "Address",
-//   calledMethod: "getWarehouses",
-//   methodProperties: {
-//     CityName: "Київ",
-//     CityRef: "CityRef",
-//     Page: "1",
-//     Limit: "50",
-//     Language: "UA",
-//     TypeOfWarehouseRef: "00000000-0000-0000-0000-000000000000",
-//     WarehouseId: "151",
-//   },
-// };
-
-// const getDocumentPrice = {
-//   apiKey: process.env.NOVA_POSTA_KEY,
-//   modelName: "InternetDocument",
-//   calledMethod: "getDocumentPrice",
-//   methodProperties: {
-//     CitySender: "00000000-0000-0000-0000-000000000000",
-//     CityRecipient: CityRecipient,
-//     Weight: "0.1",
-//     ServiceType: "WarehouseWarehouse",
-//     Cost: "300",
-//     CargoType: "Cargo",
-//     SeatsAmount: "2",
-//     RedeliveryCalculate: {
-//       CargoType: "Money",
-//       Amount: "100",
-//     },
-//     PackCount: "1",
-//     PackRef: "00000000-0000-0000-0000-000000000000",
-//     Amount: "100",
-//     CargoDetails: [
-//       {
-//         CargoDescription: "00000000-0000-0000-0000-000000000000",
-//         Amount: "2",
-//       },
-//     ],
-//     CargoDescription: "00000000-0000-0000-0000-000000000000",
-//   },
-// };
+const apiKey = process.env.NOVA_POSTA_KEY;
 
 // Функція, яка завантажує список відділень Нової Пошти в обраному місті
 
-export default async function downloadNovaPoshtaOffices(req, res) {
-  const apiKey = process.env.NOVA_POSTA_KEY;
+export async function downloadNovaPoshtaOffices(req, res) {
   const { cityName } = req.body;
   try {
     const response = await axios.post(apiUrl, {
@@ -81,6 +21,7 @@ export default async function downloadNovaPoshtaOffices(req, res) {
     const cityRef = response.data.data[0].Ref;
 
     const officesResponse = await axios.post(apiUrl, {
+      apiKey: apiKey,
       modelName: "AddressGeneral",
       calledMethod: "getWarehouses",
       methodProperties: {
@@ -88,7 +29,6 @@ export default async function downloadNovaPoshtaOffices(req, res) {
         Limit: 50,
         Page: 1,
       },
-      apiKey: apiKey,
     });
 
     const offices = officesResponse.data.data.map((office) => {
@@ -97,11 +37,7 @@ export default async function downloadNovaPoshtaOffices(req, res) {
         value: office.Description,
       };
     });
-return res.json(offices)
-    // const fileName = `${cityName}_offices.json`;
-    // console.log(offices)
-    // fs.writeFileSync(fileName, JSON.stringify(offices, null, 2));
-    // console.log(`File ${fileName} saved!`);
+    return res.json(offices);
   } catch (error) {
     console.error(error);
     const errorMsg = `NovaPosta get warehouses is failed: ${error.message}`;
@@ -110,33 +46,93 @@ return res.json(offices)
   }
 }
 
-// // Функція, яка запускає завантаження відділень раз на день о 10:00
-// function runDailyDownload() {
-//   // Встановлюємо час, коли має бути запущена функція
-//   const downloadTime = new Date();
-//   downloadTime.setHours(10, 0, 0, 0);
+export async function deliveryPriceNP(deliveryData) {
+  try {
+    const cityKyiv = "e718a680-4b33-11e4-ab6d-005056801329";
 
-//   // Встановлюємо інтервал між запусками в 24 години
-//   const interval = 24 * 60 * 60 * 1000;
+    async function delivery(deliveryData) {
+      return await axios.post(apiUrl, {
+        apiKey: apiKey,
+        modelName: "InternetDocument",
+        calledMethod: "getDocumentPrice",
+        methodProperties: {
+          CitySender: cityKyiv,
+          CityRecipient: deliveryData.city,
+          Weight: `${deliveryData.weight / 1000}`,
+          ServiceType: "WarehouseWarehouse",
+          Cost: `${deliveryData.price}`,
+          CargoType: "Cargo",
+          SeatsAmount: "1",
+        },
+      });
+    }
+    const response = await delivery(deliveryData);
+    const price = response.data.data[0].Cost;
+    return price;
+  } catch (error) {
+    const errorMsg = `Delivery price NP calculation is failed: ${error.message}`;
+    logger.error(errorMsg);
+  }
+}
 
-//   // Обчислюємо час, який залишився до ближчого запуску
-//   let timeUntilDownload = downloadTime.getTime() - new Date().getTime();
+export async function saveEHNP(deliveryData) {
+  try {
+    const cityKyiv = "e718a680-4b33-11e4-ab6d-005056801329";
 
-//   // Якщо час до запуску вже пройшов, то запускаємо функцію відразу
-//   if (timeUntilDownload <= 0) {
-//     timeUntilDownload += interval;
-//   }
+    async function delivery(deliveryData) {
+      return await axios.post(apiUrl, {
+        apiKey: apiKey,
+        modelName: "InternetDocument",
+        calledMethod: "save",
+        methodProperties: {
+          SenderWarehouseIndex: "101/102",
+          RecipientWarehouseIndex: "101/102",
+          PaymentMethod: "NonCash",
+          CargoType: "Parcel",
+          VolumeGeneral: "0.45", // Загальний об'єм, м.куб (min - 0.0004)
+          Weight: "0.5",
+          ServiceType: "WarehouseWarehouse",
+          Description: "Замовлення з магазину Kram Market",
+          Cost: "15000", // Оціночна вартість
+          CitySender: "00000000-0000-0000-0000-000000000000", // Ідентифікатор міста відправника
+          Sender: "00000000-0000-0000-0000-000000000000", //Ідентифікатор відправника
+          SenderAddress: "00000000-0000-0000-0000-000000000000", // Ідентифікатор адреси відправника. REF адреси брати з відповіді методу Список адрес контрагента
+          ContactSender: "00000000-0000-0000-0000-000000000000", // Ідентифікатор контактної особи відправника. REF брати з відповіді методу Список контактних осіб контрагента
+          SendersPhone: "380660000000", // Телефон відправника у форматі: +380660000000,
+          CityRecipient: "00000000-0000-0000-0000-000000000000",
+          Recipient: "00000000-0000-0000-0000-000000000000",
+          RecipientAddress: "00000000-0000-0000-0000-000000000000",
+          ContactRecipient: "00000000-0000-0000-0000-000000000000",
+          RecipientsPhone: "380660000000",
+        },
+      });
+    }
+    const response = await delivery(deliveryData);
+    const price = response.data.data[0].Cost;
+    return price;
+  } catch (error) {
+    const errorMsg = `Delivery price NP calculation is failed: ${error.message}`;
+    logger.error(errorMsg);
+  }
+}
 
-//   // Запускаємо функцію раз на день о 10
-//   setTimeout(() => {
-//     // Викликаємо функцію downloadNovaPoshtaOffices з необхідними параметрами
-//     const cityName = "Київ";
-//     const apiKey = "YOUR_API_KEY";
-//     downloadNovaPoshtaOffices(cityName, apiKey);
-//     // Запускаємо функцію ще раз через 24 години
-//     runDailyDownload();
-//   }, timeUntilDownload);
-// }
-
-// // Запускаємо функцію runDailyDownload
-// runDailyDownload();
+export async function getCounterpartiesNP(deliveryData) {
+  try {
+    async function delivery(deliveryData) {
+      return await axios.post(apiUrl, {
+        apiKey: apiKey,
+        modelName: "Counterparty",
+        calledMethod: "getCounterparties",
+        methodProperties: {
+          CounterpartyProperty: "Sender",
+        },
+      });
+    }
+    const response = await delivery(deliveryData);
+    const price = response.data.data[0].Cost;
+    return price;
+  } catch (error) {
+    const errorMsg = `Delivery price NP calculation is failed: ${error.message}`;
+    logger.error(errorMsg);
+  }
+}
