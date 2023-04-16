@@ -8,6 +8,7 @@ export async function createOrder(order) {
   const exchangeRate = await getUSDtoUAH();
   const shippingCost = Number((order.cart[order.cart.length - 1].price / exchangeRate).toFixed(2));
   const total = Number((order.total / exchangeRate).toFixed(2));
+  const item_total_value =  Number((total - shippingCost).toFixed(2));
   const cart = [...order.cart];
   console.log(order.cart)
   console.log({total, shippingCost})
@@ -36,7 +37,7 @@ export async function createOrder(order) {
               },
               item_total: {
                 currency_code: "EUR",
-                value: Number((total - shippingCost).toFixed(2)),
+                value: item_total_value,
               },
             },
           },

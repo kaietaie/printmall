@@ -23,7 +23,7 @@ export default async function mailSend(data) {
   // verify connection configuration
   transporter.verify(function (error, success) {
     if (error) {
-      const errorMsg = `Get product is failed: ${error.message}`;
+      const errorMsg = `Mailer is failed: ${error.message}`;
       logger.error(errorMsg);
     } else {
       console.log("Server is ready to take our messages");
@@ -39,7 +39,7 @@ export default async function mailSend(data) {
   }); 
   // console.dir(info);
 } catch (error) {
-  const errorMsg = `Get product is failed: ${error.message}`;
+  const errorMsg = `Mailer is failed: ${error.message}`;
   logger.error(errorMsg);
 }
 }

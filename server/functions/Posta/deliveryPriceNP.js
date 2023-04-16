@@ -13,7 +13,7 @@ console.log({address})
         calledMethod: "getDocumentPrice",
         methodProperties: {
           CitySender: "e718a680-4b33-11e4-ab6d-005056801329",
-          CityRecipient: address.city,
+          CityRecipient: address.city.value,
           Weight: "0.3",
           ServiceType: "WarehouseWarehouse",
           Cost: "300",

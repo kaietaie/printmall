@@ -4,10 +4,9 @@ import checkStatus from "../../functions/checkMonoPaymentStatus.js";
 import savePayment from "../../functions/saveOrder/savePayment.js";
 import logger from "../../logger/logger.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
+import sendOrderToAdmin from "../../mailer/sendOrderToAdmin.js";
 import getPaymentMethodText from "../../functions/getPaymentMethodText.js";
 import { order } from "../../functions/makingCart.js";
-import { shippingAddress } from "../addShippingAddress.js";
-import sendOrderToAdmin from "../../mailer/sendOrderToAdmin.js";
 
 export default async function checkMonoPayment(req, res) {
   try {
@@ -63,8 +62,9 @@ export default async function checkMonoPayment(req, res) {
       status: statusPay.status,
     };
     console.dir(order.cart)
-    sendConfirmationMail(shippingAddress, data);
-    // sendOrderToAdmin(shippingAddress, data, order.cart);
+    sendConfirmationMail(data);
+    const dataMail = {id:statusPay.reference }
+    sendOrderToAdmin(dataMail);
     return res.json(data);
   } catch (error) {
     console.error(error);
