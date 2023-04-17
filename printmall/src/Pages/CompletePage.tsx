@@ -2,7 +2,7 @@ import PurchaseStatus from '../components/common/PurchaseStatus';
 import CompleteContent from '../components/CompleteContent';
 import { useEffect, useRef } from 'react';
 import { clearCart } from '../store/cart/cartSlice';
-import { clearPaymentInfo } from '../store/payment/paymentSlice';
+import { clearPaymentDetails } from '../store/payment/paymentSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import { PaymentState } from '../types/Payment';
@@ -33,7 +33,7 @@ const CompletePage = () => {
     dispatch(clearShippingPrice());
 
     return () => {
-      dispatch(clearPaymentInfo());
+      dispatch(clearPaymentDetails());
       navigate('/seller/Go_A');
     };
   }, [dispatch, navigate, status]);

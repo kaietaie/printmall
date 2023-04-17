@@ -20,10 +20,12 @@ const paymentSlice = createSlice({
       state.orderId = action.payload;
       localStorage.setItem('orderId', JSON.stringify(state.orderId));
     },
-    clearPaymentInfo: (state) => {
+    clearPaymentDetails: (state) => {
       state.paymentDetails = null;
-      state.orderId = null;
       state.status = 'idle';
+    },
+    clearOrderId: (state) => {
+      state.orderId = null;
       localStorage.setItem('orderId', JSON.stringify(state.orderId));
     },
   },
@@ -44,6 +46,7 @@ const paymentSlice = createSlice({
   },
 });
 
-export const { clearPaymentInfo, setOrderId } = paymentSlice.actions;
+export const { clearPaymentDetails, setOrderId, clearOrderId } =
+  paymentSlice.actions;
 
 export default paymentSlice.reducer;

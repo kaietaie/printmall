@@ -11,6 +11,7 @@ import { AppDispatch, RootState } from '../store/store';
 import { toast } from 'react-toastify';
 import { PaymentState } from '../types/Payment';
 import { useTranslation } from 'react-i18next';
+import { clearOrderId } from '../store/payment/paymentSlice';
 
 const CheckPaymentPage = () => {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ const CheckPaymentPage = () => {
 
     if (orderId) {
       dispatch(captureOrderThunk({ orderId, type: 'monobank' }));
+      dispatch(clearOrderId());
     }
   }, [dispatch, orderId]);
 
@@ -44,7 +46,11 @@ const CheckPaymentPage = () => {
     if (status === 'succeeded') {
       navigate('/complete');
     }
-  }, [navigate, status, t]);
+
+    if (status === 'idle' && !orderId) {
+      navigate(`/seller/Go_A`);
+    }
+  }, [navigate, orderId, status, t]);
 
   return <Loader />;
 };
