@@ -2,10 +2,9 @@ import axios from "axios";
 import saveOrderId from "../../functions/saveOrder/saveOrderId.js";
 import logger from "../../logger/logger.js";
 import makingCart from "../../functions/makingCart.js";
-import { shippingId } from "../addShippingAddress.js";
+import { shippingId, cart } from "../addShippingAddress.js";
 
 export default async function createMonoOrder(req, res) {
-  const { cart } = req.body; // [{quantity, sku },{quantity, sku }...]
   try {
     const status = "";
     const orderId = await saveOrderId(shippingId, status); // потім додоати id_payment

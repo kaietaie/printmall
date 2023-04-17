@@ -15,7 +15,7 @@ export default async function saveShippingInfo(shippingInfo) {
   //   zip_code: "07540";
   // }
 try {
-  
+  console.dir({shippingInfo})
   const sql_address = `insert into shipping_info( first_name, last_name, phone, email, 
     address_line_1, address_line_2, city, country, region, zip  ) 
     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
