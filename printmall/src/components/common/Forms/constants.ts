@@ -13,6 +13,5 @@ export const DEFAULT_NOVA_POSHTA_CITY_OPTIONS = [
   { value: 'db5c88f5-391c-11dd-90d9-001a92567626', label: 'Львів' },
   { value: 'db5c88d0-391c-11dd-90d9-001a92567626', label: 'Одеса' },
   { value: 'db5c88e0-391c-11dd-90d9-001a92567626', label: 'Харків' },
-  { value: 'db5c88e0-391c-11dd-90d9-001a92567626', label: 'Харків' },
   { value: 'db5c88f0-391c-11dd-90d9-001a92567626', label: 'Дніпро' },
 ];
