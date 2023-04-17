@@ -59,8 +59,8 @@ export async function addAddress(deliveryData) {
         foreignStreetHouseApartment: street,
       },
     });
-    const response = price.id
-    return response
+    const response = price.id;
+    return response;
   } catch (error) {
     const errorMsg = `Add international address UKR post is failed: ${error.message}`;
     logger.error(errorMsg);
@@ -68,7 +68,6 @@ export async function addAddress(deliveryData) {
 }
 export async function getAddress(id) {
   try {
-
     const address = await axios({
       method: "get",
       url: url + "/addresses",
@@ -76,9 +75,9 @@ export async function getAddress(id) {
         Authorization: `Bearer ${process.env.UKR_POSTA_BEARER}`,
         "Content-Type": "application/json",
       },
-      params: {id}
-    })
-    return address
+      params: { id },
+    });
+    return address;
   } catch (error) {
     const errorMsg = `Get address UKR post is failed: ${error.message}`;
     logger.error(errorMsg);
@@ -87,23 +86,29 @@ export async function getAddress(id) {
 
 export async function makeClient(client) {
   try {
-
+    const {deliveryData} = client 
+    const addressId = await addAddress(deliveryData)
     const address = await axios({
-      method: "post",
+      method: "post", 
       url: url + "/clients",
       headers: {
         Authorization: `Bearer ${process.env.UKR_POSTA_BEARER}`,
         "Content-Type": "application/json",
       },
-      params: {id}
-    })
-    return address
+      data: {
+        firstName: "Олександр",
+        lastName: "Петренко",
+        addressId: addressId,
+        phoneNumber: 380672217743,
+        type: "INDIVIDUAL",
+      },
+    });
+    return address;
   } catch (error) {
     const errorMsg = `Get address UKR post is failed: ${error.message}`;
     logger.error(errorMsg);
   }
 }
-
 
 /*
 {
