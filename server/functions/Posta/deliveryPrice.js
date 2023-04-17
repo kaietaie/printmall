@@ -1,5 +1,5 @@
 import logger from "../../logger/logger.js";
-import deliveryPriceInt from "./deliveryPriceInt.js";
+import {deliveryPriceInt} from "./ukrPostaAPI.js";
 import { deliveryPriceNP } from "./novaPostaAPI.js";
 
 export default async function deliveryPrice(cart, address) {
