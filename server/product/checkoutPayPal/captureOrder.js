@@ -3,6 +3,7 @@ import saveOrder from "../../functions/saveOrder.js";
 import sendConfirmationMail from "../../mailer/sendConfirmationMail.js";
 import logger from "../../logger/logger.js";
 import { shippingAddress } from "../addShippingAddress.js";
+import sendOrderToAdmin from "../../mailer/sendOrderToAdmin.js";
 
 // Call API with your client and get a response for your call
 export default async function capturePayPalOrder(req, res) {
@@ -18,8 +19,9 @@ export default async function capturePayPalOrder(req, res) {
       date: captureData.purchase_units[0].payments.captures[0].create_time,
     };
     const data = await saveOrder(capturedOrder);
-    sendConfirmationMail(captureData, data);
-    // sendOrderToAdmin(shippingAddress, data, sql_order_line);
+    sendConfirmationMail(data);
+    const dataMail = { id: data.order_number}
+    sendOrderToAdmin(dataMail);
     res.json(data);
   } catch (error) {
     const errorMsg = `capturePayPalOrder is failed: ${error.message}`;

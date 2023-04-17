@@ -6,6 +6,7 @@ export interface SupportFormValues {
   email: string;
   phone: string;
   message: string;
+  lang: string;
 }
 
 export interface CheckoutFormValues {

@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { getSupportValidationSchema } from './validationSchema';
 import TelephoneInput from '../TelephoneInput/TelephoneInput';
 import { Link } from 'react-router-dom';
+import i18next from 'i18next';
 
 import './Form.sass';
 
@@ -35,6 +36,7 @@ const SupportForm: React.FC<SupportFormProps> = ({ onClose }) => {
       email: '',
       phone: '',
       message: '',
+      lang: i18next.language,
     },
     validationSchema,
     onSubmit: async (values) => {
