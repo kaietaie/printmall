@@ -8,13 +8,10 @@ import { SkuCartItem } from '../types/Cart';
 import { BACKEND_URL, CAPTURE_PAYMENT_URLS } from './constants';
 import { CheckoutFormValues } from '../types/Forms';
 
-export const createPayPalOrder = async (
-  SkuCartItem: SkuCartItem[]
-): Promise<string> => {
+export const createPayPalOrder = async (): Promise<string> => {
   try {
     const response = await axios.post<{ id: string }>(
-      `${BACKEND_URL}/payment/create-paypal-order`,
-      { cart: SkuCartItem }
+      `${BACKEND_URL}/payment/create-paypal-order`
     );
 
     return response.data.id;
@@ -42,21 +39,19 @@ export const captureOrder = async ({
   }
 };
 
-export const makeMonobankPayment = async (
-  SkuCartItem: SkuCartItem[]
-): Promise<MakeMonobankPaymentResponse> => {
-  try {
-    const response = await axios.post(
-      `${BACKEND_URL}/paymentmono/create-mono-order`,
-      { cart: SkuCartItem }
-    );
+export const makeMonobankPayment =
+  async (): Promise<MakeMonobankPaymentResponse> => {
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/paymentmono/create-mono-order`
+      );
 
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw new Error('Failed to make monobank payment');
-  }
-};
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to make monobank payment');
+    }
+  };
 
 export const sendShippingInfo = async (
   shippingInfo: CheckoutFormValues,
