@@ -1,11 +1,10 @@
 import * as paypal from "./paypal-api.js";
 import logger from "../../logger/logger.js";
 import makingCart from "../../functions/makingCart.js";
-import { cart } from "../addShippingAddress.js";
 
 export default async function createPayPalOrder(req, res) {
   try {
- 
+    const {cart } = req.body
     const orderCart = await makingCart(cart)
     console.dir(orderCart.cart)
     const createData = await paypal.createOrder(orderCart);

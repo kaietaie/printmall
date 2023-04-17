@@ -17,7 +17,6 @@ warehouse: "1ec09d2e-e1c2-11e3-8c4a-0050568002cf"
 zip_code: ""
     */
 try {
-  console.dir({shippingInfo})
   const sql_address = `insert into shipping_info( first_name, last_name, phone, email, 
     address_line_1, address_line_2, city, country, region, zip, shipping_method,  warehouse ) 
     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)

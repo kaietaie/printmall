@@ -2,10 +2,11 @@ import axios from "axios";
 import saveOrderId from "../../functions/saveOrder/saveOrderId.js";
 import logger from "../../logger/logger.js";
 import makingCart from "../../functions/makingCart.js";
-import { shippingId, cart } from "../addShippingAddress.js";
+import { shippingId } from "../addShippingAddress.js";
 
 export default async function createMonoOrder(req, res) {
   try {
+    const { cart } = req.body;
     const status = "";
     const orderId = await saveOrderId(shippingId, status); // потім додоати id_payment
 
@@ -19,7 +20,7 @@ export default async function createMonoOrder(req, res) {
       redirectUrl: "http://" + process.env.REACT_APP_HOST + "/checkpayment",
       // webHookUrl: "",
     };
-
+console.log({cart})
     const orderCart = await makingCart(cart, paymentreq); // order = { total, cart };
     const total = orderCart.order.total;
     paymentreq.amount = total * 100;
