@@ -78,7 +78,6 @@ export default async function sendConfirmationMail(data) {
          <p>Команда Kram Market</p>`,
       };
     }
-    console.log(mailText);
     mailSend(mailText);
   } catch (error) {
     const errorMsg = `Send confirmation email is failed: ${error.message}`;

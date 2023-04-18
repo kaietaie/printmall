@@ -20,7 +20,6 @@ export default async function createMonoOrder(req, res) {
       redirectUrl: "http://" + process.env.REACT_APP_HOST + "/checkpayment",
       // webHookUrl: "",
     };
-console.log({cart})
     const orderCart = await makingCart(cart, paymentreq); // order = { total, cart };
     const total = orderCart.order.total;
     paymentreq.amount = total * 100;

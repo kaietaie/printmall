@@ -4,7 +4,7 @@ Tshirt marketplace
 ## How to start project?
 
 1. clone repo in your terminal 
-2. install [NodeJS](https://nodejs.org/) if you don`t have it yet
+2. install [NodeJS](https://nodejs.org/) if you don`t have it yet. We use version 14.7. 
 3. `cd` into `printmall/server` folder and type `npm install`
 4. run backend-server type `npm start`
 5. `cd` into `printmall/printmall` folder and type `npm install`

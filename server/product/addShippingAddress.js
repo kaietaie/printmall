@@ -9,7 +9,6 @@ export default async function addShippingAddress(req, res) {
   const { shippingInfo } = req.body;
   shippingAddress = shippingInfo;
   const {cart} = req.body;
-  console.log(cart)
   shippingId = await saveShippingInfo(shippingInfo);
   shippingCost = await deliveryPrice(cart, shippingInfo);
   return res.status(200).json({ shippingCost });

@@ -9,10 +9,7 @@ export async function createOrder(order) {
   const shippingCost = Number((order.cart[order.cart.length - 1].price / exchangeRate).toFixed(1));
   const total = Number((order.total / exchangeRate).toFixed(1));
   const item_total = Number((total - shippingCost).toFixed(1));
-  console.log({total, item_total, shippingCost})
   const cart = [...order.cart];
-  console.log(order.cart)
-  console.log({total, shippingCost})
   cart.pop();
 
 
@@ -44,7 +41,6 @@ export async function createOrder(order) {
           },
           items: cart.map(({ name, quantity, price }) => {
             const unit_amount = Number((price / exchangeRate).toFixed(1));
-            console.log({ name, quantity, unit_amount })
             return {
               name: name,
               unit_amount: {

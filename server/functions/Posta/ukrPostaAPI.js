@@ -86,18 +86,18 @@ export async function getAddress(id) {
 
 export async function addClient(client) {
   try {
-    const {deliveryData} = client 
-    const latinName = client.firstName + " " + client.lastName
-    const addressId = await addAddress(deliveryData)
+    const { deliveryData } = client;
+    const latinName = client.firstName + " " + client.lastName;
+    const addressId = await addAddress(deliveryData);
     const clientId = await axios({
-      method: "post", 
+      method: "post",
       url: url + "/clients",
       headers: {
         Authorization: `Bearer ${process.env.UKR_POSTA_BEARER}`,
         "Content-Type": "application/json",
       },
       params: {
-        token: process.env.UKR_POSTA_COUNTERPARTY
+        token: process.env.UKR_POSTA_COUNTERPARTY,
       },
       data: {
         firstName: client.firstName,
@@ -118,15 +118,36 @@ export async function addClient(client) {
 export async function getClient(uuid) {
   try {
     const clientInfo = await axios({
-      method: "get", 
-      url: url + "/clients/" + uuid ,
+      method: "get",
+      url: url + "/clients/" + uuid,
       headers: {
         Authorization: `Bearer ${process.env.UKR_POSTA_BEARER}`,
         "Content-Type": "application/json",
       },
       params: {
-        token: process.env.UKR_POSTA_COUNTERPARTY
-      }
+        token: process.env.UKR_POSTA_COUNTERPARTY,
+      },
+    });
+    return clientInfo;
+  } catch (error) {
+    const errorMsg = `Get client UKR post is failed: ${error.message}`;
+    logger.error(errorMsg);
+  }
+}
+export async function getClientByPhone(phone) {
+  try {
+    const clientInfo = await axios({
+      method: "get",
+      url: url + "/clients/phone?",
+      headers: {
+        Authorization: `Bearer ${process.env.UKR_POSTA_BEARER}`,
+        "Content-Type": "application/json",
+      },
+      params: {
+        token: process.env.UKR_POSTA_COUNTERPARTY,
+        countryISO3166: "UA",
+        phoneNumber: phone,
+      },
     });
     return clientInfo;
   } catch (error) {
@@ -137,18 +158,18 @@ export async function getClient(uuid) {
 export async function updateClient(uuid) {
   try {
     const clientInfo = await axios({
-      method: "put", 
-      url: url + "/clients/" + uuid ,
+      method: "put",
+      url: url + "/clients/" + uuid,
       headers: {
         Authorization: `Bearer ${process.env.UKR_POSTA_BEARER}`,
         "Content-Type": "application/json",
       },
       params: {
-        token: process.env.UKR_POSTA_COUNTERPARTY
+        token: process.env.UKR_POSTA_COUNTERPARTY,
       },
       data: {
         phoneNumber: phone,
-      }
+      },
     });
     return clientInfo;
   } catch (error) {
@@ -156,6 +177,67 @@ export async function updateClient(uuid) {
     logger.error(errorMsg);
   }
 }
+
+//  Створення поштового відправлення
+
+export async function newIntShipment() {
+  try {
+    const clientInfo = await axios({
+      method: "post",
+      url: url + "/shipments",
+      headers: {
+        Authorization: `Bearer ${process.env.UKR_POSTA_BEARER}`,
+        "Content-Type": "application/json",
+      },
+      params: {
+        token: process.env.UKR_POSTA_COUNTERPARTY,
+      },
+      data: {
+        type: "",
+        packageType: "SMALL_BAG",
+        sender: uuidSender,
+        recipient: uuidClient,
+        senderAddressId: senderAddressId,
+        recipientEmail: emailClient,
+        deliveryType: "W2W",
+        weight: weightParcel,
+        length: lengthParcel,
+        parcels: [
+          {
+            name: "Parcel",
+            weight: weightParcel,
+            length: lengthParcel,
+            parcelItems: [
+              {
+                latinName: "T-Shirt",
+                description: "Blue shirtr",
+                quantity: 1,
+                weight: 200,
+                value: 28000,
+                countryOfOrigin: "UA",
+                hsCode: 102030605089,
+              },
+            ],
+          },
+        ],
+        internationalData: {
+          tracked: true,
+          transportType: "GROUND",
+          pickingByCourier: false,
+          categoryType: "SALE_OF_GOODS",
+          explanation: "Clothes",
+          directFlight: false,
+          additionalInfoForCustoms: "VAT has not been collected by Kram Market",
+        },
+      },
+    });
+    return clientInfo;
+  } catch (error) {
+    const errorMsg = `Get client UKR post is failed: ${error.message}`;
+    logger.error(errorMsg);
+  }
+}
+
 /*
 {
 	"id": 5253578,

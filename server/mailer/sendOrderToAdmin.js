@@ -15,7 +15,6 @@ export default async function sendOrderToAdmin(dataMail) {
         `,
       };
     } else if (dataMail.userMessage) {
-      console.log({ dataMail });
       const { first_name, last_name, email, message, phone } =
         dataMail.userMessage;
       mailText = {
