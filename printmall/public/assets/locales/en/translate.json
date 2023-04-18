@@ -53,7 +53,8 @@
   },
   "errorBanner": {
     "title": "Oops!",
-    "message": "Something went wrong!"
+    "message": "Something went wrong!",
+    "productMessage": "Sorry, we couldn't load the seller's products. Please try again later or contact customer support for assistance."
   },
   "payment": {
     "cancelMessage": "You canceled purchasing",
