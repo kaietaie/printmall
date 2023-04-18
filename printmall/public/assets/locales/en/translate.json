@@ -82,7 +82,8 @@
   "orderDetails": {
     "total": "Total",
     "shipping": "Shipping",
-    "subtotal": "Subtotal"
+    "subtotal": "Subtotal",
+    "message": "VAT is not included in the product price for orders outside Ukraine."
   },
   "supportModal": {
     "subTitle": "Contact us",
