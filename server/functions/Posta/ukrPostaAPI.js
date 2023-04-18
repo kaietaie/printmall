@@ -110,7 +110,7 @@ export async function addClient(client) {
     });
     return clientId;
   } catch (error) {
-    const errorMsg = `Get address UKR post is failed: ${error.message}`;
+    const errorMsg = `Add client UKR post is failed: ${error.message}`;
     logger.error(errorMsg);
   }
 }
@@ -130,11 +130,32 @@ export async function getClient(uuid) {
     });
     return clientInfo;
   } catch (error) {
-    const errorMsg = `Get address UKR post is failed: ${error.message}`;
+    const errorMsg = `Get client UKR post is failed: ${error.message}`;
     logger.error(errorMsg);
   }
 }
-
+export async function updateClient(uuid) {
+  try {
+    const clientInfo = await axios({
+      method: "put", 
+      url: url + "/clients/" + uuid ,
+      headers: {
+        Authorization: `Bearer ${process.env.UKR_POSTA_BEARER}`,
+        "Content-Type": "application/json",
+      },
+      params: {
+        token: process.env.UKR_POSTA_COUNTERPARTY
+      },
+      data: {
+        phoneNumber: phone,
+      }
+    });
+    return clientInfo;
+  } catch (error) {
+    const errorMsg = `Get client UKR post is failed: ${error.message}`;
+    logger.error(errorMsg);
+  }
+}
 /*
 {
 	"id": 5253578,

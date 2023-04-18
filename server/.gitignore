@@ -5,3 +5,4 @@ dist
 .idea
 logs
 .env.prod
+dbConnection co.js
