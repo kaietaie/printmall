@@ -8,7 +8,6 @@ import {
   selectProductsStatus,
 } from '../../store/products/productsSelectors';
 import { ProductsState } from '../../types/Products';
-import ErrorBoundary from '../common/ErrorBoundary';
 import { SellerState } from '../../types/Sellers';
 import ErrorBannerSmall from '../common/ErrorBanner/ErrorBannerSmall';
 import { useTranslation } from 'react-i18next';

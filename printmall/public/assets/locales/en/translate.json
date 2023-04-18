@@ -54,7 +54,8 @@
   "errorBanner": {
     "title": "Oops!",
     "message": "Something went wrong!",
-    "productMessage": "Sorry, we couldn't load the seller's products. Please try again later or contact customer support for assistance."
+    "productMessage": "Sorry, we couldn't load the seller's products. Please try again later or contact customer support for assistance.",
+    "sellerInfoMessage": "Sorry, we couldn't load the information about seller. Please try again later or contact customer support for assistance."
   },
   "payment": {
     "cancelMessage": "You canceled purchasing",

@@ -10,7 +10,7 @@ const ErrorBannerSmall: React.FC<ErrorBannerSmallProps> = ({ message }) => {
   return (
     <div className="error-banner-small">
       <h3 className="error-banner-small-message">{message}</h3>
-      <img className="error-banner-image" src={errorImage} alt="error" />
+      <img className="error-banner-image-small" src={errorImage} alt="error" />
     </div>
   );
 };

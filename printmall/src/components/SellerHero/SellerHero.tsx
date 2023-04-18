@@ -1,15 +1,30 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import Banner from './Banner';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { selectSeller } from '../../store/seller/sellerSelectors';
-import { Seller } from '../../types/Sellers';
+import {
+  selectSeller,
+  selectSellerStatus,
+} from '../../store/seller/sellerSelectors';
+import { Seller, SellerState } from '../../types/Sellers';
 import defaultAvatar from '../images/defaultImages/avatar_big.png';
+import ErrorBannerSmall from '../common/ErrorBanner/ErrorBannerSmall';
+import { useTranslation } from 'react-i18next';
 
 import './SellerHero.sass';
 
 const SellerHero = () => {
+  const { t } = useTranslation();
   const seller = useSelector<RootState, Seller | null>(selectSeller);
+  const sellerStatus = useSelector<RootState, SellerState['status']>(
+    selectSellerStatus
+  );
+
+  const isError = sellerStatus === 'failed';
+
+  if (isError) {
+    return <ErrorBannerSmall message={t('errorBanner.sellerInfoMessage')} />;
+  }
 
   return (
     <div className="seller-hero">
