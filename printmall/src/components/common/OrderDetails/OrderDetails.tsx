@@ -7,13 +7,10 @@ import { useTranslation } from 'react-i18next';
 import OrderDetailsInfo from './OrderDetailsInfo';
 import { memo, useEffect } from 'react';
 import { getTotals } from '../../../store/cart/cartSlice';
-import cookies from 'js-cookie';
 
 import './OrderDetails.sass';
 
 const OrderDetails = () => {
-  const currentLanguage = cookies.get('i18next') || 'ua';
-  const isUkrainianLanguage = currentLanguage === 'ua';
   const { t } = useTranslation();
   const items = useSelector<RootState, CartState['items']>(selectCartItems);
   const dispatch = useDispatch<AppDispatch>();
@@ -35,16 +32,9 @@ const OrderDetails = () => {
         ))}
       </div>
       <OrderDetailsInfo />
-      {!isUkrainianLanguage && (
-        <>
-          <span className="order-details-message">
-            &#8226; Shipping costs depend on your location
-          </span>
-          <span className="order-details-message">
-            &#8226; Prices do not include VAT
-          </span>
-        </>
-      )}
+      <span className="order-details-message">
+        &#8226; {t('orderDetails.message')}
+      </span>
     </div>
   );
 };
