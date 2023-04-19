@@ -155,7 +155,9 @@ export async function getClientByPhone(phone) {
     logger.error(errorMsg);
   }
 }
-export async function updateClient(uuid) {
+export async function updateClient(client) {
+const {data, uuid} = client // data ={ "nameEn":"Vema123 LTD", "phoneNumber":"0671231235"}
+
   try {
     const clientInfo = await axios({
       method: "put",
@@ -167,9 +169,7 @@ export async function updateClient(uuid) {
       params: {
         token: process.env.UKR_POSTA_COUNTERPARTY,
       },
-      data: {
-        phoneNumber: phone,
-      },
+      data: data,
     });
     return clientInfo;
   } catch (error) {
@@ -193,15 +193,13 @@ export async function newIntShipment() {
         token: process.env.UKR_POSTA_COUNTERPARTY,
       },
       data: {
-        type: "",
+        type: "INTERNATIONAL",
         packageType: "SMALL_BAG",
         sender: uuidSender,
         recipient: uuidClient,
         senderAddressId: senderAddressId,
         recipientEmail: emailClient,
         deliveryType: "W2W",
-        weight: weightParcel,
-        length: lengthParcel,
         parcels: [
           {
             name: "Parcel",
@@ -239,6 +237,24 @@ export async function newIntShipment() {
 }
 
 /*
+{
+	"id": 5257312,
+	"postcode": "82101",
+	"region": "Bratislava",
+	"district": null,
+	"city": "Bratislava",
+	"street": "Rumancekova",
+	"houseNumber": "861/52",
+	"apartmentNumber": "13",
+	"description": null,
+	"countryside": false,
+	"posteRestante": false,
+	"foreignStreetHouseApartment": "Rumancekova 861/52, 13",
+	"detailedInfo": "Словаччина, 82101, Bratislava, Bratislava, Rumancekova 861/52, 13",
+	"created": "2023-04-19T00:45:00",
+	"lastModified": "2023-04-19T00:45:00",
+	"country": "SK"
+}
 {
 	"id": 5253578,
 	"postcode": "00-001",
@@ -321,6 +337,72 @@ export async function newIntShipment() {
 			"uuid": "e9f7087b-47d8-49b5-b61d-26a99109401f",
 			"phoneId": 5254524,
 			"phoneNumber": "421949590207",
+			"type": "PERSONAL",
+			"main": true
+		}
+	],
+	"email": "",
+	"emails": [],
+	"bankAccount": null,
+	"postPayPaymentType": "POSTPAY_PAYMENT_CASH_ONLY",
+	"accountType": {
+		"type": "CORPORATE",
+		"assignmentDate": "2023-04-11"
+	},
+	"resident": true,
+	"GDPRRead": false,
+	"GDPRAccept": false,
+	"personalDataApproved": false,
+	"checkOnDeliveryAllowed": true,
+	"freeStorageAvailable": false,
+	"returnDaysSettingAvailable": false
+}
+{
+	"uuid": "92774540-4f63-4ac2-b2ce-1fe64e395afc",
+	"name": "Market Kram",
+	"firstName": "Kram",
+	"middleName": null,
+	"lastName": "Market",
+	"latinName": "Kram Market",
+	"contactPersonName": null,
+	"type": "INDIVIDUAL",
+	"postId": null,
+	"externalId": null,
+	"uniqueRegistrationNumber": null,
+	"counterpartyUuid": "583ecbb9-4e95-4134-860c-a95af22bd2ae",
+	"addressId": 5253730,
+	"addresses": [
+		{
+			"uuid": "eed68534-b962-4be0-aed8-b13786025b5d",
+			"addressId": 5253730,
+			"address": {
+				"id": 5253730,
+				"postcode": "07541",
+				"region": "Київська",
+				"district": null,
+				"city": "Березань",
+				"street": "вул. Шевченків шлях",
+				"houseNumber": "112",
+				"apartmentNumber": "10",
+				"description": null,
+				"countryside": true,
+				"posteRestante": false,
+				"foreignStreetHouseApartment": null,
+				"detailedInfo": "Україна, 07541, Київська, Березань, вул. Шевченків шлях 112, 10",
+				"created": "2023-04-17T15:09:28",
+				"lastModified": "2023-04-17T15:09:28",
+				"country": "UA"
+			},
+			"type": "PHYSICAL",
+			"main": true
+		}
+	],
+	"phoneNumber": "+380639366753",
+	"phones": [
+		{
+			"uuid": "fdc15a26-b6f5-4ca9-8888-da434924b732",
+			"phoneId": 5257311,
+			"phoneNumber": "+380639366753",
 			"type": "PERSONAL",
 			"main": true
 		}
