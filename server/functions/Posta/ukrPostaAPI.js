@@ -156,7 +156,7 @@ export async function getClientByPhone(phone) {
   }
 }
 export async function updateClient(client) {
-const {data, uuid} = client // data ={ "nameEn":"Vema123 LTD", "phoneNumber":"0671231235"}
+  const { data, uuid } = client; // data ={ "nameEn":"Vema123 LTD", "phoneNumber":"0671231235"}
 
   try {
     const clientInfo = await axios({
@@ -195,25 +195,32 @@ export async function newIntShipment() {
       data: {
         type: "INTERNATIONAL",
         packageType: "SMALL_BAG",
-        sender: uuidSender,
-        recipient: uuidClient,
-        senderAddressId: senderAddressId,
-        recipientEmail: emailClient,
+        sender: {
+          uuid: "92774540-4f63-4ac2-b2ce-1fe64e395afc",
+        },
+        recipient: {
+          uuid: "849a9a5f-36db-42f3-b54a-2d289f80c1ed",
+        },
+        senderAddressId: 5259379,
         deliveryType: "W2W",
+        weight: 200,
+        length: 25,
         parcels: [
           {
             name: "Parcel",
-            weight: weightParcel,
-            length: lengthParcel,
+            weight: 200,
+            length: 25,
+            width: 10,
+            height: 3,
             parcelItems: [
               {
                 latinName: "T-Shirt",
                 description: "Blue shirtr",
                 quantity: 1,
                 weight: 200,
-                value: 28000,
+                value: 500,
                 countryOfOrigin: "UA",
-                hsCode: 102030605089,
+                hsCode: 610990,
               },
             ],
           },
