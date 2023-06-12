@@ -1,5 +1,9 @@
-# printmall
+# Printmall
 Tshirt marketplace
+
+# Disclaimer
+This project is a copy from our organization repo. 
+Artem make the front end and I was making the back end of the application.
 
 ## How to start project?
 
